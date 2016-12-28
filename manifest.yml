@@ -1,0 +1,11 @@
+applications:
+- path: .
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: dietview
+  host: dietview
+  disk_quota: 1024M
+  services:
+  - Auto-Scaling-tm
+  - Monitoring and Analytics-6
