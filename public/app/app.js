@@ -10,7 +10,8 @@ var altairApp = angular.module('altairApp', [
     'ngRetina',
     'ncy-angular-breadcrumb',
     'ConsoleLogger',
-    'lbServices'
+    'lbServices',
+    'vcRecaptcha'
 ]);
 
 altairApp.constant('variables', {

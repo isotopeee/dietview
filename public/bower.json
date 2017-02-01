@@ -99,12 +99,16 @@
     "velocity": "~1.3.1",
     "waypoints": "~4.0.1",
     "weather-icons": "~2.0.10",
-    "Waves": "waves#~0.7.4"
+    "Waves": "waves#~0.7.4",
+    "angular-recaptcha": "^4.0.1"
   },
   "resolutions": {
     "jquery": "~2.2.x",
     "fastclick": "~1.0.6",
     "d3": "~3.5",
-    "angular": "~1.5.3"
+    "angular": ">=1.0.8",
+    "metrics-graphics": "~2.9",
+    "fullcalendar": "~3.0.1",
+    "moment": ">=2.5.0"
   }
 }

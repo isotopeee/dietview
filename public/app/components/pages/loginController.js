@@ -10,6 +10,7 @@ angular
 
             $scope.registerFormActive = false;
             $scope.rememberMe = false;
+            $scope.recaptcha = {};
 
             var $login_card = $('#login_card'),
                 $login_form = $('#login_form'),
@@ -51,21 +52,25 @@ angular
 
             // authenticate User
             var authenticate = function () {
-              var credentials = $scope.credentials,
-                rememberMe = $scope.rememberMe;
+              if (!$scope.recaptcha.login) {
+                alert('check recaptcha');
+              } else {
+                var credentials = $scope.credentials,
+                  rememberMe = $scope.rememberMe;
 
-                // add realm to credentials
-                credentials.realm = 'dietview';
+                  // add realm to credentials
+                  credentials.realm = 'dietview';
 
-                User.login({ rememberMe: $scope.rememberMe }, credentials,
-                function (data, headers) {
-                  console.log(data);
-                  console.log(headers);
-                  $state.go("restricted.dashboard");
-                },
-                function (response) {
-                  console.log(response);
-                });
+                  User.login({ rememberMe: $scope.rememberMe }, credentials,
+                  function (data, headers) {
+                    console.log(data);
+                    console.log(headers);
+                    $state.go("restricted.dashboard");
+                  },
+                  function (response) {
+                    console.log(response);
+                  });
+              }
             }
 
             //request reset password
@@ -108,7 +113,6 @@ angular
 
             $scope.requestResetPassword = function ($event) {
               request_reset_password();
-            }
-
+            };
         }
     ]);
