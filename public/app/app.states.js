@@ -40,7 +40,7 @@ altairApp
                             return $ocLazyLoad.load([
                                 'lazy_uikit',
                                 'lazy_iCheck',
-                                'bower_components/angular-resource/angular-resource.min.js',
+                              //  'bower_components/angular-resource/angular-resource.min.js',
                                 'app/components/pages/loginController.js'
                             ]);
                         }]
@@ -60,8 +60,8 @@ altairApp
                                 'lazy_prismJS',
                                 'lazy_autosize',
                                 'lazy_iCheck',
-                                'lazy_themes',
-                                'bower_components/angular-resource/angular-resource.min.js'
+                                'lazy_themes'
+                                //'bower_components/angular-resource/angular-resource.min.js'
                             ]);
                         }]
                     }

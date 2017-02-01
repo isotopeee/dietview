@@ -9,7 +9,8 @@ var altairApp = angular.module('altairApp', [
     'ngSanitize',
     'ngRetina',
     'ncy-angular-breadcrumb',
-    'ConsoleLogger'
+    'ConsoleLogger',
+    'lbServices'
 ]);
 
 altairApp.constant('variables', {
@@ -27,10 +28,10 @@ altairApp.config(function($sceDelegateProvider) {
 });
 
 //LoopBackResource provider configuration
-altairApp.config(function(LoopBackResouceProvider){
-    
+altairApp.config(function(LoopBackResourceProvider){
+
     // URL where to access the Loopback REST API server
-    LoopBackResouceProvider.setUrlBase('https://dietview-api.mybluemix.net/');
+    LoopBackResourceProvider.setUrlBase('https://dietview-api.mybluemix.net/');
 });
 
 // breadcrumbs
