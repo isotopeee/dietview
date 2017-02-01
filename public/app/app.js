@@ -26,6 +26,13 @@ altairApp.config(function($sceDelegateProvider) {
     ]);
 });
 
+//LoopBackResource provider configuration
+altairApp.config(function(LoopBackResouceProvider){
+    
+    // URL where to access the Loopback REST API server
+    LoopBackResouceProvider.setUrlBase('https://dietview-api.mybluemix.net/');
+});
+
 // breadcrumbs
 altairApp.config(function($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
