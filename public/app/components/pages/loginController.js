@@ -2,11 +2,14 @@ angular
     .module('altairApp')
     .controller('loginCtrl', [
         '$scope',
+        '$state',
         '$rootScope',
         'utils',
-        function ($scope,$rootScope,utils) {
+        'User',
+        function ($scope,$state,$rootScope,utils,User) {
 
             $scope.registerFormActive = false;
+            $scope.rememberMe = false;
 
             var $login_card = $('#login_card'),
                 $login_form = $('#login_form'),
@@ -46,6 +49,37 @@ angular
                     .hide();
             };
 
+            // authenticate User
+            var authenticate = function () {
+              var credentials = $scope.credentials,
+                rememberMe = $scope.rememberMe;
+
+                // add realm to credentials
+                credentials.realm = 'dietview';
+
+                User.login({ rememberMe: $scope.rememberMe }, credentials,
+                function (data, headers) {
+                  console.log(data);
+                  console.log(headers);
+                  $state.go("restricted.dashboard");
+                },
+                function (response) {
+                  console.log(response);
+                });
+            }
+
+            //request reset password
+            var request_reset_password = function () {
+              User.resetPassword({}, $scope.reset,
+              function (data, headers) {
+                console.log(data);
+                console.log(headers);
+              },
+              function (response) {
+                console.log(response);
+              });
+            }
+
             $scope.loginHelp = function($event) {
                 $event.preventDefault();
                 utils.card_show_hide($login_card,undefined,login_help_show,undefined);
@@ -67,6 +101,14 @@ angular
                 $event.preventDefault();
                 utils.card_show_hide($login_card,undefined,password_reset_show,undefined);
             };
+
+            $scope.authenticate = function ($event) {
+              authenticate();
+            };
+
+            $scope.requestResetPassword = function ($event) {
+              request_reset_password();
+            }
 
         }
     ]);
