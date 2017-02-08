@@ -13689,3 +13689,23 @@ body.pace-done > .page_preloader {
 .wizard > .content > .body pre[class*="language-"] {
   max-height: inherit;
 }
+/* reset page */
+.reset_page {
+  font-size: 15px;
+  padding: 64px 24px;
+  overflow-y: auto;
+  height: auto;
+  min-height: 100%;
+}
+@media only screen and (max-width: 767px) {
+  .reset_page {
+    padding: 24px;
+  }
+}
+.reset_page_wrapper {
+  width: 360px;
+  max-width: 100%;
+  margin: 0 auto;
+  -webkit-transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}

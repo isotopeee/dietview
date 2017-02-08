@@ -71,19 +71,23 @@ angular
                     console.log(response);
                   });
               }
-            }
+            };
 
             //request reset password
             var request_reset_password = function () {
-              User.resetPassword({}, $scope.reset,
-              function (data, headers) {
-                console.log(data);
-                console.log(headers);
-              },
-              function (response) {
-                console.log(response);
-              });
-            }
+              if (!$scope.recaptcha.reset) {
+                alert('check recaptcha');
+              } else {
+                User.resetPassword({}, $scope.reset,
+                function (data, headers) {
+                  console.log(headers);
+                  console.log(data);
+                },
+                function (response) {
+                  console.log(response);
+                });
+              }
+            };
 
             $scope.loginHelp = function($event) {
                 $event.preventDefault();

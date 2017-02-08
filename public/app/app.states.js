@@ -46,6 +46,22 @@ altairApp
                         }]
                     }
                 })
+            // -- RESET-PASSWORD PAGE --
+                .state("resetPassword", {
+                    url: "/reset-password?access_token&user_id",
+                    templateUrl: 'app/components/pages/resetPasswordView.html',
+                    controller: 'resetPasswordCtrl',
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'lazy_uikit',
+                                'lazy_iCheck',
+                              //  'bower_components/angular-resource/angular-resource.min.js',
+                                'app/components/pages/resetPasswordController.js'
+                            ]);
+                        }]
+                    }
+                })
             // -- RESTRICTED --
                 .state("restricted", {
                     abstract: true,
