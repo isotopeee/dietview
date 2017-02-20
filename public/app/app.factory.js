@@ -9,7 +9,7 @@ altairApp
                 width: function() {
                     return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
                 }
-            }
+            };
         }
     ])
     .factory('utils', [
@@ -90,6 +90,18 @@ altairApp
             };
         }]
     )
+    .factory('modals', [
+      function () {
+        return {
+          alert: function (message) {
+            UIkit.modal.alert(message);
+          },
+          confirm: function (prompt, callback) {
+            UIkit.modal.confirm(prompt, callback);
+          }
+        };
+      }
+    ])
 ;
 
 angular.module("ConsoleLogger", [])
@@ -121,6 +133,6 @@ angular.module("ConsoleLogger", [])
                 console.log("$stateNotFound --- event, unfoundState, fromState, fromParams");
                 console.log(arguments);
             });
-        };
+        }
         return handler;
     }]);

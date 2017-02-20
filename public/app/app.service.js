@@ -18,7 +18,7 @@ altairApp
                     }
                 }
                 return 'unknown';
-            }
+            };
         }
     ])
     .service('preloaders', [
@@ -56,7 +56,6 @@ altairApp
                     }, 500);
                 }
             };
-
         }
     ])
 ;

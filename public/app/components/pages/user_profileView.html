@@ -11,8 +11,8 @@
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom">
-                                    <span class="uk-text-truncate">Username -  {{user_data.name}}</span>
-                                    <span class="sub-heading">Role - {{user_data.position}}</span>
+                                    <span class="uk-text-truncate">{{user_data.account.profile.firstname}} {{user_data.account.profile.lastname}}</span>
+                                    <span class="sub-heading">{{user_data.username}}</span>
                                 </h2>
                             </div>
                             <a class="md-fab md-fab-small md-fab-accent" ui-sref="restricted.pages.user_edit">
@@ -34,7 +34,7 @@
                                                         <i class="md-list-addon-icon material-icons">&#xE158;</i>
                                                     </div>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading">{{user_data_contacts.email}}</span>
+                                                        <span class="md-list-heading">{{user_data.email}}</span>
                                                         <span class="uk-text-small uk-text-muted">Email</span>
                                                     </div>
                                                 </li>
@@ -43,7 +43,7 @@
                                                         <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
                                                     </div>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading">{{user_data_contacts.phone}}</span>
+                                                        <span class="md-list-heading">{{user_data.account.profile.phone}}</span>
                                                         <span class="uk-text-small uk-text-muted">Phone</span>
                                                     </div>
                                                 </li>

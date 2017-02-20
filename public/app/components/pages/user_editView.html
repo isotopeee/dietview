@@ -1,6 +1,6 @@
 <div id="page_content">
     <div id="page_content_inner">
-        <form action="" class="uk-form-stacked" id="user_edit_form">
+        <form ng-submit="update($event)" class="uk-form-stacked" id="user_edit_form">
             <div class="uk-grid" data-uk-grid-margin>
                 <div class="uk-width-large-10-10">
                     <div class="md-card">
@@ -21,8 +21,8 @@
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b">
-                                    <span class="uk-text-truncate" id="user_edit_uname">{{user_data.name}}</span>
-                                    <span class="sub-heading" id="user_edit_position">{{user_data.position}}</span>
+                                    <span class="uk-text-truncate" id="user_edit_uname">{{user_data.username}}</span>
+                                    <span class="sub-heading" id="user_edit_position">{{user_data.account.profile.position}}</span>
                                 </h2>
                             </div>
                         </div>
@@ -37,8 +37,17 @@
                                         <div class="md-fab md-fab-toolbar md-fab-large md-fab-accent" md-fab-toolbar>
                                             <i class="material-icons">&#xE8BE;</i>
                                             <div class="md-fab-toolbar-actions">
-                                                <button type="submit" id="user_edit_save" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Save"><i class="material-icons md-color-white">&#xE161;</i></button>
-                                                <button type="submit" id="user_edit_delete" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Discard changes"><i class="material-icons md-color-white">&#xE872;</i></button>
+                                                <button type="submit" id="user_edit_save"
+                                                  data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}"
+                                                  title="Save">
+                                                  <i class="material-icons md-color-white">&#xE161;</i>
+                                                </button>
+                                                <button type="button" id="user_edit_delete"
+                                                  data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}"
+                                                  title="Discard changes"
+                                                  ng-click="discard($event)">
+                                                  <i class="material-icons md-color-white">&#xE872;</i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -46,7 +55,7 @@
                                         <div class="uk-grid" data-uk-grid-margin>
                                             <div class="uk-width-medium-1-1">
                                                 <label for="user_edit_uname_control">User name</label>
-                                                <input class="md-input" type="text" id="user_edit_uname_control" name="user_edit_uname_control" ng-model="user_data.name" md-input />
+                                                <input class="md-input" type="text" id="user_edit_uname_control" name="user_edit_uname_control" ng-model="user_data.username" md-input />
                                             </div>
                                         </div>
                                         <h3 class="full_width_in_card heading_c">
@@ -54,12 +63,12 @@
                                         </h3>
                                         <div class="uk-grid" data-uk-grid-margin>
                                             <div class="uk-width-medium-1-2">
-                                                <label for="user_edit_uname_control">User name</label>
-                                                <input class="md-input" type="text" id="user_edit_uname_control" name="user_edit_uname_control" ng-model="user_data.name" md-input />
+                                                <label for="user_edit_fname_control">First name</label>
+                                                <input class="md-input" type="text" id="user_edit_fname_control" name="user_edit_fname_control" ng-model="user_data.account.profile.firstname" md-input />
                                             </div>
                                             <div class="uk-width-medium-1-2">
-                                                <label for="user_edit_position_control">User position</label>
-                                                <input class="md-input" type="text" id="user_edit_position_control" name="user_edit_position_control" ng-model="user_data.position" md-input />
+                                                <label for="user_edit_lname_control">Last name</label>
+                                                <input class="md-input" type="text" id="user_edit_lname_control" name="user_edit_lname_control" ng-model="user_data.account.profile.lastname" md-input />
                                             </div>
                                         </div>
                                         <h3 class="full_width_in_card heading_c">
@@ -74,7 +83,7 @@
                                                                 <i class="md-list-addon-icon material-icons">&#xE158;</i>
                                                             </span>
                                                             <label>Email</label>
-                                                            <input type="text" class="md-input" name="user_edit_email" ng-model="user_data_contacts.email" md-input />
+                                                            <input type="text" class="md-input" name="user_edit_email" ng-model="user_data.email" md-input />
                                                         </div>
                                                     </div>
                                                     <div>
@@ -83,39 +92,38 @@
                                                                 <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
                                                             </span>
                                                             <label>Phone Number</label>
-                                                            <input type="text" class="md-input" name="user_edit_phone" ng-model="user_data_contacts.phone" md-input />
+                                                            <input type="text" class="md-input" name="user_edit_phone" ng-model="user_data.account.profile.phone" md-input />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                  </form>
                                 </li>
                                 <li>
+                                  <form ng-submit="changePassword($event)" class="uk-form-stacked" id="user_change_password_form">
                                     <div class="uk-margin-top">
                                         <div class="uk-grid" data-uk-grid-margin>
                                             <div class="uk-width-medium-1-2">
-                                                <label for="user_edit_uname_control">User name</label>
-                                                <input class="md-input" type="text" id="user_edit_uname_control" name="user_edit_uname_control" ng-model="user_data.name" md-input />
-                                            </div>
-                                        </div>
-                                        <div class="uk-grid" data-uk-grid-margin>
-                                            <div class="uk-width-medium-1-2">
-                                                <label for="user_edit_uname_control">User name</label>
-                                                <input class="md-input" type="text" id="user_edit_uname_control" name="user_edit_uname_control" ng-model="user_data.name" md-input />
+                                                <label for="user_edit_password_control">New password</label>
+                                                <input class="md-input" type="password" id="user_edit_password_control" name="user_edit_password_control" ng-model="user_data.password" md-input />
                                             </div>
                                             <div class="uk-width-medium-1-2">
-                                                <label for="user_edit_uname_control">User name</label>
-                                                <input class="md-input" type="text" id="user_edit_uname_control" name="user_edit_uname_control" ng-model="user_data.name" md-input />
+                                                <label for="user_edit_confirm_control">Confirm new password</label>
+                                                <input class="md-input" type="password" id="user_edit_confirm_control" name="user_edit_confirm_control" ng-model="confirm" md-input />
+                                            </div>
+                                            <div class="uk-width-medium-1-1">
+                                                <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-wave-light">Change password</button>
                                             </div>
                                         </div>
                                     </div>
+                                  </form>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
     </div>
 </div>

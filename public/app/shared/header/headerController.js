@@ -5,7 +5,8 @@ angular
         '$scope',
         '$window',
         '$state',
-        function ($timeout,$scope,$window,$state) {
+        'User',
+        function ($timeout,$scope,$window,$state,User) {
 
             $scope.user_data = {
                 name: "Lue Feest",
@@ -76,7 +77,7 @@ angular
             $('#menu_top').children('[data-uk-dropdown]').on('show.uk.dropdown', function(){
                 $timeout(function() {
                     $($window).resize();
-                },280)
+                },280);
             });
 
             // autocomplete
@@ -85,8 +86,20 @@ angular
                 var $this = $(this);
                 $state.go($this.attr('href'));
                 $('.header_main_search_input').val('');
-            })
+            });
 
+            // logout user
+            var logout = function () {
+              User.logout().$promise
+                .then(function (data) {
+                  console.log('User logged out');
+                  $state.go('login');
+                });
+            };
+
+            $scope.logout = function ($event) {
+              logout();
+            };
         }
     ])
 ;

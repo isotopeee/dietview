@@ -5,8 +5,9 @@ angular
         '$state',
         '$rootScope',
         'utils',
+        'modals',
         'User',
-        function ($scope,$state,$rootScope,utils,User) {
+        function ($scope,$state,$rootScope,utils,modals,User) {
 
             $scope.registerFormActive = false;
             $scope.rememberMe = false;

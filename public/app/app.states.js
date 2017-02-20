@@ -6,7 +6,7 @@ altairApp
 
             // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
             $urlRouterProvider
-                .when('/dashboard', '/')
+                .when('/login', '/')
                 .otherwise('/');
 
             $stateProvider
@@ -32,7 +32,7 @@ altairApp
                 })
             // -- LOGIN PAGE --
                 .state("login", {
-                    url: "/login",
+                    url: "/",
                     templateUrl: 'app/components/pages/loginView.html',
                     controller: 'loginCtrl',
                     resolve: {
@@ -84,7 +84,7 @@ altairApp
                 })
             // -- DASHBOARD --
                 .state("restricted.dashboard", {
-                    url: "/",
+                    url: "/dashboard",
                     templateUrl: 'app/components/dashboard/dashboardView.html',
                     controller: 'dashboardCtrl',
                     resolve: {
@@ -1382,7 +1382,7 @@ altairApp
                                 'js!https://maps.google.com/maps/api/js',
                                 'lazy_google_maps',
                                 'app/components/pages/search_resultsController.js'
-                            ],{serie: true})
+                            ],{serie: true});
                         }]
                     },
                     data: {
@@ -1397,7 +1397,7 @@ altairApp
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 'app/components/pages/sticky_notesController.js'
-                            ],{serie: true})
+                            ],{serie: true});
                         }]
                     },
                     data: {
@@ -1410,7 +1410,7 @@ altairApp
                     controller: 'settingsCtrl',
                     resolve: {
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load('app/components/pages/settingsController.js')
+                            return $ocLazyLoad.load('app/components/pages/settingsController.js');
                         }]
                     },
                     data: {
@@ -1469,11 +1469,11 @@ altairApp
                                 'app/components/pages/user_profileController.js'
                             ]);
                         }],
-                        user_data: function($http){
-                            return $http({ method: 'GET', url: 'data/user_data.json' })
-                                .then(function (data) {
-                                    return data.data;
-                                });
+                        user_data: function (User) {
+                            return User.getCurrent().$promise
+                              .then(function (data) {
+                                return data;
+                              });
                         }
                     },
                     data: {
@@ -1491,17 +1491,15 @@ altairApp
                                 'app/components/pages/user_editController.js'
                             ],{serie: true});
                         }],
-                        user_data: function($http){
-                            return $http({ method: 'GET', url: 'data/user_data.json' })
-                                .then(function (data) {
-                                    return data.data;
-                                });
-                        },
-                        groups_data: function($http){
-                            return $http({ method: 'GET', url: 'data/groups_data.json' })
-                                .then(function (data) {
-                                    return data.data;
-                                });
+                        user_data: function (User) {
+                            var user = User.getCachedCurrent();
+                            if(user !== null){
+                              return user;
+                            } else {
+                              return User.getCurrent().$promise.then(function (data) {
+                                return data;
+                              });
+                            }
                         }
                     },
                     data: {
@@ -1577,6 +1575,6 @@ altairApp
                     data: {
                         pageTitle: 'Blog Article'
                     }
-                })
+                });
         }
     ]);
