@@ -7,7 +7,7 @@ altairApp
             // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
             $urlRouterProvider
                 .when('/login', '/')
-                .otherwise('/');
+                .otherwise('/404');
 
             $stateProvider
             // -- ERROR PAGES --
@@ -120,6 +120,58 @@ altairApp
                     },
                     ncyBreadcrumb: {
                         label: 'Home'
+                    }
+                })
+                // -- PRODUCTS --
+                .state("restricted.products", {
+                    url: "/products",
+                    template: '<div ui-view autoscroll="false"/>',
+                    abstract: true
+                })
+                // -- MEAL ITEMS --
+                .state("restricted.products.meal_items", {
+                    url: "/meal_items",
+                    templateUrl: 'app/components/products/meal_items_listView.html',
+                    controller: 'meal_items_listCtrl',
+                    resolve: {
+                        products_data: function($http){
+                            return $http({method: 'GET', url: 'data/ecommerce_products.json'})
+                                .then(function (data) {
+                                    return data.data;
+                                });
+                        },
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'lazy_pagination',
+                                'app/components/products/meal_items_listController.js'
+                            ], { serie: true } );
+                        }]
+                    },
+                    data: {
+                        pageTitle: 'Meal Items'
+                    }
+                })
+                // -- MEAL PLANS --
+                .state("restricted.products.meal_plans", {
+                    url: "/meal_plans",
+                    templateUrl: 'app/components/products/meal_plans_listView.html',
+                    controller: 'meal_plans_listCtrl',
+                    resolve: {
+                        products_data: function($http){
+                            return $http({method: 'GET', url: 'data/ecommerce_products.json'})
+                                .then(function (data) {
+                                    return data.data;
+                                });
+                        },
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'lazy_pagination',
+                                'app/components/products/meal_plans_listController.js'
+                            ], { serie: true } );
+                        }]
+                    },
+                    data: {
+                        pageTitle: 'Meal Plans'
                     }
                 })
                 // -- FORMS --
