@@ -42,6 +42,15 @@ angular
 
             $scope.filter_pageSize = ['5', '10', '15'];
 
+            $scope.options = {
+              type: [
+                'Dairy'
+              ],
+              status: [
+                'Active'
+              ]
+            };
+
         }
     ])
 ;

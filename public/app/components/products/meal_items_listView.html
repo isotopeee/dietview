@@ -5,12 +5,12 @@
             <div class="md-card-content">
                 <div class="uk-grid" data-uk-grid-margin="">
                     <div class="uk-width-medium-3-10">
-                        <label for="product_search_name">Product Name</label>
-                        <input type="text" class="md-input" id="product_search_name" ng-model="filter.name" md-input>
+                        <label for="item_search_name">Item Name</label>
+                        <input type="text" class="md-input" id="item_search_name" ng-model="filter.name" md-input>
                     </div>
                     <div class="uk-width-medium-2-10">
-                        <label for="product_search_price">Price</label>
-                        <input type="text" class="md-input" id="product_search_price" ng-model="filter.price" md-input>
+                        <label for="item_search_calories">Calories</label>
+                        <input type="text" class="md-input" id="item_search_calories" ng-model="filter.calories" md-input>
                     </div>
                     <div class="uk-width-medium-3-10">
                         <div class="uk-margin-small-top">
@@ -35,19 +35,16 @@
                             <table class="uk-table uk-table-nowrap uk-table-align-vertical">
                                 <thead>
                                     <tr>
-                                        <th>Image</th>
-                                        <th>Product Name</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
+                                        <th>Ingredient</th>
+                                        <th>Description</th>
+                                        <th>Calories</th>
                                         <th>Status</th>
-                                        <th>Active</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr dir-paginate="product in products_data | filter: filter | multiSelectFilter: multiSelectData | itemsPerPage: pageSize">
-                                        <td class="uk-width-1-10"><img class="img_thumb" ng-src="{{ product.image }}" alt=""></td>
-                                        <td class="uk-width-3-10 uk-text-large"><a ui-sref="restricted.ecommerce.product_details">{{ product.name }}</a></td>
+                                        <td class="uk-width-3-10 uk-text-large"><a href="#" data-uk-modal="{target:'#modal_details'}">{{ product.name }}</a></td>
                                         <td class="uk-width-1-10 uk-text-nowrap">{{ product.price | currency : "$" : 2}}</td>
                                         <td class="uk-width-1-10">{{ product.quantity }}</td>
                                         <td class="uk-width-2-10 uk-text-nowrap">
@@ -55,11 +52,9 @@
                                             <span class="uk-badge uk-badge-danger" ng-if="product.status == 'out_of_stock'">Out of stock</span>
                                             <span class="uk-badge uk-badge-muted" ng-if="product.status == 'ships_3_5_days'">Ships in 3-5 days</span>
                                         </td>
-                                        <td>
-                                            <i class="material-icons md-color-light-blue-600 md-24" ng-if="product.active">&#xE86C;</i>
-                                        </td>
                                         <td class="uk-text-nowrap">
-                                            <a ui-sref="restricted.ecommerce.product_details"><i class="md-icon material-icons md-24">&#xE8F4;</i></a>
+                                            <a href="#" data-uk-modal="{target:'#modal_details'}"><i class="md-icon material-icons md-24">&#xE8F4;</i></a>
+                                            <a href="#" data-uk-modal="{target:'#modal_edit'}"><i class="md-icon material-icons md-24">&#xE3C9;</i></a>
                                             <a href="#"><i class="md-icon material-icons md-24">&#xE872;</i></a>
                                         </td>
                                     </tr>
@@ -71,12 +66,178 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    <!-- EDIT -->
+    <div id="modal_edit" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <button type="button" class="uk-modal-close uk-close"></button>
+            <div class="md-card-toolbar">
+                <h3 class="md-card-toolbar-heading-text">
+                    Edit Ingredient
+                </h3>
+            </div>
+            <form class="uk-form-stacked" id="edit_form">
+              <div class="md-card-content large-padding">
+                  <div class="uk-grid uk-grid-divider uk-grid-medium">
+                      <div class="uk-width-large-1-2">
+                          <div class="uk-form-row">
+                              <label for="ingredient_edit_name_control">Ingredient Name</label>
+                              <input type="text" class="md-input" name="ingredient_edit_name_control" id="ingredient_edit_name_control" ng-model="ingredient.name" md-input />
+                          </div>
+                          <div class="uk-form-row">
+                              <label for="ingredient_edit_calories_control">Calories</label>
+                              <input type="number" class="md-input" name="product_edit_calories_control" id="product_edit_calories_control" ng-model="ingredient.calories" md-input />
+                          </div>
+                          <div class="uk-form-row">
+                              <label class="uk-form-label">Type</label>
+                              <input config="{ create:false, maxItems: 1 }" options="options.type" ng-model="ingredient.type" name="product_edit_memory_control" selectize />
+                          </div>
+                          <div class="uk-form-row">
+                              <label class="uk-form-label">Status</label>
+                              <input config="{ create:false, maxItems: 1 }" options="options.status" ng-model="ingredient.status" name="product_edit_color_control" selectize />
+                          </div>
+                      </div>
+                      <div class="uk-width-large-1-2">
+                        <div class="uk-form-row">
+                            <label for="ingredient_edit_remarks_control">Remarks</label>
+                            <textarea class="md-input" name="ingredient_edit_remarks_control" id="ingredient_edit_remarks_control" cols="30" rows="2" ng-model="ingredient.remarks" md-input textarea-autosize></textarea>
+                        </div>
+                          <div class="uk-form-row">
+                              <label for="product_edit_description_control">Description</label>
+                              <textarea class="md-input" name="product_edit_description_control" id="product_edit_description_control" cols="30" rows="2" ng-model="ingredient.description" md-input textarea-autosize></textarea>
+                          </div>
+                          <div class="uk-form-row">
+                            <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary md-btn-wave">Save changes</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </form>
+        </div>
     </div>
 </div>
 <div class="md-fab-wrapper md-fab-speed-dial">
     <a class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-tooltip="{pos:'right'}" title="Menu" md-fab-speed-dial><i class="material-icons">&#xE5D2;</i></a>
     <div class="md-fab-wrapper-small">
-        <a class="md-fab md-fab-small md-fab-success" href="javascript:void(0)" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Add New Item"><i class="material-icons">&#xE145;</i></a>
+        <a class="md-fab md-fab-small md-fab-success" href="javascript:void(0)"
+        data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}"
+        title="Add New Ingredient"
+        data-uk-modal="{target:'#modal_add'}"><i class="material-icons">&#xE145;</i></a>
+    </div>
+</div>
+<!-- MODALS -->
+
+<!-- ADD -->
+<div id="modal_add" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div class="md-card-toolbar">
+            <h3 class="md-card-toolbar-heading-text">
+                New Ingredient
+            </h3>
+        </div>
+        <form class="uk-form-stacked" id="add_form">
+          <div class="md-card-content large-padding">
+              <div class="uk-grid uk-grid-divider uk-grid-medium">
+                  <div class="uk-width-large-1-2">
+                      <div class="uk-form-row">
+                          <label for="ingredient_add_name_control">Ingredient Name</label>
+                          <input type="text" class="md-input" name="ingredient_add_name_control" id="ingredient_add_name_control" ng-model="ingredient.name" md-input />
+                      </div>
+                      <div class="uk-form-row">
+                          <label for="ingredient_add_calories_control">Calories</label>
+                          <input type="number" class="md-input" name="product_add_calories_control" id="product_add_calories_control" ng-model="ingredient.calories" md-input />
+                      </div>
+                      <div class="uk-form-row">
+                          <label class="uk-form-label">Type</label>
+                          <input config="{ create:false, maxItems: 1 }" options="options.type" ng-model="ingredient.type" name="ingredient_add_type_control" selectize />
+                      </div>
+                      <div class="uk-form-row">
+                          <label class="uk-form-label">Status</label>
+                          <input config="{ create:false, maxItems: 1 }" options="options.status" ng-model="ingredient.status" name="ingredient_add_status_control" selectize />
+                      </div>
+                  </div>
+                  <div class="uk-width-large-1-2">
+                    <div class="uk-form-row">
+                        <label for="ingredient_add_remarks_control">Remarks</label>
+                        <textarea class="md-input" name="ingredient_add_remarks_control" id="ingredient_add_remarks_control" cols="30" rows="2" ng-model="ingredient.remarks" md-input textarea-autosize></textarea>
+                    </div>
+                      <div class="uk-form-row">
+                          <label for="product_add_description_control">Description</label>
+                          <textarea class="md-input" name="product_add_description_control" id="product_add_description_control" cols="30" rows="2" ng-model="ingredient.description" md-input textarea-autosize></textarea>
+                      </div>
+                  </div>
+                  <div class="uk-width-large-1-1">
+                    <a class="md-btn md-btn-flat md-btn-flat-primary md-btn-wave" href="javascript:void(0)">Add Ingredient</a>
+                  </div>
+              </div>
+          </div>
+        </form>
+    </div>
+</div>
+
+<!-- DETAILS -->
+<div id="modal_details" class="uk-modal">
+    <div class="uk-modal-dialog md-card">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div class="md-card-toolbar">
+            <h3 class="md-card-toolbar-heading-text">
+                Details
+            </h3>
+        </div>
+        <div class="md-card-content large-padding">
+            <div class="uk-grid uk-grid-divider uk-grid-medium">
+                <div class="uk-width-large-1-2">
+                    <div class="uk-grid uk-grid-small">
+                        <div class="uk-width-large-1-3">
+                            <span class="uk-text-muted uk-text-small">Ingredient Name</span>
+                        </div>
+                        <div class="uk-width-large-2-3">
+                            <span class="uk-text-large uk-text-middle">Name of Product</span>
+                        </div>
+                    </div>
+                    <hr class="uk-grid-divider">
+                    <div class="uk-grid uk-grid-small">
+                        <div class="uk-width-large-1-3">
+                            <span class="uk-text-muted uk-text-small">Calories</span>
+                        </div>
+                        <div class="uk-width-large-2-3">
+                            <span class="uk-text-large uk-text-middle">120</span>
+                        </div>
+                    </div>
+                    <hr class="uk-grid-divider">
+                    <div class="uk-grid uk-grid-small">
+                        <div class="uk-width-large-1-3">
+                            <span class="uk-text-muted uk-text-small">Type</span>
+                        </div>
+                        <div class="uk-width-large-2-3">
+                            Main Ingedient
+                        </div>
+                    </div>
+                    <hr class="uk-grid-divider">
+                    <div class="uk-grid uk-grid-small">
+                        <div class="uk-width-large-1-3">
+                            <span class="uk-text-muted uk-text-small">Status</span>
+                        </div>
+                        <div class="uk-width-large-2-3">
+                            Available
+                        </div>
+                    </div>
+                    <hr class="uk-grid-divider uk-hidden-large">
+                </div>
+                <div class="uk-width-large-1-2">
+                    <p>
+                        <span class="uk-text-muted uk-text-small uk-display-block uk-margin-small-bottom">Remarks</span>
+                        Remarks Here. Remarks Here. Remarks Here. Remarks Here. Remarks Here. Remarks Here. Remarks Here.
+                        <!--<span class="uk-badge uk-margin-small-right" ng-class="{'uk-badge-success': $index != 1, 'uk-badge-primary': $index == 1}" ng-repeat="tag in product.tags"></span>-->
+                    </p>
+                    <hr class="uk-grid-divider">
+                    <p>
+                        <span class="uk-text-muted uk-text-small uk-display-block uk-margin-small-bottom">Description</span>
+                        This is a very long description to test if the text will wrap.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
