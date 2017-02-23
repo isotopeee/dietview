@@ -7,7 +7,7 @@ altairApp
             // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
             $urlRouterProvider
                 .when('/login', '/')
-                .otherwise('/404');
+                .otherwise('/');
 
             $stateProvider
             // -- ERROR PAGES --
@@ -134,11 +134,11 @@ altairApp
                     templateUrl: 'app/components/products/meal_items_listView.html',
                     controller: 'meal_items_listCtrl',
                     resolve: {
-                        products_data: function($http){
-                            return $http({method: 'GET', url: 'data/ecommerce_products.json'})
-                                .then(function (data) {
-                                    return data.data;
-                                });
+                        ingredients_data: function(MealItem){
+                            return MealItem.find({}).$promise
+                            .then(function (data) {
+                              return data;
+                            })
                         },
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
                             return $ocLazyLoad.load([
@@ -149,6 +149,29 @@ altairApp
                     },
                     data: {
                         pageTitle: 'Meal Items'
+                    }
+                })
+                // -- MEALS --
+                .state("restricted.products.meals", {
+                    url: "/meals",
+                    templateUrl: 'app/components/products/meals_listView.html',
+                    controller: 'meals_listCtrl',
+                    resolve: {
+                        products_data: function($http){
+                            return $http({method: 'GET', url: 'data/ecommerce_products.json'})
+                                .then(function (data) {
+                                    return data.data;
+                                });
+                        },
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'lazy_pagination',
+                                'app/components/products/meals_listController.js'
+                            ], { serie: true } );
+                        }]
+                    },
+                    data: {
+                        pageTitle: 'Meals'
                     }
                 })
                 // -- MEAL PLANS --

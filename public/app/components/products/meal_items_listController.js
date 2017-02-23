@@ -2,30 +2,25 @@ angular
     .module('altairApp')
     .controller('meal_items_listCtrl', [
         '$scope',
-        'products_data',
-        function ($scope,products_data) {
+        '$state',
+        'modals',
+        'ingredients_data',
+        'MealItem',
+        function ($scope,$state,modals,ingredients_data,MealItem) {
 
-            // products data
-            $scope.products_data = products_data;
+            // ingredients data
+            $scope.ingredients_data = ingredients_data;
 
             $scope.pageSize = 10;
 
             $scope.filter_status_options = [
                 {
-                    value: '',
-                    title: 'All'
+                    value: 'available',
+                    title: 'available'
                 },
                 {
-                    value: 'in_stock',
-                    title: 'In stock'
-                },
-                {
-                    value: 'out_of_stock',
-                    title: 'Out of stock'
-                },
-                {
-                    value: 'ships_3_5_days',
-                    title: 'Ships in 3-5 days'
+                    value: 'not available',
+                    title: 'not available'
                 }
             ];
 
@@ -37,20 +32,102 @@ angular
             };
 
             $scope.filterData = {
-                status: ["in_stock","out_of_stock","ships_3_5_days"]
+                status: ["available","not available"]
             };
 
             $scope.filter_pageSize = ['5', '10', '15'];
 
             $scope.options = {
               type: [
-                'Dairy'
+                'dairy',
+                'meats',
+                'vegetables',
+                'fruits',
+                'spices',
+                'seafood',
+                'fish',
+                'soup',
+                'grains'
               ],
               status: [
-                'Active'
+                'available',
+                'not available'
               ]
             };
 
+            var change_selected_item = function (index) {
+                $scope.ingredient = $scope.ingredients_data[index];
+            };
+
+            var clear_form = function () {
+                $scope.ingredient = {};
+            }
+
+            var get_ingredients = function () {
+                MealItem.find({}).$promise.then(function (data) {
+                    $scope.ingredients_data = data;
+                });
+            };
+
+            var update = function () {
+                $scope.ingredient.$save().then(function (data) {
+                    modals.alert('Changes made has been saved');
+                });
+            };
+
+            var create = function () {
+                MealItem.create({
+                    name: $scope.ingredient.name,
+                    calories: $scope.ingredient.calories,
+                    type: $scope.ingredient.type,
+                    status: $scope.ingredient.status,
+                    remarks: $scope.ingredient.remarks,
+                    description: $scope.ingredient.description
+                }).$promise.then(function (data) {
+                  modals.alert('New ingredient added');
+                  $scope.ingredients_data.push(data);
+                  clear_form();
+                });
+            };
+
+            var remove = function (index) {
+                modals.confirm('Are you sure you want to delete the ingredient', function () {
+                    MealItem.deleteById({
+                        id: $scope.ingredient.id
+                    }).$promise.then(function (data) {
+                        modals.alert('Ingredient has been deleted');
+                        $scope.ingredients_data.splice(index, 1);
+                    });
+                });
+            };
+
+            $scope.changeSelectedItem = function ($event,$index) {
+                change_selected_item($index);
+            };
+
+            $scope.clearForm = function ($event) {
+                clear_form();
+            };
+
+            $scope.refresh = function ($event) {
+                modals.confirm('Any unsaved changes will be discarded. Do you want to continue?', function () {
+                    get_ingredients();
+                    modals.alert('Ingredients list has been updated');
+                });
+            };
+
+            $scope.update = function ($event) {
+                update();
+            };
+
+            $scope.create = function ($event) {
+                create();
+            };
+
+            $scope.remove = function ($event, $index) {
+                $scope.changeSelectedItem($event,$index);
+                remove($index);
+            };
         }
     ])
 ;
