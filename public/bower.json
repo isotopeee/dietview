@@ -100,7 +100,8 @@
     "waypoints": "~4.0.1",
     "weather-icons": "~2.0.10",
     "Waves": "waves#~0.7.4",
-    "angular-recaptcha": "^4.0.1"
+    "angular-recaptcha": "^4.0.1",
+    "ng-file-upload": "^12.2.13"
   },
   "resolutions": {
     "jquery": "~2.2.x",

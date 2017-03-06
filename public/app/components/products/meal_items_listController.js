@@ -61,7 +61,7 @@ angular
 
             var clear_form = function () {
                 $scope.ingredient = {};
-            }
+            };
 
             var get_ingredients = function () {
                 MealItem.find({}).$promise.then(function (data) {

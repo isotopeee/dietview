@@ -1,8 +1,9 @@
 /*
-*  Altair Admin AngularJS
-*  directives
-*/
-;'use strict';
+ *  Altair Admin AngularJS
+ *  directives
+ */
+;
+'use strict';
 
 altairApp
     // page title
@@ -16,8 +17,8 @@ altairApp
                     var listener = function(event, toState) {
                         var default_title = 'Altair Admin';
                         $timeout(function() {
-                            $rootScope.page_title = (toState.data && toState.data.pageTitle)
-                                ? default_title + ' - ' + toState.data.pageTitle : default_title;
+                            $rootScope.page_title = (toState.data && toState.data.pageTitle) ?
+                                default_title + ' - ' + toState.data.pageTitle : default_title;
                         });
                     };
                     $rootScope.$on('$stateChangeSuccess', listener);
@@ -29,15 +30,15 @@ altairApp
     .directive('addImageProp', [
         '$timeout',
         'utils',
-        function ($timeout,utils) {
+        function($timeout, utils) {
             return {
                 restrict: 'A',
-                link: function (scope, elem, attrs) {
-                    elem.on('load', function () {
+                link: function(scope, elem, attrs) {
+                    elem.on('load', function() {
                         $timeout(function() {
-                            var w = !utils.isHighDensity() ? $(elem).actual('width') : $(elem).actual('width')/2,
-                                h = !utils.isHighDensity() ? $(elem).actual('height') : $(elem).actual('height')/2;
-                            $(elem).attr('width',w).attr('height',h);
+                            var w = !utils.isHighDensity() ? $(elem).actual('width') : $(elem).actual('width') / 2,
+                                h = !utils.isHighDensity() ? $(elem).actual('height') : $(elem).actual('height') / 2;
+                            $(elem).attr('width', w).attr('height', h);
                         })
                     });
                 }
@@ -48,19 +49,19 @@ altairApp
     .directive('printPage', [
         '$rootScope',
         '$timeout',
-        function ($rootScope,$timeout) {
+        function($rootScope, $timeout) {
             return {
                 restrict: 'A',
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
                     var message = attrs['printMessage'];
                     $(elem).on('click', function(e) {
                         e.preventDefault();
-                        UIkit.modal.confirm(message ? message : 'Do you want to print this page?', function () {
+                        UIkit.modal.confirm(message ? message : 'Do you want to print this page?', function() {
                             // hide sidebar
                             $rootScope.primarySidebarActive = false;
                             $rootScope.primarySidebarOpen = false;
                             // wait for dialog to fully hide
-                            $timeout(function () {
+                            $timeout(function() {
                                 window.print();
                             }, 300)
                         }, {
@@ -75,10 +76,10 @@ altairApp
     ])
     // full screen
     .directive('fullScreenToggle', [
-        function () {
+        function() {
             return {
                 restrict: 'A',
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
                     $(elem).on('click', function(e) {
                         e.preventDefault();
                         screenfull.toggle();
@@ -92,10 +93,10 @@ altairApp
     .directive('singleCard', [
         '$window',
         '$timeout',
-        function ($window,$timeout) {
+        function($window, $timeout) {
             return {
                 restrict: 'A',
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
 
                     var $md_card_single = $(elem),
                         w = angular.element($window);
@@ -107,13 +108,13 @@ altairApp
 
                     $timeout(function() {
                         md_card_content_height();
-                    },100);
+                    }, 100);
 
                     w.on('resize', function(e) {
                         // Reset timeout
                         $timeout.cancel(scope.resizingTimer);
                         // Add a timeout to not call the resizing function every pixel
-                        scope.resizingTimer = $timeout( function() {
+                        scope.resizingTimer = $timeout(function() {
                             md_card_content_height();
                             return scope.$apply();
                         }, 280);
@@ -127,10 +128,10 @@ altairApp
     .directive('listOutside', [
         '$window',
         '$timeout',
-        function ($window,$timeout) {
+        function($window, $timeout) {
             return {
                 restrict: 'A',
-                link: function (scope, elem, attr) {
+                link: function(scope, elem, attr) {
 
                     var $md_list_outside_wrapper = $(elem),
                         w = angular.element($window);
@@ -146,7 +147,7 @@ altairApp
                         // Reset timeout
                         $timeout.cancel(scope.resizingTimer);
                         // Add a timeout to not call the resizing function every pixel
-                        scope.resizingTimer = $timeout( function() {
+                        scope.resizingTimer = $timeout(function() {
                             md_list_outside_height();
                             return scope.$apply();
                         }, 280);
@@ -157,10 +158,10 @@ altairApp
         }
     ])
     // callback on last element in ng-repeat
-    .directive('onLastRepeat', function ($timeout) {
-        return function (scope, element, attrs) {
+    .directive('onLastRepeat', function($timeout) {
+        return function(scope, element, attrs) {
             if (scope.$last) {
-                $timeout(function () {
+                $timeout(function() {
                     scope.$emit('onLastRepeat', element, attrs);
                 })
             }
@@ -170,18 +171,18 @@ altairApp
     .directive('tableCheckAll', [
         '$window',
         '$timeout',
-        function ($window,$timeout) {
+        function($window, $timeout) {
             return {
                 restrict: 'A',
-                link: function (scope, elem, attr) {
+                link: function(scope, elem, attr) {
 
                     var $checkRow = $(elem).closest('table').find('.check_row');
 
                     $(elem)
-                        .on('ifChecked',function() {
+                        .on('ifChecked', function() {
                             $checkRow.iCheck('check');
                         })
-                        .on('ifUnchecked',function() {
+                        .on('ifUnchecked', function() {
                             $checkRow.iCheck('uncheck');
                         });
 
@@ -193,18 +194,18 @@ altairApp
     .directive('tableCheckRow', [
         '$window',
         '$timeout',
-        function ($window,$timeout) {
+        function($window, $timeout) {
             return {
                 restrict: 'A',
                 require: 'ngModel',
-                link: function (scope, elem, attr, ngModel) {
+                link: function(scope, elem, attr, ngModel) {
 
                     var $this = $(elem);
 
-                    scope.$watch(function () {
+                    scope.$watch(function() {
                         return ngModel.$modelValue;
                     }, function(newValue) {
-                        if(newValue) {
+                        if (newValue) {
                             $this.closest('tr').addClass('row_checked');
                         } else {
                             $this.closest('tr').removeClass('row_checked');
@@ -219,14 +220,14 @@ altairApp
     .directive('formDynamicFields', [
         '$window',
         '$timeout',
-        function ($window,$timeout) {
+        function($window, $timeout) {
             return {
                 restrict: 'A',
-                link: function (scope, elem, attr, ngModel) {
+                link: function(scope, elem, attr, ngModel) {
 
                     var $this = $(elem);
                     // clone section
-                    $this.on('click','.btnSectionClone', function(e) {
+                    $this.on('click', '.btnSectionClone', function(e) {
                         e.preventDefault();
                         var $this = $(this),
                             section_to_clone = $this.attr('data-section-clone'),
@@ -234,7 +235,7 @@ altairApp
                             cloned_section = $(section_to_clone).clone();
 
                         cloned_section
-                            .attr('data-section-added',section_number)
+                            .attr('data-section-added', section_number)
                             .removeAttr('id')
                             // inputs
                             .find('.md-input').each(function(index) {
@@ -243,7 +244,7 @@ altairApp
 
                                 $thisInput
                                     .val('')
-                                    .attr('name',name ? name + '[s_'+section_number +':i_'+ index +']' : '[s_'+section_number +':i_'+ index +']')
+                                    .attr('name', name ? name + '[s_' + section_number + ':i_' + index + ']' : '[s_' + section_number + ':i_' + index + ']')
 
                                 //altair_md.update_input($thisInput);
                             })
@@ -256,9 +257,9 @@ altairApp
                                 var $thisInput = $(this),
                                     name = $thisInput.attr('name'),
                                     id = $thisInput.attr('id'),
-                                    $inputLabel = cloned_section.find('label[for="'+ id +'"]'),
-                                    newName = name ? name + '-s'+section_number +':cb'+ index +'' : 's'+section_number +':cb'+ index,
-                                    newId = id ? id + '-s'+section_number +':cb'+ index +'' : 's'+section_number +':cb'+ index;
+                                    $inputLabel = cloned_section.find('label[for="' + id + '"]'),
+                                    newName = name ? name + '-s' + section_number + ':cb' + index + '' : 's' + section_number + ':cb' + index,
+                                    newId = id ? id + '-s' + section_number + ':cb' + index + '' : 's' + section_number + ':cb' + index;
 
                                 $thisInput
                                     .attr('name', newName)
@@ -277,9 +278,9 @@ altairApp
                                     var $thisInput = $(this),
                                         name = $thisInput.attr('name'),
                                         id = $thisInput.attr('id'),
-                                        $inputLabel = cloned_section.find('label[for="'+ id +'"]'),
-                                        newName = name ? name + '-s'+section_number +':cb'+ thisIndex +'' : '[s'+section_number +':cb'+ thisIndex,
-                                        newId = id ? id + '-s'+section_number +':cb'+ index +'' : 's'+section_number +':cb'+ index;
+                                        $inputLabel = cloned_section.find('label[for="' + id + '"]'),
+                                        newName = name ? name + '-s' + section_number + ':cb' + thisIndex + '' : '[s' + section_number + ':cb' + thisIndex,
+                                        newId = id ? id + '-s' + section_number + ':cb' + index + '' : 's' + section_number + ':cb' + index;
 
                                     $thisInput
                                         .attr('name', newName)
@@ -297,9 +298,9 @@ altairApp
                                 var $thisInput = $(this),
                                     name = $thisInput.attr('name'),
                                     id = $thisInput.attr('id'),
-                                    $inputLabel = cloned_section.find('label[for="'+ id +'"]'),
-                                    newName = name ? name + '-s'+section_number +':sw'+ index +'' : 's'+section_number +':sw'+ index,
-                                    newId = id ? id + '-s'+section_number +':sw'+ index +'' : 's'+section_number +':sw'+ index;
+                                    $inputLabel = cloned_section.find('label[for="' + id + '"]'),
+                                    newName = name ? name + '-s' + section_number + ':sw' + index + '' : 's' + section_number + ':sw' + index,
+                                    newId = id ? id + '-s' + section_number + ':sw' + index + '' : 's' + section_number + ':sw' + index;
 
                                 $thisInput
                                     .attr('name', newName)
@@ -312,38 +313,38 @@ altairApp
                             .end()
                             // selectize
                             .find('[data-md-selectize]').each(function(index) {
-                            var $thisSelect = $(this),
-                                name = $thisSelect.attr('name'),
-                                id = $thisSelect.attr('id'),
-                                orgSelect = $('#'+id),
-                                newName = name ? name + '-s'+section_number +':sel'+ index +'' : 's'+section_number +':sel'+ index,
-                                newId = id ? id + '-s'+section_number +':sel'+ index +'' : 's'+section_number +':sel'+ index;
+                                var $thisSelect = $(this),
+                                    name = $thisSelect.attr('name'),
+                                    id = $thisSelect.attr('id'),
+                                    orgSelect = $('#' + id),
+                                    newName = name ? name + '-s' + section_number + ':sel' + index + '' : 's' + section_number + ':sel' + index,
+                                    newId = id ? id + '-s' + section_number + ':sel' + index + '' : 's' + section_number + ':sel' + index;
 
-                            // destroy selectize
-                            var selectize = orgSelect[0].selectize;
-                            if(selectize) {
-                                selectize.destroy();
-                                orgSelect.val('').next('.selectize_fix').remove();
-                                var clonedOptions = orgSelect.html();
-                                altair_forms.select_elements(orgSelect.parent());
+                                // destroy selectize
+                                var selectize = orgSelect[0].selectize;
+                                if (selectize) {
+                                    selectize.destroy();
+                                    orgSelect.val('').next('.selectize_fix').remove();
+                                    var clonedOptions = orgSelect.html();
+                                    altair_forms.select_elements(orgSelect.parent());
 
-                                $thisSelect
-                                    .html(clonedOptions)
-                                    .attr('name', newName)
-                                    .attr('id', newId)
-                                    .removeClass('selectized')
-                                    .next('.selectize-control').remove()
-                                    .end()
-                                    .next('.selectize_fix').remove();
-                            }
+                                    $thisSelect
+                                        .html(clonedOptions)
+                                        .attr('name', newName)
+                                        .attr('id', newId)
+                                        .removeClass('selectized')
+                                        .next('.selectize-control').remove()
+                                        .end()
+                                        .next('.selectize_fix').remove();
+                                }
 
-                        });
+                            });
 
                         $(section_to_clone).before(cloned_section);
 
                         var $newSection = $(section_to_clone).prev();
 
-                        if($newSection.hasClass('form_section_separator')) {
+                        if ($newSection.hasClass('form_section_separator')) {
                             $newSection.after('<hr class="form_hr">')
                         }
 
@@ -375,21 +376,21 @@ altairApp
     .directive('contentSidebar', [
         '$rootScope',
         '$document',
-        function ($rootScope,$document) {
+        function($rootScope, $document) {
             return {
                 restrict: 'A',
-                link: function(scope,el,attr) {
+                link: function(scope, el, attr) {
 
-                    if(!$rootScope.header_double_height) {
+                    if (!$rootScope.header_double_height) {
                         $rootScope.$watch('hide_content_sidebar', function() {
-                            if($rootScope.hide_content_sidebar) {
+                            if ($rootScope.hide_content_sidebar) {
                                 $('#page_content').css('max-height', $('html').height() - 40);
                                 $('html').css({
                                     'paddingRight': scrollbarWidth(),
                                     'overflow': 'hidden'
                                 });
                             } else {
-                                $('#page_content').css('max-height','');
+                                $('#page_content').css('max-height', '');
                                 $('html').css({
                                     'paddingRight': '',
                                     'overflow': ''
@@ -408,10 +409,10 @@ altairApp
         '$window',
         '$timeout',
         'variables',
-        function ($rootScope, $window, $timeout,variables) {
+        function($rootScope, $window, $timeout, variables) {
             return {
                 restrict: 'A',
-                link: function(scope,el,attr) {
+                link: function(scope, el, attr) {
 
                     var hidePrimarySidebar = function() {
                         $rootScope.primarySidebarActive = false;
@@ -420,7 +421,7 @@ altairApp
                         $rootScope.primarySidebarHiding = true;
                         $timeout(function() {
                             $rootScope.primarySidebarHiding = false;
-                        },280);
+                        }, 280);
                     };
 
                     var hideSecondarySidebar = function() {
@@ -453,49 +454,49 @@ altairApp
                     };
 
                     // hide components on $document click
-                    scope.onClick = function ($event) {
+                    scope.onClick = function($event) {
                         // primary sidebar
-                        if( $rootScope.primarySidebarActive && !$($event.target).closest('#sidebar_main').length && !$($event.target).closest('#sSwitch_primary').length && !$rootScope.largeScreen) {
+                        if ($rootScope.primarySidebarActive && !$($event.target).closest('#sidebar_main').length && !$($event.target).closest('#sSwitch_primary').length && !$rootScope.largeScreen) {
                             hidePrimarySidebar();
                         }
                         // secondary sidebar
-                        if( ($rootScope.secondarySidebarActive && !$($event.target).closest('#sidebar_secondary').length && !$($event.target).closest('#sSwitch_secondary').length) && !$rootScope.secondarySidebarPersistent) {
+                        if (($rootScope.secondarySidebarActive && !$($event.target).closest('#sidebar_secondary').length && !$($event.target).closest('#sSwitch_secondary').length) && !$rootScope.secondarySidebarPersistent) {
                             hideSecondarySidebar();
                         }
                         // main search form
-                        if( $rootScope.mainSearchActive && !$($event.target).closest('.header_main_search_form').length && !$($event.target).closest('#main_search_btn').length) {
+                        if ($rootScope.mainSearchActive && !$($event.target).closest('.header_main_search_form').length && !$($event.target).closest('#main_search_btn').length) {
                             hideMainSearch();
                         }
                         // style switcher
-                        if( $rootScope.styleSwitcherActive && !$($event.target).closest('#style_switcher').length) {
+                        if ($rootScope.styleSwitcherActive && !$($event.target).closest('#style_switcher').length) {
                             $rootScope.styleSwitcherActive = false;
                         }
                         // sticky notes form
-                        if( $rootScope.noteFormActive && !$($event.target).closest('#note_form').length) {
+                        if ($rootScope.noteFormActive && !$($event.target).closest('#note_form').length) {
                             $rootScope.noteFormActive = false;
                         }
                     };
 
                     // hide components on key press (esc)
-                    scope.onKeyUp = function ($event) {
+                    scope.onKeyUp = function($event) {
                         // primary sidebar
-                        if( $rootScope.primarySidebarActive && !$rootScope.largeScreen && $event.keyCode == 27) {
+                        if ($rootScope.primarySidebarActive && !$rootScope.largeScreen && $event.keyCode == 27) {
                             hidePrimarySidebar();
                         }
                         // secondary sidebar
-                        if( !$rootScope.secondarySidebarPersistent && $rootScope.secondarySidebarActive && $event.keyCode == 27) {
+                        if (!$rootScope.secondarySidebarPersistent && $rootScope.secondarySidebarActive && $event.keyCode == 27) {
                             hideSecondarySidebar();
                         }
                         // main search form
-                        if( $rootScope.mainSearchActive && $event.keyCode == 27) {
+                        if ($rootScope.mainSearchActive && $event.keyCode == 27) {
                             hideMainSearch();
                         }
                         // style switcher
-                        if( $rootScope.styleSwitcherActive && $event.keyCode == 27) {
+                        if ($rootScope.styleSwitcherActive && $event.keyCode == 27) {
                             $rootScope.styleSwitcherActive = false;
                         }
                         // sticky notes form
-                        if( $rootScope.noteFormActive && $event.keyCode == 27) {
+                        if ($rootScope.noteFormActive && $event.keyCode == 27) {
                             $rootScope.noteFormActive = false;
                         }
                     };
@@ -510,13 +511,13 @@ altairApp
         '$window',
         'variables',
         '$timeout',
-        function ($rootScope, $window, variables, $timeout) {
+        function($rootScope, $window, variables, $timeout) {
             return {
                 restrict: 'E',
                 template: '<a id="main_search_btn" class="user_action_icon" ng-click="showSearch()"><i class="material-icons md-24 md-light">&#xE8B6;</i></a>',
                 replace: true,
                 scope: true,
-                link: function(scope,el,attr) {
+                link: function(scope, el, attr) {
                     scope.showSearch = function() {
 
                         $('#header_main')
@@ -549,14 +550,14 @@ altairApp
         '$rootScope',
         '$window',
         'variables',
-        function ($rootScope, $window, variables) {
+        function($rootScope, $window, variables) {
             return {
                 restrict: 'E',
                 template: '<i class="md-icon header_main_search_close material-icons" ng-click="hideSearch()">&#xE5CD;</i>',
                 replace: true,
                 scope: true,
-                link: function(scope,el,attr) {
-                    scope.hideSearch = function () {
+                link: function(scope, el, attr) {
+                    scope.hideSearch = function() {
 
                         var $header_main = $('#header_main');
 
@@ -594,15 +595,15 @@ altairApp
         '$window',
         '$timeout',
         'variables',
-        function ($rootScope, $window, $timeout,variables) {
+        function($rootScope, $window, $timeout, variables) {
             return {
                 restrict: 'A',
                 scope: 'true',
-                link: function(scope,el,attr) {
+                link: function(scope, el, attr) {
 
                     var $sidebar_main = $('#sidebar_main');
 
-                    scope.submenuToggle = function ($event) {
+                    scope.submenuToggle = function($event) {
                         $event.preventDefault();
 
                         var $this = $($event.currentTarget),
@@ -613,10 +614,10 @@ altairApp
                                 duration: 400,
                                 easing: variables.easing_swiftOut,
                                 begin: function() {
-                                    if(slideToogle == 'slideUp') {
+                                    if (slideToogle == 'slideUp') {
                                         $(this).closest('.submenu_trigger').removeClass('act_section')
                                     } else {
-                                        if($rootScope.menuAccordionMode) {
+                                        if ($rootScope.menuAccordionMode) {
                                             $this.closest('li').siblings('.submenu_trigger').each(function() {
                                                 $(this).children('ul').velocity('slideUp', {
                                                     duration: 500,
@@ -631,8 +632,8 @@ altairApp
                                     }
                                 },
                                 complete: function() {
-                                    if(slideToogle !== 'slideUp') {
-                                        var scrollContainer = $sidebar_main.find(".scroll-content").length ? $sidebar_main.find(".scroll-content") :  $sidebar_main.find(".scrollbar-inner");
+                                    if (slideToogle !== 'slideUp') {
+                                        var scrollContainer = $sidebar_main.find(".scroll-content").length ? $sidebar_main.find(".scroll-content") : $sidebar_main.find(".scrollbar-inner");
                                         $this.closest('.act_section').velocity("scroll", {
                                             duration: 500,
                                             easing: variables.easing_swiftOut,
@@ -643,8 +644,8 @@ altairApp
                             });
                     };
 
-                    $rootScope.$watch('slimSidebarActive', function ( status ) {
-                        if(status) {
+                    $rootScope.$watch('slimSidebarActive', function(status) {
+                        if (status) {
                             var $body = $('body');
                             $sidebar_main
                                 .mouseenter(function() {
@@ -655,7 +656,7 @@ altairApp
                                     $body.addClass('sidebar_slim_inactive');
                                     $body.removeClass('sidebar_slim_active');
                                 })
-                       }
+                        }
                     });
 
                 }
@@ -667,40 +668,40 @@ altairApp
         '$rootScope',
         '$window',
         '$timeout',
-        function ($rootScope, $window, $timeout) {
+        function($rootScope, $window, $timeout) {
             return {
                 restrict: 'E',
                 replace: true,
                 scope: true,
                 template: '<a id="sSwitch_primary" href="#" class="sSwitch sSwitch_left" ng-click="togglePrimarySidebar($event)" ng-hide="miniSidebarActive || slimSidebarActive || topMenuActive"><span class="sSwitchIcon"></span></a>',
-                link: function (scope, el, attrs) {
-                    scope.togglePrimarySidebar = function ($event) {
+                link: function(scope, el, attrs) {
+                    scope.togglePrimarySidebar = function($event) {
 
                         $event.preventDefault();
 
-                        if($rootScope.primarySidebarActive) {
+                        if ($rootScope.primarySidebarActive) {
                             $rootScope.primarySidebarHiding = true;
-                            if($rootScope.largeScreen) {
+                            if ($rootScope.largeScreen) {
                                 $timeout(function() {
                                     $rootScope.primarySidebarHiding = false;
                                     $(window).resize();
-                                },290);
+                                }, 290);
                             }
                         } else {
-                            if($rootScope.largeScreen) {
+                            if ($rootScope.largeScreen) {
                                 $timeout(function() {
                                     $(window).resize();
-                                },290);
+                                }, 290);
                             }
                         }
 
                         $rootScope.primarySidebarActive = !$rootScope.primarySidebarActive;
 
-                        if( !$rootScope.largeScreen ) {
+                        if (!$rootScope.largeScreen) {
                             $rootScope.hide_content_sidebar = $rootScope.primarySidebarActive ? true : false;
                         }
 
-                        if($rootScope.primarySidebarOpen) {
+                        if ($rootScope.primarySidebarOpen) {
                             $rootScope.primarySidebarOpen = false;
                             $rootScope.primarySidebarActive = false;
                         }
@@ -715,18 +716,18 @@ altairApp
         '$rootScope',
         '$timeout',
         'variables',
-        function ($rootScope,$timeout,variables) {
+        function($rootScope, $timeout, variables) {
             return {
                 restrict: 'A',
-                link: function(scope,el,attrs) {
+                link: function(scope, el, attrs) {
                     $rootScope.sidebar_secondary = true;
-                    if(attrs.toggleHidden == 'large') {
+                    if (attrs.toggleHidden == 'large') {
                         $rootScope.secondarySidebarHiddenLarge = true;
                     }
 
                     // chat
                     var $sidebar_secondary = $(el);
-                    if($sidebar_secondary.find('.md-list.chat_users').length) {
+                    if ($sidebar_secondary.find('.md-list.chat_users').length) {
 
                         $('.md-list.chat_users').on('click', 'li', function() {
                             $('.md-list.chat_users').velocity("transition.slideRightBigOut", {
@@ -749,14 +750,14 @@ altairApp
 
                         $sidebar_secondary
                             .find('.chat_sidebar_close')
-                            .on('click',function() {
+                            .on('click', function() {
                                 $sidebar_secondary
                                     .find('.chat_box_wrapper')
                                     .removeClass('chat_box_active')
                                     .velocity("transition.slideRightBigOut", {
                                         duration: 280,
                                         easing: variables.easing_swiftOut,
-                                        complete: function () {
+                                        complete: function() {
                                             $sidebar_secondary.removeClass('chat_sidebar');
                                             $('.md-list.chat_users').velocity("transition.slideRightBigIn", {
                                                 duration: 280,
@@ -766,9 +767,9 @@ altairApp
                                     })
                             });
 
-                        if($sidebar_secondary.find('.uk-tab').length) {
-                            $sidebar_secondary.find('.uk-tab').on('change.uk.tab',function(event, active_item, previous_item) {
-                                if($(active_item).hasClass('chat_sidebar_tab') && $sidebar_secondary.find('.chat_box_wrapper').hasClass('chat_box_active')) {
+                        if ($sidebar_secondary.find('.uk-tab').length) {
+                            $sidebar_secondary.find('.uk-tab').on('change.uk.tab', function(event, active_item, previous_item) {
+                                if ($(active_item).hasClass('chat_sidebar_tab') && $sidebar_secondary.find('.chat_box_wrapper').hasClass('chat_box_active')) {
                                     $sidebar_secondary.addClass('chat_sidebar')
                                 } else {
                                     $sidebar_secondary.removeClass('chat_sidebar')
@@ -786,13 +787,13 @@ altairApp
         '$rootScope',
         '$window',
         '$timeout',
-        function ($rootScope, $window, $timeout) {
+        function($rootScope, $window, $timeout) {
             return {
                 restrict: 'E',
                 replace: true,
                 template: '<a href="#" id="sSwitch_secondary" class="sSwitch sSwitch_right" ng-show="sidebar_secondary" ng-click="toggleSecondarySidebar($event)"><span class="sSwitchIcon"></span></a>',
-                link: function (scope, el, attrs) {
-                    scope.toggleSecondarySidebar = function ($event) {
+                link: function(scope, el, attrs) {
+                    scope.toggleSecondarySidebar = function($event) {
                         $event.preventDefault();
                         $rootScope.secondarySidebarActive = !$rootScope.secondarySidebarActive;
                     };
@@ -804,14 +805,14 @@ altairApp
     .directive('cardFullscreenActivate', [
         '$rootScope',
         'variables',
-        function ($rootScope, variables) {
+        function($rootScope, variables) {
             return {
                 restrict: 'E',
                 replace: true,
                 scope: true,
                 template: '<i class="md-icon material-icons md-card-fullscreen-activate" ng-click="cardFullscreenActivate($event)">&#xE5D0;</i>',
-                link: function (scope, el, attrs) {
-                    scope.cardFullscreenActivate = function ($event) {
+                link: function(scope, el, attrs) {
+                    scope.cardFullscreenActivate = function($event) {
                         $event.preventDefault();
 
                         var $thisCard = $(el).closest('.md-card'),
@@ -822,7 +823,7 @@ altairApp
                             mdCard_offset = $thisCard.offset();
 
                         // create placeholder for card
-                        $thisCard.after('<div class="md-card-placeholder" style="width:'+ mdCard_w+'px;height:'+ mdCard_h+'px;"/>');
+                        $thisCard.after('<div class="md-card-placeholder" style="width:' + mdCard_w + 'px;height:' + mdCard_h + 'px;"/>');
                         // add overflow hidden to #page_content (fix for ios)
                         //$body.addClass('md-card-fullscreen-active');
                         // add width/height to card (preserve original size)
@@ -838,7 +839,7 @@ altairApp
                             .velocity({
                                 left: 0,
                                 top: 0
-                            },{
+                            }, {
                                 duration: 400,
                                 easing: variables.easing_swiftOut,
                                 begin: function(elements) {
@@ -853,7 +854,7 @@ altairApp
                             .velocity({
                                 height: '100%',
                                 width: '100%'
-                            },{
+                            }, {
                                 duration: 400,
                                 easing: variables.easing_swiftOut,
                                 complete: function(elements) {
@@ -868,7 +869,7 @@ altairApp
                                             $(window).resize();
                                         }
                                     });
-                                    if(mdCardToolbarFixed) {
+                                    if (mdCardToolbarFixed) {
                                         $thisCard.addClass('mdToolbar_fixed')
                                     }
                                 }
@@ -883,13 +884,13 @@ altairApp
         '$rootScope',
         '$window',
         'variables',
-        function ($rootScope, $window, variables) {
+        function($rootScope, $window, variables) {
             return {
                 restrict: 'E',
                 replace: true,
                 template: '<span class="md-icon md-card-fullscreen-deactivate material-icons uk-float-left" ng-show="card_fullscreen" ng-click="cardFullscreenDeactivate($event)">&#xE5C4;</span>',
-                link: function (scope, el, attrs) {
-                    scope.cardFullscreenDeactivate = function ($event) {
+                link: function(scope, el, attrs) {
+                    scope.cardFullscreenDeactivate = function($event) {
                         $event.preventDefault();
 
                         // get card placeholder width/height and offset
@@ -907,14 +908,17 @@ altairApp
                             .velocity({
                                 height: mdPlaceholderCard_h,
                                 width: mdPlaceholderCard_w
-                            },{
+                            }, {
                                 duration: 400,
                                 easing: variables.easing_swiftOut,
                                 begin: function(elements) {
                                     // hide fullscreen content
-                                    $thisCard.find('.md-card-fullscreen-content').velocity("transition.slideDownOut",{ duration: 280, easing: variables.easing_swiftOut });
+                                    $thisCard.find('.md-card-fullscreen-content').velocity("transition.slideDownOut", {
+                                        duration: 280,
+                                        easing: variables.easing_swiftOut
+                                    });
                                     $rootScope.card_fullscreen = false;
-                                    if(mdCardToolbarFixed) {
+                                    if (mdCardToolbarFixed) {
                                         $thisCard.removeClass('mdToolbar_fixed')
                                     }
                                 },
@@ -926,7 +930,7 @@ altairApp
                             .velocity({
                                 left: mdPlaceholderCard_offset_left,
                                 top: mdPlaceholderCard_offset_top
-                            },{
+                            }, {
                                 duration: 400,
                                 easing: variables.easing_swiftOut,
                                 complete: function(elements) {
@@ -952,37 +956,37 @@ altairApp
     .directive('cardFullscreenWhole', [
         '$rootScope',
         'variables',
-        function ($rootScope, variables) {
+        function($rootScope, variables) {
             return {
                 restrict: 'A',
                 replace: true,
                 scope: true,
-                link: function (scope, el, attrs) {
+                link: function(scope, el, attrs) {
 
-                    $(el).on('click',function(e) {
+                    $(el).on('click', function(e) {
                         e.preventDefault();
                         var $this = $(this);
-                        if(!$this.hasClass('md-card-fullscreen')) {
+                        if (!$this.hasClass('md-card-fullscreen')) {
                             scope.cardFSActivate();
                         }
                     });
 
-                    $(el).on('click','.cardFSDeactivate',function(e) {
+                    $(el).on('click', '.cardFSDeactivate', function(e) {
                         e.preventDefault();
                         var $this = $(this);
-                        if(!$this.hasClass('md-card-fullscreen')) {
+                        if (!$this.hasClass('md-card-fullscreen')) {
                             scope.cardFSDeactivate();
                         }
                     });
 
-                    scope.cardFSActivate = function () {
+                    scope.cardFSActivate = function() {
                         var $thisCard = $(el),
                             mdCardToolbarFixed = $thisCard.hasClass('toolbar-fixed'),
                             mdCard_h = $thisCard.height(),
                             mdCard_w = $thisCard.width();
 
                         // create placeholder for card
-                        $thisCard.after('<div class="md-card-placeholder" style="width:'+ mdCard_w+'px;height:'+ mdCard_h+'px;"/>');
+                        $thisCard.after('<div class="md-card-placeholder" style="width:' + mdCard_w + 'px;height:' + mdCard_h + 'px;"/>');
                         // add width/height to card (preserve original size)
                         $thisCard
                             .addClass('md-card-fullscreen')
@@ -994,7 +998,7 @@ altairApp
                             .velocity({
                                 left: 0,
                                 top: 0
-                            },{
+                            }, {
                                 duration: 400,
                                 easing: variables.easing_swiftOut,
                                 begin: function(elements) {
@@ -1021,13 +1025,13 @@ altairApp
                                             $(window).resize();
                                         }
                                     });
-                                    if(mdCardToolbarFixed) {
+                                    if (mdCardToolbarFixed) {
                                         $thisCard.addClass('mdToolbar_fixed')
                                     }
                                 }
                             });
                     };
-                    scope.cardFSDeactivate = function () {
+                    scope.cardFSDeactivate = function() {
                         // get card placeholder width/height and offset
                         var $thisPlaceholderCard = $('.md-card-placeholder'),
                             mdPlaceholderCard_h = $thisPlaceholderCard.height(),
@@ -1038,18 +1042,21 @@ altairApp
                             mdCardToolbarFixed = $thisCard.hasClass('toolbar-fixed');
 
                         $thisCard
-                        // resize card to original size
+                            // resize card to original size
                             .velocity({
                                 height: mdPlaceholderCard_h,
                                 width: mdPlaceholderCard_w
-                            },{
+                            }, {
                                 duration: 400,
                                 easing: variables.easing_swiftOut,
                                 begin: function(elements) {
                                     // hide fullscreen content
-                                    $thisCard.find('.md-card-fullscreen-content').velocity("transition.slideDownOut",{ duration: 280, easing: variables.easing_swiftOut });
+                                    $thisCard.find('.md-card-fullscreen-content').velocity("transition.slideDownOut", {
+                                        duration: 280,
+                                        easing: variables.easing_swiftOut
+                                    });
                                     $rootScope.card_fullscreen = false;
-                                    if(mdCardToolbarFixed) {
+                                    if (mdCardToolbarFixed) {
                                         $thisCard.removeClass('mdToolbar_fixed')
                                     }
                                     $thisCard.find('.cardFSDeactivate').remove();
@@ -1062,7 +1069,7 @@ altairApp
                             .velocity({
                                 left: mdPlaceholderCard_offset_left,
                                 top: mdPlaceholderCard_offset_top
-                            },{
+                            }, {
                                 duration: 400,
                                 easing: variables.easing_swiftOut,
                                 complete: function(elements) {
@@ -1087,14 +1094,14 @@ altairApp
     // card close
     .directive('cardClose', [
         'utils',
-        function (utils) {
+        function(utils) {
             return {
                 restrict: 'E',
                 replace: true,
                 scope: true,
                 template: '<i class="md-icon material-icons md-card-close" ng-click="cardClose($event)">&#xE14C;</i>',
-                link: function (scope, el, attrs) {
-                    scope.cardClose = function ($event) {
+                link: function(scope, el, attrs) {
+                    scope.cardClose = function($event) {
                         $event.preventDefault();
 
                         var $this = $(el),
@@ -1104,7 +1111,7 @@ altairApp
                                 $(window).resize();
                             };
 
-                        utils.card_show_hide(thisCard,undefined,removeCard);
+                        utils.card_show_hide(thisCard, undefined, removeCard);
 
                     }
                 }
@@ -1114,15 +1121,15 @@ altairApp
     // card toggle
     .directive('cardToggle', [
         'variables',
-        function (variables) {
+        function(variables) {
             return {
                 restrict: 'E',
                 replace: true,
                 scope: true,
                 template: '<i class="md-icon material-icons md-card-toggle" ng-click="cardToggle($event)">&#xE316;</i>',
-                link: function (scope, el, attrs) {
+                link: function(scope, el, attrs) {
 
-                    scope.cardToggle = function ($event) {
+                    scope.cardToggle = function($event) {
                         $event.preventDefault();
 
                         var $this = $(el),
@@ -1146,7 +1153,7 @@ altairApp
 
                     // hide card content on page load
                     var thisCard = $(el).closest('.md-card');
-                    if(thisCard.hasClass('md-card-collapsed')) {
+                    if (thisCard.hasClass('md-card-collapsed')) {
                         var $this_toggle = thisCard.find('.md-card-toggle');
 
                         $this_toggle.html('&#xE313;');
@@ -1159,23 +1166,23 @@ altairApp
     ])
     // card overlay toggle
     .directive('cardOverlayToggle', [
-        function () {
+        function() {
             return {
                 restrict: 'E',
                 template: '<i class="md-icon material-icons" ng-click="toggleOverlay($event)">&#xE5D4;</i>',
                 replace: true,
                 scope: true,
-                link: function (scope, el, attrs) {
+                link: function(scope, el, attrs) {
 
-                    if(el.closest('.md-card').hasClass('md-card-overlay-active')) {
+                    if (el.closest('.md-card').hasClass('md-card-overlay-active')) {
                         el.html('&#xE5CD;')
                     }
 
-                    scope.toggleOverlay = function ($event) {
+                    scope.toggleOverlay = function($event) {
 
                         $event.preventDefault();
 
-                        if(!el.closest('.md-card').hasClass('md-card-overlay-active')) {
+                        if (!el.closest('.md-card').hasClass('md-card-overlay-active')) {
                             el
                                 .html('&#xE5CD;')
                                 .closest('.md-card').addClass('md-card-overlay-active');
@@ -1194,11 +1201,11 @@ altairApp
     // card toolbar progress
     .directive('cardProgress', [
         '$timeout',
-        function ($timeout) {
+        function($timeout) {
             return {
                 restrict: 'A',
                 scope: true,
-                link: function (scope, el, attrs) {
+                link: function(scope, el, attrs) {
 
                     var $this = $(el).children('.md-card-toolbar'),
                         bg_percent = parseInt(attrs.cardProgress);
@@ -1208,14 +1215,20 @@ altairApp
                         var bg_color_default = $this.attr('card-bg-default');
 
                         var bg_color = !bg_color_default ? $this.css('backgroundColor') : bg_color_default;
-                        if(!bg_color_default) {
-                            $this.attr('card-bg-default',bg_color)
+                        if (!bg_color_default) {
+                            $this.attr('card-bg-default', bg_color)
                         }
 
                         $this
-                            .css({ 'background': '-moz-linear-gradient(left, '+bg_color+' '+percent+'%, #fff '+(percent)+'%)'})
-                            .css({ 'background': '-webkit-linear-gradient(left, '+bg_color+' '+percent+'%, #fff '+(percent)+'%)'})
-                            .css({ 'background': 'linear-gradient(to right,  '+bg_color+' '+percent+'%, #fff '+(percent)+'%)'});
+                            .css({
+                                'background': '-moz-linear-gradient(left, ' + bg_color + ' ' + percent + '%, #fff ' + (percent) + '%)'
+                            })
+                            .css({
+                                'background': '-webkit-linear-gradient(left, ' + bg_color + ' ' + percent + '%, #fff ' + (percent) + '%)'
+                            })
+                            .css({
+                                'background': 'linear-gradient(to right,  ' + bg_color + ' ' + percent + '%, #fff ' + (percent) + '%)'
+                            });
 
 
                         scope.cardPercentage = percent;
@@ -1237,14 +1250,14 @@ altairApp
     .directive('customScrollbar', [
         '$rootScope',
         '$timeout',
-        function ($rootScope,$timeout) {
+        function($rootScope, $timeout) {
             return {
                 restrict: 'A',
                 scope: true,
-                link: function (scope, el, attrs) {
+                link: function(scope, el, attrs) {
 
                     // check if mini sidebar is enabled
-                    if(attrs['id'] == 'sidebar_main' && $rootScope.miniSidebarActive) {
+                    if (attrs['id'] == 'sidebar_main' && $rootScope.miniSidebarActive) {
                         return;
                     }
 
@@ -1252,7 +1265,7 @@ altairApp
                         .addClass('uk-height-1-1')
                         .wrapInner("<div class='scrollbar-inner'></div>");
 
-                    if(Modernizr.touch) {
+                    if (Modernizr.touch) {
                         $(el).children('.scrollbar-inner').addClass('touchscroll');
                     } else {
                         $timeout(function() {
@@ -1269,50 +1282,50 @@ altairApp
         }
     ])
     // material design inputs
-    .directive('mdInput',[
+    .directive('mdInput', [
         '$timeout',
-        function ($timeout) {
+        function($timeout) {
             return {
                 restrict: 'A',
                 scope: {
                     ngModel: '='
                 },
-                controller: function ($scope,$element) {
+                controller: function($scope, $element) {
                     var $elem = $($element);
                     $scope.updateInput = function() {
                         // clear wrapper classes
                         $elem.closest('.md-input-wrapper').removeClass('md-input-wrapper-danger md-input-wrapper-success md-input-wrapper-disabled');
 
-                        if($elem.hasClass('md-input-danger')) {
+                        if ($elem.hasClass('md-input-danger')) {
                             $elem.closest('.md-input-wrapper').addClass('md-input-wrapper-danger')
                         }
-                        if($elem.hasClass('md-input-success')) {
+                        if ($elem.hasClass('md-input-success')) {
                             $elem.closest('.md-input-wrapper').addClass('md-input-wrapper-success')
                         }
-                        if($elem.prop('disabled')) {
+                        if ($elem.prop('disabled')) {
                             $elem.closest('.md-input-wrapper').addClass('md-input-wrapper-disabled')
                         }
-                        if($elem.hasClass('label-fixed')) {
+                        if ($elem.hasClass('label-fixed')) {
                             $elem.closest('.md-input-wrapper').addClass('md-input-filled')
                         }
-                        if($elem.val() != '') {
+                        if ($elem.val() != '') {
                             $elem.closest('.md-input-wrapper').addClass('md-input-filled')
                         }
                     };
                 },
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
 
                     var $elem = $(elem);
 
                     $timeout(function() {
-                        if(!$elem.hasClass('md-input-processed')) {
+                        if (!$elem.hasClass('md-input-processed')) {
 
                             var extraClass = '';
-                            if($elem.is('[class*="uk-form-width-"]')) {
-                                var elClasses = $elem.attr('class').split (' ');
-                                for(var i = 0; i < elClasses.length; i++){
-                                    var classPart = elClasses[i].substr(0,14);
-                                    if(classPart == "uk-form-width-"){
+                            if ($elem.is('[class*="uk-form-width-"]')) {
+                                var elClasses = $elem.attr('class').split(' ');
+                                for (var i = 0; i < elClasses.length; i++) {
+                                    var classPart = elClasses[i].substr(0, 14);
+                                    if (classPart == "uk-form-width-") {
                                         var extraClass = elClasses[i];
                                     }
                                 }
@@ -1328,7 +1341,7 @@ altairApp
                             $elem
                                 .addClass('md-input-processed')
                                 .closest('.md-input-wrapper')
-                                .append('<span class="md-input-bar '+extraClass+'"/>');
+                                .append('<span class="md-input-bar ' + extraClass + '"/>');
                         }
 
                         scope.updateInput();
@@ -1336,18 +1349,20 @@ altairApp
                     });
 
                     scope.$watch(function() {
-                        return $elem.attr('class'); },
-                        function(newValue,oldValue){
-                            if(newValue != oldValue) {
+                            return $elem.attr('class');
+                        },
+                        function(newValue, oldValue) {
+                            if (newValue != oldValue) {
                                 scope.updateInput();
                             }
                         }
                     );
 
                     scope.$watch(function() {
-                        return $elem.val(); },
-                        function(newValue,oldValue){
-                            if( !$elem.is(':focus') && (newValue != oldValue) ) {
+                            return $elem.val();
+                        },
+                        function(newValue, oldValue) {
+                            if (!$elem.is(':focus') && (newValue != oldValue)) {
                                 scope.updateInput();
                             }
                         }
@@ -1360,12 +1375,12 @@ altairApp
                         .on('blur', function() {
                             $timeout(function() {
                                 $elem.closest('.md-input-wrapper').removeClass('md-input-focus');
-                                if($elem.val() == '') {
+                                if ($elem.val() == '') {
                                     $elem.closest('.md-input-wrapper').removeClass('md-input-filled')
                                 } else {
                                     $elem.closest('.md-input-wrapper').addClass('md-input-filled')
                                 }
-                            },100)
+                            }, 100)
                         });
 
                 }
@@ -1373,22 +1388,22 @@ altairApp
         }
     ])
     // material design fab speed dial
-    .directive('mdFabSpeedDial',[
+    .directive('mdFabSpeedDial', [
         'variables',
-        function (variables) {
+        function(variables) {
             return {
                 restrict: 'A',
                 scope: true,
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
                     $(elem)
                         .append('<i class="material-icons md-fab-action-close" style="display:none">&#xE5CD;</i>')
-                        .on('click',function(e) {
+                        .on('click', function(e) {
                             e.preventDefault();
 
                             var $this = $(this),
                                 $this_wrapper = $this.closest('.md-fab-wrapper');
 
-                            if(!$this_wrapper.hasClass('md-fab-active')) {
+                            if (!$this_wrapper.hasClass('md-fab-active')) {
                                 $this_wrapper.addClass('md-fab-active');
                             } else {
                                 $this_wrapper.removeClass('md-fab-active');
@@ -1396,14 +1411,14 @@ altairApp
 
                             $this.velocity({
                                 scale: 0
-                            },{
+                            }, {
                                 duration: 140,
                                 easing: variables.easing_swiftOut,
                                 complete: function() {
                                     $this.children().toggle();
                                     $this.velocity({
                                         scale: 1
-                                    },{
+                                    }, {
                                         duration: 140,
                                         easing: variables.easing_swiftOut
                                     })
@@ -1411,7 +1426,7 @@ altairApp
                             })
                         })
                         .closest('.md-fab-wrapper').find('.md-fab-small')
-                        .on('click',function() {
+                        .on('click', function() {
                             $(elem).trigger('click');
                         });
                 }
@@ -1419,14 +1434,14 @@ altairApp
         }
     ])
     // material design fab toolbar
-    .directive('mdFabToolbar',[
+    .directive('mdFabToolbar', [
         'variables',
         '$document',
-        function (variables,$document) {
+        function(variables, $document) {
             return {
                 restrict: 'A',
                 scope: true,
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
 
                     var $fab_toolbar = $(elem);
 
@@ -1444,26 +1459,26 @@ altairApp
 
                             setTimeout(function() {
                                 $fab_toolbar
-                                    .width((toolbarItems*FAB_size + FAB_padding))
-                            },140);
+                                    .width((toolbarItems * FAB_size + FAB_padding))
+                            }, 140);
 
                             setTimeout(function() {
                                 $fab_toolbar.addClass('md-fab-active');
-                            },420);
+                            }, 420);
 
                         });
 
                     $($document).on('click scroll', function(e) {
-                        if( $fab_toolbar.hasClass('md-fab-active') ) {
+                        if ($fab_toolbar.hasClass('md-fab-active')) {
                             if (!$(e.target).closest($fab_toolbar).length) {
 
                                 $fab_toolbar
-                                    .css('width','')
+                                    .css('width', '')
                                     .removeClass('md-fab-active');
 
                                 setTimeout(function() {
                                     $fab_toolbar.removeClass('md-fab-animated');
-                                },140);
+                                }, 140);
 
                             }
                         }
@@ -1473,14 +1488,14 @@ altairApp
         }
     ])
     // material design fab sheet
-    .directive('mdFabSheet',[
+    .directive('mdFabSheet', [
         'variables',
         '$document',
-        function (variables,$document) {
+        function(variables, $document) {
             return {
                 restrict: 'A',
                 scope: true,
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
                     var $fab_sheet = $(elem);
 
                     $fab_sheet
@@ -1495,29 +1510,29 @@ altairApp
                             setTimeout(function() {
                                 $fab_sheet
                                     .width('240px')
-                                    .height(sheetItems*40 + 8);
-                            },140);
+                                    .height(sheetItems * 40 + 8);
+                            }, 140);
 
                             setTimeout(function() {
                                 $fab_sheet.addClass('md-fab-active');
-                            },280);
+                            }, 280);
 
                         });
 
                     $($document).on('click scroll', function(e) {
-                        if( $fab_sheet.hasClass('md-fab-active') ) {
+                        if ($fab_sheet.hasClass('md-fab-active')) {
                             if (!$(e.target).closest($fab_sheet).length) {
 
                                 $fab_sheet
                                     .css({
-                                        'height':'',
-                                        'width':''
+                                        'height': '',
+                                        'width': ''
                                     })
                                     .removeClass('md-fab-active');
 
                                 setTimeout(function() {
                                     $fab_sheet.removeClass('md-fab-animated');
-                                },140);
+                                }, 140);
 
                             }
                         }
@@ -1530,18 +1545,18 @@ altairApp
     .directive('hierarchicalShow', [
         '$timeout',
         '$rootScope',
-        function ($timeout,$rootScope) {
+        function($timeout, $rootScope) {
             return {
                 restrict: 'A',
                 scope: true,
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
 
 
                     var parent_el = $(elem),
                         baseDelay = 60;
 
 
-                    var add_animation = function(children,length) {
+                    var add_animation = function(children, length) {
                         children
                             .each(function(index) {
                                 $(this).css({
@@ -1562,7 +1577,7 @@ altairApp
                                                 '-webkit-animation-delay': '',
                                                 'animation-delay': ''
                                             });
-                                    }, (length*baseDelay)+1200 );
+                                    }, (length * baseDelay) + 1200);
                                     this.destroy();
                                 },
                                 context: window,
@@ -1570,16 +1585,16 @@ altairApp
                             });
                     };
 
-                    $rootScope.$watch('pageLoaded',function() {
-                       if($rootScope.pageLoaded) {
-                           var children = parent_el.children(),
-                               children_length = children.length;
+                    $rootScope.$watch('pageLoaded', function() {
+                        if ($rootScope.pageLoaded) {
+                            var children = parent_el.children(),
+                                children_length = children.length;
 
-                           $timeout(function() {
-                               add_animation(children,children_length)
-                           },560)
+                            $timeout(function() {
+                                add_animation(children, children_length)
+                            }, 560)
 
-                       }
+                        }
                     });
 
                 }
@@ -1590,16 +1605,16 @@ altairApp
     .directive('hierarchicalSlide', [
         '$timeout',
         '$rootScope',
-        function ($timeout,$rootScope) {
+        function($timeout, $rootScope) {
             return {
                 restrict: 'A',
                 scope: true,
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
 
                     var $this = $(elem),
                         baseDelay = 100;
 
-                    var add_animation = function(children,context,childrenLength) {
+                    var add_animation = function(children, context, childrenLength) {
                         children.each(function(index) {
                             $(this).css({
                                 '-webkit-animation-delay': (index * baseDelay) + "ms",
@@ -1615,7 +1630,7 @@ altairApp
                                         '-webkit-animation-delay': '',
                                         'animation-delay': ''
                                     });
-                                }, (childrenLength*baseDelay)+1200 );
+                                }, (childrenLength * baseDelay) + 1200);
                                 this.destroy();
                             },
                             context: context[0],
@@ -1623,16 +1638,16 @@ altairApp
                         });
                     };
 
-                    $rootScope.$watch('pageLoaded',function() {
-                        if($rootScope.pageLoaded) {
+                    $rootScope.$watch('pageLoaded', function() {
+                        if ($rootScope.pageLoaded) {
                             var thisChildren = attrs['slideChildren'] ? $this.children(attrs['slideChildren']) : $this.children(),
                                 thisContext = attrs['slideContext'] ? $this.closest(attrs['slideContext']) : 'window',
                                 thisChildrenLength = thisChildren.length;
 
-                            if(thisChildrenLength >= 1) {
+                            if (thisChildrenLength >= 1) {
                                 $timeout(function() {
-                                    add_animation(thisChildren,thisContext,thisChildrenLength)
-                                },560)
+                                    add_animation(thisChildren, thisContext, thisChildrenLength)
+                                }, 560)
                             }
                         }
                     });
@@ -1642,8 +1657,8 @@ altairApp
         }
     ])
     // preloaders
-    .directive('mdPreloader',[
-        function () {
+    .directive('mdPreloader', [
+        function() {
             return {
                 restrict: 'E',
                 scope: {
@@ -1653,7 +1668,7 @@ altairApp
                     style: '@?'
                 },
                 template: '<div class="md-preloader{{style}}"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" ng-attr-height="{{ height }}" ng-attr-width="{{ width }}" viewbox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" ng-attr-stroke-width="{{ strokeWidth }}"/></svg></div>',
-                link: function (scope, elem, attr) {
+                link: function(scope, elem, attr) {
 
                     scope.width = scope.width ? scope.width : 48;
                     scope.height = scope.height ? scope.height : 48;
@@ -1675,10 +1690,10 @@ altairApp
             }
         }
     ])
-    .directive('preloader',[
+    .directive('preloader', [
         '$rootScope',
         'utils',
-        function ($rootScope,utils) {
+        function($rootScope, utils) {
             return {
                 restrict: 'E',
                 scope: {
@@ -1687,12 +1702,12 @@ altairApp
                     style: '@?'
                 },
                 template: '<img src="assets/img/spinners/{{style}}{{imgDensity}}.gif" alt="" ng-attr-width="{{width}}" ng-attr-height="{{height}}">',
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
 
                     scope.width = scope.width ? scope.width : 32;
                     scope.height = scope.height ? scope.height : 32;
                     scope.style = scope.style ? scope.style : 'spinner';
-                    scope.imgDensity = utils.isHighDensity() ? '@2x' : '' ;
+                    scope.imgDensity = utils.isHighDensity() ? '@2x' : '';
 
                     attrs.$observe('warning', function() {
                         scope.style = 'spinner_warning'
@@ -1723,12 +1738,12 @@ altairApp
         }
     ])
     // uikit components
-    .directive('ukHtmlEditor',[
+    .directive('ukHtmlEditor', [
         '$timeout',
-        function ($timeout) {
+        function($timeout) {
             return {
                 restrict: 'A',
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
                     $timeout(function() {
                         UIkit.htmleditor(elem[0], {
                             'toolbar': '',
@@ -1739,9 +1754,9 @@ altairApp
             }
         }
     ])
-    .directive('ukNotification',[
+    .directive('ukNotification', [
         '$window',
-        function ($window) {
+        function($window) {
             return {
                 restrict: 'A',
                 scope: {
@@ -1752,7 +1767,7 @@ altairApp
                     position: '@?',
                     callback: '&?'
                 },
-                link: function (scope, elem, attrs) {
+                link: function(scope, elem, attrs) {
 
                     var w = angular.element($window),
                         $element = $(elem);
@@ -1765,11 +1780,11 @@ altairApp
                             group: scope.group ? scope.group : '',
                             pos: scope.position ? scope.position : 'top-center',
                             onClose: function() {
-                                $('body').find('.md-fab-wrapper').css('margin-bottom','');
+                                $('body').find('.md-fab-wrapper').css('margin-bottom', '');
                                 clearTimeout(thisNotify.timeout);
 
-                                if(scope.callback) {
-                                    if( angular.isFunction(scope.callback()) ) {
+                                if (scope.callback) {
+                                    if (angular.isFunction(scope.callback())) {
                                         scope.$apply(scope.callback());
                                     } else {
                                         console.log('Callback is not a function');
@@ -1778,26 +1793,26 @@ altairApp
 
                             }
                         });
-                        if(
-                            ( (w.width() < 768) && (
-                                (scope.position == 'bottom-right')
-                                || (scope.position == 'bottom-left')
-                                || (scope.position == 'bottom-center')
-                            ) )
-                            || (scope.position == 'bottom-right')
+                        if (
+                            ((w.width() < 768) && (
+                                (scope.position == 'bottom-right') ||
+                                (scope.position == 'bottom-left') ||
+                                (scope.position == 'bottom-center')
+                            )) ||
+                            (scope.position == 'bottom-right')
                         ) {
                             var thisNotify_height = $(thisNotify.element).outerHeight(),
                                 spacer = (w.width() < 768) ? -6 : 8;
-                            $('body').find('.md-fab-wrapper').css('margin-bottom',thisNotify_height + spacer);
+                            $('body').find('.md-fab-wrapper').css('margin-bottom', thisNotify_height + spacer);
                         }
                     };
 
-                    $element.on("click", function(){
-                        if($('body').find('.uk-notify-message').length) {
+                    $element.on("click", function() {
+                        if ($('body').find('.uk-notify-message').length) {
                             $('body').find('.uk-notify-message').click();
                             setTimeout(function() {
                                 scope.showNotify()
-                            },450)
+                            }, 450)
                         } else {
                             scope.showNotify()
                         }

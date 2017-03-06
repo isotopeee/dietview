@@ -11,7 +11,8 @@ var altairApp = angular.module('altairApp', [
     'ncy-angular-breadcrumb',
     'ConsoleLogger',
     'lbServices',
-    'vcRecaptcha'
+    'vcRecaptcha',
+    'ngFileUpload'
 ]);
 
 altairApp.constant('variables', {
@@ -33,6 +34,7 @@ altairApp.config(function(LoopBackResourceProvider){
 
     // URL where to access the Loopback REST API server
     LoopBackResourceProvider.setUrlBase('https://dietview-api.mybluemix.net/api');
+    //LoopBackResourceProvider.setUrlBase('http://localhost:3000/api');
 });
 
 // breadcrumbs
