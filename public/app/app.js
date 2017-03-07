@@ -37,6 +37,13 @@ altairApp.config(function(LoopBackResourceProvider){
     //LoopBackResourceProvider.setUrlBase('http://localhost:3000/api');
 });
 
+//Enable cors
+altairApp.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }
+]);
+
 // breadcrumbs
 altairApp.config(function($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
