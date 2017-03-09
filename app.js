@@ -8,12 +8,18 @@
 // for more info, see: http://expressjs.com
 var express = require('express');
 
+// cors module
+var cors = require('cors');
+
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
 
 // create a new express server
 var app = express();
+
+// enable cors
+app.use(cors());
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));

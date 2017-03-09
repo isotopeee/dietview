@@ -53,7 +53,7 @@
                                 <tbody>
                                     <tr dir-paginate="meal in meals_data | filter: filter | multiSelectFilter: multiSelectData | itemsPerPage: pageSize">
                                         <td class="uk-width-1-10"><img class="img_thumb" ng-src="{{ meal.image }}" alt=""></td>
-                                        <td class="uk-width-1-10 uk-text-large"><a ng-click="changeSelectedItem($event,$index)" href="#" data-uk-modal="{target:'#modal_details'}">Code</a></td>
+                                        <td class="uk-width-1-10 uk-text-large"><a ng-click="changeSelectedItem($event,$index)" href="#" data-uk-modal="{target:'#modal_details'}">{{ meal.code }}</a></td>
                                         <td class="uk-width-1-10 uk-text-large">{{ meal.name }}</td>
                                         <td class="uk-width-1-10 uk-text-large">{{ meal.description }}</a>
                                         </td>
@@ -89,6 +89,68 @@
 </div>
 
 <!-- MODALS -->
+
+<!-- EDIT -->
+<div id="modal_edit" class="uk-modal">
+    <div class="uk-modal-dialog uk-modal-dialog-large md-card">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div class="md-card-toolbar">
+            <h3 class="md-card-toolbar-heading-text uk-text-warning">
+                Edit Meal
+            </h3>
+        </div>
+        <form ng-submit="update($event)" class="uk-form-stacked" id="edit_form" name="edit_form">
+            <div class="md-card-content large-padding">
+                <div class="uk-grid uk-grid-divider uk-grid-medium">
+                    <div class="uk-width-large-1-2">
+                        <div class="uk-form-row">
+                            <label for="meal_add_code_control">Code</label>
+                            <input type="text" class="md-input" name="meal_add_code_control" id="meal_add_code_control" ng-model="meal.code" md-input />
+                        </div>
+                        <div class="uk-form-row">
+                            <label for="meal_add_name_control">Meal Name</label>
+                            <input type="text" class="md-input" name="meal_add_name_control" id="meal_add_name_control" ng-model="meal.name" md-input />
+                        </div>
+                        <div class="uk-form-row">
+                            <label for="meal_add_calories_control">Calories</label>
+                            <input type="number" disabled class="md-input" name="meal_add_calories_control" id="meal_add_calories_control" ng-model="meal.calories" md-input />
+                        </div>
+                        <div class="uk-form-row">
+                            <label class="uk-form-label">Ingredients</label>
+                            <input config="config.ingredients" options="options.ingredients" ng-model="ingredients" name="meal_add_ingredients_control" selectize />
+                        </div>
+                        <div class="uk-form-row">
+                            <label class="uk-form-label">Type</label>
+                            <input config="{ create:false, maxItems: 1 }" options="options.type" ng-model="meal.type" name="meal_add_type_control" selectize />
+                        </div>
+                        <div class="uk-form-row">
+                            <label class="uk-form-label">Status</label>
+                            <input config="{ create:false, maxItems: 1 }" options="options.status" ng-model="meal.status" name="meal_add_status_control" selectize />
+                        </div>
+                    </div>
+                    <div class="uk-width-large-1-2">
+                        <div class="uk-form-row">
+                            <label for="meal_add_remarks_control">Remarks</label>
+                            <textarea class="md-input" name="meal_add_remarks_control" id="meal_add_remarks_control" cols="30" rows="2" ng-model="meal.remarks" md-input textarea-autosize></textarea>
+                        </div>
+                        <div class="uk-form-row">
+                            <label for="meal_add_description_control">Description</label>
+                            <textarea class="md-input" name="meal_add_description_control" id="meal_add_description_control" cols="30" rows="2" ng-model="meal.description" md-input textarea-autosize></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-form-row">
+                        <button type="submit" class="md-btn md-btn-primary md-btn-wave-light">Save New Meal</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <!-- ADD -->
 <div id="modal_add" class="uk-modal">
@@ -155,9 +217,6 @@
                             <img ngf-src="image">
                         </div>
                     </div>
-                </div>
-                <div class="uk-grid" data-uk-grid-margin>
-
                 </div>
                 <div class="uk-grid" data-uk-grid-margin>
                     <div class="uk-form-row">

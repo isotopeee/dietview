@@ -2,12 +2,16 @@ angular
     .module('altairApp')
     .controller('meal_plans_listCtrl', [
         '$scope',
-        '$rootScope',
-        'products_data',
-        function ($scope,$rootScope,products_data) {
+        'modals',
+        'meals_data',
+        'meal_plans_data',
+        'MealPlan',
+        'Upload',
+        'API',
+        function ($scope, modals, meals_data, meal_plans_data, MealPlan, Upload, API) {
 
-            // products data
-            $scope.products_data = products_data;
+            // meal plans data
+            $scope.meal_plans_data = meal_plans_data;
 
             $scope.pageSize = 10;
 

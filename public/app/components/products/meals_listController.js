@@ -7,8 +7,8 @@ angular
         'ingredients_data',
         'Meal',
         'Upload',
-        function($scope, modals, meals_data, ingredients_data, Meal, Upload) {
-
+        'API',
+        function($scope, modals, meals_data, ingredients_data, Meal, Upload, API) {
             $('.dropify').dropify();
 
             // selectize options
@@ -57,11 +57,13 @@ angular
                         }
                     },
                     onItemAdd: function(value, $item) {
-                        for (var i = 0; i < ingredients_data.length; i++) {
-                            if (ingredients_data[i].id === value) {
-                                value = ingredients_data[i];
-                                $scope.meal.mealItems.push(value);
-                                $scope.meal.calories += value.calories;
+                        if ($scope.ingredients.indexOf(value) === -1) {    
+                            for (var i = 0; i < ingredients_data.length; i++) {
+                                if (ingredients_data[i].id === value) {
+                                    value = ingredients_data[i];
+                                    $scope.meal.mealItems.push(value);
+                                    $scope.meal.calories += value.calories;
+                                }
                             }
                         }
                     },
@@ -106,21 +108,33 @@ angular
 
             $scope.filter_pageSize = ['5', '10', '15'];
 
-            var API_BASE = 'https://dietview-api.mybluemix.net/'
-
-            var clear_form = function () {
-                $scope.meal = {};
-                $scope.image = {};
-                $scope.ingredients = {};
+            var change_selected_item = function(index) {
+                clear_form();
+                $scope.meal = $scope.meals_data[index];
+                for (var i = 0; i < $scope.meal.mealItems.length; i++) {
+                    $scope.ingredients.push($scope.meal.mealItems[i].id);
+                }
             };
 
-            var create = function () {
+            var clear_form = function() {
+                $scope.meal = {
+                    mealItems: [],
+                    mealPlans: [],
+                    feedbacks: [],
+                    calories: 0,
+                    rating: 0,
+                }
+                $scope.image = {};
+                $scope.ingredients = [];
+            };
+
+            var create = function() {
                 Upload.upload({
-                    url: API_BASE + 'api/Meals/upload',
+                    url: API.URL_BASE + 'api/Meals/upload',
                     data: {
                         file: $scope.image
                     }
-                }).then(function (response) {
+                }).then(function(response) {
                     Meal.create({
                         mealItems: $scope.meal.mealItems,
                         mealPlans: $scope.meal.mealPlans,
@@ -131,21 +145,45 @@ angular
                         calories: $scope.meal.calories,
                         type: $scope.meal.type,
                         remarks: $scope.meal.remarks,
-                        image: API_BASE + response.data.path,
+                        image: API.URL_BASE + response.data.path,
                         rating: $scope.meal.rating,
                         status: $scope.meal.status
-                    }).$promise.then(function (data) {
+                    }).$promise.then(function(data) {
                         modals.alert('New Meal Added');
                         $scope.meals_data.push(data);
                         clear_form();
                     });
-                }, null, function (event) {
+                }, null, function(event) {
                     console.log(event);
                 });
             };
 
+            var remove = function(index) {
+                modals.confirm('Are you sure you want to delete the meal', function() {
+                    Meal.deleteById({
+                        id: $scope.meal.id
+                    }).$promise.then(function(data) {
+                        modals.alert('Meal has been deleted');
+                        $scope.meals_data.splice(index, 1);
+                    });
+                });
+            };
+
+            $scope.changeSelectedItem = function($event, $index) {
+                change_selected_item($index);
+            };
+
+            $scope.clearForm = function($event) {
+                clear_form();
+            };
+
             $scope.create = function($event) {
                 create();
+            };
+
+            $scope.remove = function($event, $index) {
+                $scope.changeSelectedItem($event, $index);
+                remove($index);
             };
         }
     ]);

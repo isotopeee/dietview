@@ -187,12 +187,18 @@ altairApp
                     templateUrl: 'app/components/products/meal_plans_listView.html',
                     controller: 'meal_plans_listCtrl',
                     resolve: {
-                        products_data: function($http){
-                            return $http({method: 'GET', url: 'data/ecommerce_products.json'})
-                                .then(function (data) {
-                                    return data.data;
-                                });
+                        meals_data: function(Meal){
+                          return Meal.find({}).$promise
+                          .then(function (data) {
+                            return data;
+                          })
                         },
+                        meal_plans_data: function (MealPlan) {
+                          return MealPlan.find({}).$promise
+                          .then(function (data) {
+                            return data;
+                          })
+                        }
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 'lazy_pagination',
