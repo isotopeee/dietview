@@ -198,7 +198,7 @@ altairApp
                           .then(function (data) {
                             return data;
                           })
-                        }
+                        },
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 'lazy_pagination',

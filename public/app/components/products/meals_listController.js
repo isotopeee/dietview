@@ -57,7 +57,7 @@ angular
                         }
                     },
                     onItemAdd: function(value, $item) {
-                        if ($scope.ingredients.indexOf(value) === -1) {    
+                        if ($scope.ingredients.indexOf(value) === -1) {
                             for (var i = 0; i < ingredients_data.length; i++) {
                                 if (ingredients_data[i].id === value) {
                                     value = ingredients_data[i];
@@ -114,6 +114,7 @@ angular
                 for (var i = 0; i < $scope.meal.mealItems.length; i++) {
                     $scope.ingredients.push($scope.meal.mealItems[i].id);
                 }
+                console.log($scope.meal);
             };
 
             var clear_form = function() {
