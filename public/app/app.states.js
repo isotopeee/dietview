@@ -210,6 +210,35 @@ altairApp
                         pageTitle: 'Meal Plans'
                     }
                 })
+                // -- ADD MEAL PLANS --
+                .state("restricted.products.meal_plans_add", {
+                    url: "/meal_plans_add",
+                    templateUrl: 'app/components/products/meal_plans_add.html',
+                    controller: 'meal_plans_list_addCtrl',
+                    resolve: {
+                        meals_data: function(Meal){
+                          return Meal.find({}).$promise
+                          .then(function (data) {
+                            return data;
+                          })
+                        },
+                        meal_plans_data: function (MealPlan) {
+                          return MealPlan.find({}).$promise
+                          .then(function (data) {
+                            return data;
+                          })
+                        },
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'lazy_pagination',
+                                'app/components/products/meal_plans_addController.js'
+                            ], { serie: true } );
+                        }]
+                    },
+                    data: {
+                        pageTitle: 'Add Meal Plans'
+                    }
+                })
                 // -- FORMS --
                 .state("restricted.forms", {
                     url: "/forms",

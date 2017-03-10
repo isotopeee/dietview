@@ -105,7 +105,7 @@ altairApp
     .factory('API', [
       function () {
         return {
-          URL_BASE: 'http://localhost:3000/'
+          URL_BASE: 'https://dietview-api.mybluemix.net/'
         };
       }
     ])

@@ -1,0 +1,151 @@
+<div id="page_content">
+    <div id="page_content_inner">
+      <div class="md-card" id="invoice" single-card>
+          <form action="" class="uk-form-stacked">
+              <div class="md-card-toolbar">
+                  <div class="md-card-toolbar-actions">
+                      <i class="md-icon material-icons" id="invoice_submit">&#xE161;</i>
+                  </div>
+                  <h1 class="md-card-toolbar-heading-text uk-text-warning">New Meal Plan</h1>
+              </div>
+              <div class="md-card-content large-padding">
+                <div class="uk-grid uk-grid-divider uk-grid-medium">
+                    <div class="uk-width-large-1-2">
+                        <div class="uk-form-row">
+                            <label for="meal_add_code_control">Code</label>
+                            <input type="text" class="md-input" name="meal_add_code_control" id="meal_add_code_control" ng-model="meal.code" md-input />
+                        </div>
+                        <div class="uk-form-row">
+                            <label for="meal_add_name_control">Meal Name</label>
+                            <input type="text" class="md-input" name="meal_add_name_control" id="meal_add_name_control" ng-model="meal.name" md-input />
+                        </div>
+                        <div class="uk-form-row">
+                            <label for="meal_add_calories_control">Calories</label>
+                            <input type="number" disabled class="md-input" name="meal_add_calories_control" id="meal_add_calories_control" ng-model="meal.calories" md-input />
+                        </div>
+                        <div class="uk-form-row">
+                            <label class="uk-form-label">Target Calories per Day</label>
+                              <input type="text" class="md-input" name="meal_add_name_control" id="meal_add_name_control"  md-input />
+                        </div>
+
+                    </div>
+                    <div class="uk-width-large-1-2">
+                        <div class="uk-form-row">
+                            <label for="meal_add_remarks_control">Remarks</label>
+                            <input class="md-input" name="meal_add_remarks_control" id="meal_add_remarks_control" cols="30" rows="2" ng-model="meal.remarks" md-input textarea-autosize></input>
+                        </div>
+                        <div class="uk-form-row">
+                            <label for="meal_add_description_control">Description</label>
+                            <input class="md-input" name="meal_add_description_control" id="meal_add_description_control" cols="30" rows="2" ng-model="meal.description" md-input textarea-autosize></input>
+                        </div>
+                        <div class="uk-form-row">
+                            <h3 class="heading_a uk-margin-small-bottom">Upload Image</h3>
+                            <input type="file" class="dropify"
+                                ng-model="image"
+                                name="image"
+                                ngf-select ngf-drop
+                                ngf-accept="'image/*'"
+                                ngf-multiple="false" />
+                        </div>
+                        <div class="uk-form-row">
+                            <h3 class="heading_a uk-margin-small-bottom">Image</h3>
+                            <img ngf-src="image">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="uk-grid uk-grid-divider grid-block" data-uk-grid-margin>
+                      <div class="uk-width-medium-2-2">
+                          <label class="uk-form-label uk-margin-bottom">Duration (days):</label>
+                          <span class="icheck-inline">
+                              <input type="radio" name="invoice_due_date" id="duration_3" icheck ng-model="duration" value="3" ng-change="onDurationChange(duration)" />
+                              <label for="duration_3" class="inline-label">3</label>
+                          </span>
+                          <span class="icheck-inline">
+                              <input type="radio" name="invoice_due_date" id="duration_5" icheck ng-model="duration" value="5" ng-change="onDurationChange(duration)" />
+                              <label for="duration_5" class="inline-label">5</label>
+                          </span>
+                          <span class="icheck-inline">
+                              <input type="radio" name="invoice_due_date" id="duration_7" icheck ng-model="duration" value="7" ng-change="onDurationChange(duration)" />
+                              <label for="duration_7" class="inline-label">7</label>
+                          </span>
+                          {{tempDuration}}
+                          <!-- FOR CUSTOM DATE -->
+                        <div class="uk-form-row">
+                          <span class="icheck-inline">
+
+                              <label for="duration_7" class="inline-label">Custom Duration</label>
+                              <input id="input1" type="text" class="md-input" name="meal_add_name_control" id="meal_add_name_control" ng-model="duration" ng-change="onDurationChange(duration)" md-input />
+                          </span>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="uk-grid" data-uk-grid-margin>
+                      <div class="uk-width-1-1">
+                          <div id="form_invoice_services">
+                              <div class="uk-grid" data-uk-grid-margin ng-repeat="n in tempDuration">
+                                      <div class="uk-width-medium-1-10 uk-text-center">
+                                          <p class="uk-text-large">Day {{n+1}}</p>
+                                      </div>
+                                      <div class="uk-width-medium-3-10 uk-text-left">
+                                          <div class="uk-form-row">
+                                            <label>Breakfast</label>
+                                          </div>
+                                          <div class="uk-form-row">
+                                              <label>Lunch</label>
+                                          </div>
+                                          <div class="uk-form-row">
+                                              <label>Dinner</label>
+                                          </div>
+                                          <div class="uk-form-row">
+                                              <label>Snack</label>
+                                          </div>
+                                      </div>
+                                      <div class="uk-width-medium-2-10 uk-text-left">
+                                          <div class="uk-form-row">
+                                              <input config="config.meals_data" options="options.meals_data" ng-model="meals" name="meal_add_ingredients_control" selectize />
+                                          </div>
+                                          <div class="uk-form-row">
+                                              <input config="config.meals_data" options="options.meals_data" ng-model="meals" name="meal_add_ingredients_control" selectize />
+                                          </div>
+                                          <div class="uk-form-row">
+                                              <input config="config.meals_data" options="options.meals_data" ng-model="meals" name="meal_add_ingredients_control" selectize />
+                                          </div>
+                                          <div class="uk-form-row">
+                                              <input config="config.meals_data" options="options.meals_data" ng-model="meals" name="meal_add_ingredients_control" selectize />
+                                          </div>
+                                      </div>
+                                      <div class="uk-width-medium-2-10 uk-text-left">
+                                        <div class="uk-form-row">
+                                            <input type="number" disabled class="md-input" name="meal_add_calories_control" id="meal_add_calories_control" ng-model="meal.calories" md-input />
+                                        </div>
+                                        <div class="uk-form-row">
+                                            <input type="number" disabled class="md-input" name="meal_add_calories_control" id="meal_add_calories_control" ng-model="meal.calories" md-input />
+                                        </div>
+                                        <div class="uk-form-row">
+                                            <input type="number" disabled class="md-input" name="meal_add_calories_control" id="meal_add_calories_control" ng-model="meal.calories" md-input />
+                                        </div>
+                                      </div>
+                                      <div class="uk-width-medium-2-10 uk-text-left">
+                                        <label for="meal_add_calories_control">Total Calories</label>
+                                        <input type="number" disabled class="md-input" name="meal_add_calories_control" id="meal_add_calories_control" ng-model="meal.calories" md-input />
+                                      </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="md-fab-wrapper md-fab-speed-dial">
+    Avg Calories Per Day
+    <a class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-tooltip="{pos:'right'}" title="Actions" md-fab-speed-dial><i class="material-icons">&#xE5D2;</i></a>
+    <div class="md-fab-wrapper-small">
+        <a class="md-fab md-fab-small md-fab-success" href="javascript:void(0)" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Add New Meal" data-uk-modal="{target:'#modal_add'}" ng-click="clearForm($event)"><i class="material-icons">&#xE145;</i></a>
+        <a class="md-fab md-fab-small md-fab-warning" href="javascript:void(0)" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Refresh" ng-click="refresh($event)"><i class="material-icons">&#xE5D5;</i></a>
+    </div>
+</div>

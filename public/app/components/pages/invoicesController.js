@@ -15,7 +15,7 @@ angular
                 $rootScope.page_full_height = false;
                 $rootScope.headerDoubleHeightActive = false;
             });
-            
+
             $scope.invoices_data = invoices_data;
 
             $scope.getMonth = function(invoice,$index) {

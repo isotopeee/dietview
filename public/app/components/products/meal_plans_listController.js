@@ -10,10 +10,13 @@ angular
         'API',
         function ($scope, modals, meals_data, meal_plans_data, MealPlan, Upload, API) {
 
+
             // meal plans data
             $scope.meal_plans_data = meal_plans_data;
 
             $scope.pageSize = 10;
+            $scope.set = [];
+
 
             $scope.filter_status_options = [
                 {
@@ -46,8 +49,38 @@ angular
             };
 
             $scope.filter_pageSize = ['5', '10', '15'];
+            $scope.filter_status_options = [{
+                    value: 'available',
+                    title: 'available'
+                },
+                {
+                    value: 'not available',
+                    title: 'not available'
+                }
+            ];
 
+            $scope.filter_status_config = {
+                create: false,
+                valueField: 'value',
+                labelField: 'title',
+                placeholder: 'Status...'
+            };
+
+            $scope.filterData = {
+                status: ["available", "not available"]
+            };
+
+            $scope.tempDuration =[];
+            $scope.onDurationChange = function(duration){
+              $scope.tempDuration = [];
+              for(var i=0 ; i <= duration-1 ; i++)
+              {
+                $scope.tempDuration.push(i);
+              }
+            };
         }
+
+
     ])
 ;
 Array.prototype.contains = function(obj) {
