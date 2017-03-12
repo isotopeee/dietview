@@ -9,19 +9,16 @@ angular
 
             $scope.user_list = user_list;
 
-            function getCustomers(arr) {
-                var out = [];
-
-                for (var i = 0; i < arr.length; i++) {
-                    if (arr[i].account.role === 'customer') {
-                        out.push(arr[i]);
+            function getCustomers() {
+                for (var i = 0; i < $scope.user_list.length; i++) {
+                    if ($scope.user_list[i].account.role !== 'customer') {
+                        $scope.user_list.splice(i, 1);
                     }
                 }
-                return out;
             };
 
-            $scope.user_list_roles = ['customers'];
-            $scope.user_list = getCustomers(user_list);
+            $scope.user_list_roles = ['customer'];
+            getCustomers();
 
             $scope.$on('onLastRepeat', function(scope, element, attrs) {
                 $scope.$apply(function() {
@@ -62,8 +59,16 @@ angular
                 });
             };
 
+            var details = function (user) {
+                $scope.user = user;
+            };
+
             $scope.create = function ($event) {
                 create();
+            };
+
+            $scope.details = function ($event, user) {
+                details(user);
             };
         }
     ]);

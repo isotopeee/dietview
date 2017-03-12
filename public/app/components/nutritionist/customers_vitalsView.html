@@ -5,33 +5,34 @@
         <div class="md-card uk-margin-medium-bottom">
             <div class="md-card-content">
                 <div class="uk-grid" data-uk-grid-margin>
-                    <div class="uk-width-medium-1-2">
-                        <div class="uk-vertical-align">
-                            <div class="uk-vertical-align-middle">
-                                <ul id="user_list_filter" class="uk-subnav uk-subnav-pill uk-margin-remove">
-                                    <li class="uk-active" data-uk-filter="">
-                                        <a href="#">All</a>
-                                    </li>
-                                    <li ng-repeat="role in user_list_roles" data-uk-filter="{{role}}" style="text-transform: capitalize;">
-                                        <a href="#">{{role}}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="uk-width-medium-1-3">
+                        <label for="user_list_search_firstname">First name</label>
+                        <input class="md-input" type="text" id="user_list_search_firstname" ng-model="q.account.profile.firstname" md-input />
                     </div>
-                    <div class="uk-width-medium-1-2">
-                        <label for="user_list_search">User email</label>
-                        <input class="md-input" type="text" id="user_list_search" ng-model="q.email" md-input />
+                    <div class="uk-width-medium-1-3">
+                        <label for="user_list_search_lastname">Last name</label>
+                        <input class="md-input" type="text" id="user_list_search_lastname" ng-model="q.account.profile.lastname" md-input />
+                    </div>
+                    <div class="uk-width-medium-1-3">
+                        <label for="user_list_search_email">User email</label>
+                        <input class="md-input" type="text" id="user_list_search_email" ng-model="q.email" md-input />
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-5 hierarchical_show" id="user_list" hierarchical-show>
-            <div ng-repeat="user in user_list | filter: q" data-uk-filter="{{user.account.role}}" on-last-repeat>
+            <div ng-repeat="user in user_list | filter: q" data-uk-filter="" on-last-repeat>
                 <div class="md-card md-card-hover">
                     <div class="md-card-head" ng-class="{'md-bg-cyan-600' : user.featured}">
-
+                        <div class="md-card-head-menu" data-uk-dropdown="{pos:'bottom-right'}">
+                            <i class="md-icon material-icons" ng-class="{'md-icon-light' : user.featured}">&#xE5D4;</i>
+                            <div class="uk-dropdown uk-dropdown-small">
+                                <ul class="uk-nav">
+                                    <li><a href="#details" data-uk-modal="{ center:true }" ng-click="details($event, user)">View Details</a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="uk-text-center">
                             <img class="md-card-head-avatar" ng-src="assets\/img\/avatars\/avatar_01.png" alt="" />
                         </div>
@@ -44,8 +45,26 @@
                         <ul class="md-list">
                             <li>
                                 <div class="md-list-content">
-                                    <span class="md-list-heading">Email</span>
-                                    <span class="uk-text-small uk-text-muted uk-text-truncate">{{user.email}}</span>
+                                    <span class="md-list-heading">Height</span>
+                                    <span class="uk-text-small uk-text-muted">{{user.account.vitals.height.feet}}" {{user.account.vitals.height.inches}}'</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="md-list-heading">Weight</span>
+                                    <span class="uk-text-small uk-text-muted">{{user.account.vitals.weight}} lbs.</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="md-list-heading">BMI</span>
+                                    <span class="uk-text-small uk-text-muted">{{user.account.vitals.bmi}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="md-list-heading">Status</span>
+                                    <span class="uk-text-small uk-text-muted">{{user.account.vitals.status}}</span>
                                 </div>
                             </li>
                         </ul>
@@ -53,52 +72,40 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
-<div class="md-fab-wrapper">
-    <a class="md-fab md-fab-accent" href="javascript:void(0)" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Add New User" data-uk-modal="{target:'#modal_add'}">
-        <i class="material-icons">&#xE145;</i>
-    </a>
-</div>
-
-<!-- MODALS -->
-
-<!-- ADD -->
-<div id="modal_add" class="uk-modal">
-    <div class="uk-modal-dialog md-card">
-        <button type="button" class="uk-modal-close uk-close"></button>
-        <div class="md-card-toolbar">
-            <h3 class="md-card-toolbar-heading-text uk-text-success">
-                Create Account
-            </h3>
+<div class="uk-modal" id="details">
+    <div class="uk-modal-dialog">
+        <div class="uk-modal-header">
+            <span class="uk-badge uk-badge-danger uk-float-right" ng-if="info.status == 'blocker'">BLOCKER</span>
+            <span class="uk-badge uk-badge-success uk-float-right" ng-if="info.status == 'minor'">MINOR</span>
+            <span class="uk-badge uk-badge-warning uk-float-right" ng-if="info.status == 'critical'">CRITICAL</span>
+            <h3 class="uk-modal-title">Vitals Details</h3>
         </div>
-        <form ng-submit="create($event)" class="uk-form-stacked" id="add_form">
-            <div class="md-card-content large-padding">
-                <div class="uk-grid uk-grid-divider uk-grid-medium">
-                    <div class="uk-width-large-1-1">
-                        <div class="uk-form-row">
-                            <label for="user_add_firstname_control">First name</label>
-                            <input type="text" class="md-input" name="user_add_firstname_control" id="user_add_firstname_control" ng-model="user.account.profile.firstname" md-input />
-                        </div>
-                        <div class="uk-form-row">
-                            <label for="user_add_lastname_control">Last name</label>
-                            <input type="text" class="md-input" name="user_add_lastname_control" id="user_add_lastname_control" ng-model="user.account.profile.lastname" md-input />
-                        </div>
-                        <div class="uk-form-row">
-                            <label for="user_add_username_control">Username</label>
-                            <input type="text" class="md-input" name="user_add_username_control" id="user_add_username_control" ng-model="user.username" md-input />
-                        </div>
-                        <div class="uk-form-row">
-                            <label for="user_add_email_control">Email</label>
-                            <input type="email" class="md-input" name="user_add_email_control" id="user_add_email_control" ng-model="user.email" md-input />
-                        </div>
-                    </div>
-                </div>
+        <form class="uk-form-stacked">
+            <div class="uk-margin-medium-bottom">
+                <p class="uk-margin-small-bottom uk-text-muted">Height</p>
+                <p class="uk-margin-remove">{{user.account.vitals.height.feet}}" {{user.account.vitals.height.inches}}'</p>
+            </div>
+            <div class="uk-margin-medium-bottom">
+                <p class="uk-margin-small-bottom uk-text-muted">Weight</p>
+                <p class="uk-margin-remove">{{user.account.vitals.weight}} lbs.</p>
+            </div>
+            <div class="uk-margin-medium-bottom">
+                <p class="uk-margin-small-bottom uk-text-muted">BMI</p>
+                <p class="uk-margin-remove">{{user.account.vitals.bmi}}</p>
+            </div>
+            <div class="uk-margin-medium-bottom">
+                <p class="uk-margin-small-bottom uk-text-muted">Status</p>
+                <p class="uk-margin-remove">{{user.account.vitals.status}}</p>
+            </div>
+            <div class="uk-margin-medium-bottom">
+                <p class="uk-margin-small-bottom uk-text-muted">Remarks</p>
+                <p class="uk-margin-remove">{{user.account.vitals.bmi.remarks}}</p>
             </div>
             <div class="uk-modal-footer uk-text-right">
-                <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Create User</button>
+                <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
             </div>
         </form>
     </div>
