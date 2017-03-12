@@ -1,6 +1,6 @@
 angular
     .module('altairApp')
-    .controller('meal_plans_list_addCtrl', [
+    .controller('meal_plans_addCtrl', [
         '$scope',
         'modals',
         'meals_data',

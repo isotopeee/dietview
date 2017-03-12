@@ -122,6 +122,33 @@ altairApp
                         label: 'Home'
                     }
                 })
+                // == ADMIN --
+                .state("restricted.admin", {
+                    url: "/admin",
+                    template: '<div ui-view autoscroll="false" ng-class="{ \'uk-height-1-1\': page_full_height }" />',
+                    abstract: true
+                })
+                // MANAGEMENT CONSOLE
+                .state("restricted.admin.console", {
+                    url: "/console",
+                    templateUrl: 'app/components/admin/consoleView.html',
+                    controller: 'consoleCtrl',
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'app/components/admin/consoleController.js'
+                            ],{serie: true});
+                        }],
+                        user_list: function(User){
+                            return User.find({}).$promise.then(function (data) {
+                                return data;
+                            });
+                        }
+                    },
+                    data: {
+                        pageTitle: 'Management Console'
+                    }
+                })
                 // -- PRODUCTS --
                 .state("restricted.products", {
                     url: "/products",
@@ -214,16 +241,10 @@ altairApp
                 .state("restricted.products.meal_plans_add", {
                     url: "/meal_plans_add",
                     templateUrl: 'app/components/products/meal_plans_add.html',
-                    controller: 'meal_plans_list_addCtrl',
+                    controller: 'meal_plans_addCtrl',
                     resolve: {
                         meals_data: function(Meal){
                           return Meal.find({}).$promise
-                          .then(function (data) {
-                            return data;
-                          })
-                        },
-                        meal_plans_data: function (MealPlan) {
-                          return MealPlan.find({}).$promise
                           .then(function (data) {
                             return data;
                           })
@@ -236,7 +257,34 @@ altairApp
                         }]
                     },
                     data: {
-                        pageTitle: 'Add Meal Plans'
+                        pageTitle: 'New Meal Plan'
+                    }
+                })
+                // == NUTRITIONIST --
+                .state("restricted.nutritionist", {
+                    url: "/nutritionist",
+                    template: '<div ui-view autoscroll="false" ng-class="{ \'uk-height-1-1\': page_full_height }" />',
+                    abstract: true
+                })
+                // CUSTOMERS VITALS
+                .state("restricted.nutritionist.customers_vitals", {
+                    url: "/customers_vitals",
+                    templateUrl: 'app/components/nutritionist/customers_vitalsView.html',
+                    controller: 'customers_vitalsCtrl',
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'app/components/nutritionist/customers_vitalsController.js'
+                            ],{serie: true});
+                        }],
+                        user_list: function(User){
+                            return User.find({}).$promise.then(function (data) {
+                                return data;
+                            });
+                        }
+                    },
+                    data: {
+                        pageTitle: 'Customers Vitals'
                     }
                 })
                 // -- FORMS --

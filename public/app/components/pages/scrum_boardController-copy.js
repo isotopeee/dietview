@@ -5,8 +5,7 @@ angular
         '$scope',
         'tasks_list',
         'dragulaService',
-        'modals',
-        function ($rootScope,$scope,tasks_list,dragulaService,modals) {
+        function ($rootScope,$scope,tasks_list,dragulaService) {
 
             $rootScope.page_full_height = true;
 
@@ -27,6 +26,10 @@ angular
                 {
                     id: 'todo',
                     name: 'To Do'
+                },
+                {
+                    id: 'inAnalysis',
+                    name: 'In analysis'
                 },
                 {
                     id: 'inProgress',
@@ -51,54 +54,24 @@ angular
                 }
             };
 
-            var clear_form = function () {
-                $scope.newTask = {
-                    name: '',
-                    assignee: '',
-                    group: ''
-                };
-            };
-
-            var addTask = function () {
-                $scope.tasks_list.push($scope.newTask);
-            };
-
-            $scope.addTask = function ($event) {
-                addTask();
-                modals.alert('New task has been added');
-                clear_form();
-            };
-
-            var deleteTask = function () {
-                for (var i = 0; i < $scope.tasks_list.length; i++) {
-                    if ($scope.info.name === $scope.tasks_list[i].name) {
-                        $scope.tasks_list.splice(i, 1);
-                        UIkit.modal('#task_info').hide();
-                        break;
-                    }
-                }
-            };
-
-            $scope.deleteTask = function ($event) {
-                modals.confirm('Are you sure you want to delete the task?', function () {
-                    deleteTask();
-                    modals.alert('The task has been deleted');
-                });
-            };
-
             // new task
             $scope.newTask = {
-                name: '',
-                assignee: '',
-                group: ''
+                name: 'Altair-245',
+                assignee: [
+                    { id: 1, title: 'Aleen Grant' },
+                    { id: 2, title: 'Tyrese Koss' },
+                    { id: 3, title: 'Chasity Green' },
+                    { id: 4, title: 'Me' }
+                ],
+                group: [
+                    { name: 'todo', title: 'To Do' },
+                    { name: 'inAnalysis', title: 'In Analysis' },
+                    { name: 'inProgress', title: 'In Progress' },
+                    { name: 'done', title: 'Done' }
+                ]
             };
 
-            $scope.newTask_assignee =  [
-                'Chef',
-                'Delivery',
-                'Nutritionist',
-                'Secretary'
-            ];
+            $scope.newTask_assignee =  $scope.newTask.assignee;
             $scope.newTask_assignee_config = {
                 create:false,
                 maxItems: 1,
@@ -106,11 +79,7 @@ angular
                 labelField: 'title',
                 placeholder: 'Select Assignee...'
             };
-            $scope.newTask_group =  [
-                { name: 'todo', title: 'To Do' },
-                { name: 'inProgress', title: 'In Progress' },
-                { name: 'done', title: 'Done' }
-            ];
+            $scope.newTask_group =  $scope.newTask.group;
             $scope.newTask_group_config =  {
                 create:false,
                 maxItems: 1,
