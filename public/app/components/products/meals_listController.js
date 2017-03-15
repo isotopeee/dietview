@@ -50,10 +50,13 @@ angular
                         option: function(ingredients_data, escape) {
                             return '<div class="option">' +
                                 '<span class="title">' + escape(ingredients_data.name) + '</span>' +
+                                ' - ' +
+                                '<span>' + escape(ingredients_data.description) + '</span>' +
                                 '</div>';
                         },
                         item: function(ingredients_data, escape) {
-                            return '<div class="item">' + escape(ingredients_data.name) + '</div>';
+                            return '<div class="item">' + escape(ingredients_data.name) +
+                                ' - ' + escape(ingredients_data.description) + '</div>';
                         }
                     },
                     onItemAdd: function(value, $item) {
@@ -85,25 +88,33 @@ angular
 
             $scope.pageSize = 10;
 
-            $scope.filter_status_options = [{
-                    value: 'available',
-                    title: 'available'
+            $scope.filter_type_options = [{
+                    value: 'breakfast',
+                    title: 'breakfast'
                 },
                 {
-                    value: 'not available',
-                    title: 'not available'
+                    value: 'lunch',
+                    title: 'lunch'
+                },
+                {
+                    value: 'dinner',
+                    title: 'dinner'
+                },
+                {
+                    value: 'snack',
+                    title: 'snack'
                 }
             ];
 
-            $scope.filter_status_config = {
+            $scope.filter_type_config = {
                 create: false,
                 valueField: 'value',
                 labelField: 'title',
-                placeholder: 'Status...'
+                placeholder: 'Type  ...'
             };
 
             $scope.filterData = {
-                status: ["available", "not available"]
+                status: ["breakfast", "lunch", "dinner", "snack"]
             };
 
             $scope.filter_pageSize = ['5', '10', '15'];
@@ -125,8 +136,37 @@ angular
                     calories: 0,
                     rating: 0,
                 }
-                $scope.image = {};
+                $scope.image = undefined;
                 $scope.ingredients = [];
+            };
+
+            var get_ingredients = function() {
+                Meal.find({}).$promise.then(function(data) {
+                    $scope.meals_data = data;
+                });
+            };
+
+            var update = function() {
+                if ($scope.image) {
+                    modals.confirm('Do you want to overwrite the exisiting image?', function() {
+                        Upload.upload({
+                            url: API.URL_BASE + 'api/Meals/upload',
+                            data: {
+                                file: $scope.image
+                            }
+                        }).then(function(response) {
+                            $scope.meal.image = API.URL_BASE + response.data.path;
+                            $scope.meal.$save().then(function(data) {
+                                modals.alert('Changes made has been saved');
+                            });
+                        })
+                    });
+                } else {
+                    $scope.meal.$save().then(function(data) {
+                        modals.alert('Changes made has been saved');
+                    });
+                }
+
             };
 
             var create = function() {
@@ -176,6 +216,17 @@ angular
 
             $scope.clearForm = function($event) {
                 clear_form();
+            };
+
+            $scope.refresh = function($event) {
+                modals.confirm('Any unsaved changes will be discarded. Do you want to continue?', function() {
+                    get_ingredients();
+                    modals.alert('Meals list has been updated');
+                });
+            };
+
+            $scope.update = function($event) {
+                update();
             };
 
             $scope.create = function($event) {

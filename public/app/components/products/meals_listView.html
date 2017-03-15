@@ -18,7 +18,7 @@
                     </div>
                     <div class="uk-width-medium-3-10">
                         <div class="uk-margin-small-top">
-                            <selectize config="filter_status_config" options="filter_status_options" ng-model="multiSelectData.status" position="bottom"></selectize>
+                            <selectize config="filter_type_config" options="filter_type_options" ng-model="multiSelectData.type" position="bottom"></selectize>
                         </div>
                     </div>
                     <div class="uk-width-medium-2-10">
@@ -34,7 +34,7 @@
             <div class="md-card-content">
                 <div class="uk-grid" data-uk-grid-margin>
                     <div class="uk-width-1-1">
-                        {{ filter_status }}
+                        {{ filter_type }}
                         <div class="uk-overflow-container">
                             <table class="uk-table uk-table-nowrap uk-table-align-vertical">
                                 <thead>
@@ -61,7 +61,7 @@
                                         <td class="uk-width-1-10">{{ meal.type }}</td>
                                         <td class="uk-width-1-10 uk-text-nowrap">
                                             <span class="uk-badge uk-badge-success" ng-if="meal.status == 'available'">available</span>
-<span class="uk-badge uk-badge-warning" ng-if="meal.status == 'not available'">not available</span>
+                                            <span class="uk-badge uk-badge-warning" ng-if="meal.status == 'not available'">not available</span>
                                         </td>
                                         <td class="uk-text-nowrap">{{ meal.rating }}</td>
                                         <td class="uk-text-nowrap">
@@ -128,6 +128,12 @@
                             <label class="uk-form-label">Status</label>
                             <input config="{ create:false, maxItems: 1 }" options="options.status" ng-model="meal.status" name="meal_add_status_control" selectize />
                         </div>
+                        <div class="uk-form-row">
+                            <h3 class="heading_a uk-margin-small-bottom">
+                              Upload New Image
+                          </h3>
+                            <input type="file" class="dropify" ng-model="image" name="image" ngf-select ngf-drop ngf-accept="'image/*'" ngf-multiple="false" />
+                        </div>
                     </div>
                     <div class="uk-width-large-1-2">
                         <div class="uk-form-row">
@@ -138,14 +144,17 @@
                             <label for="meal_add_description_control">Description</label>
                             <textarea class="md-input" name="meal_add_description_control" id="meal_add_description_control" cols="30" rows="2" ng-model="meal.description" md-input textarea-autosize></textarea>
                         </div>
+                        <div class="uk-form-row">
+                            <h3 class="heading_a uk-margin-small-bottom">
+                              New Image
+                          </h3>
+                            <img ngf-src="image" class="img_medium">
+                        </div>
                     </div>
                 </div>
                 <div class="uk-grid" data-uk-grid-margin>
-
-                </div>
-                <div class="uk-grid" data-uk-grid-margin>
                     <div class="uk-form-row">
-                        <button type="submit" class="md-btn md-btn-primary md-btn-wave-light">Save New Meal</button>
+                        <button type="submit" class="md-btn md-btn-primary md-btn-wave-light">Save Changes</button>
                     </div>
                 </div>
             </div>
@@ -194,12 +203,7 @@
                             <h3 class="heading_a uk-margin-small-bottom">
                               Upload Image
                           </h3>
-                            <input type="file" class="dropify"
-                                ng-model="image"
-                                name="image"
-                                ngf-select ngf-drop
-                                ngf-accept="'image/*'"
-                                ngf-multiple="false" />
+                            <input type="file" class="dropify" ng-model="image" name="image" ngf-select ngf-drop ngf-accept="'image/*'" ngf-multiple="false" />
                         </div>
                     </div>
                     <div class="uk-width-large-1-2">
@@ -215,9 +219,8 @@
                             <h3 class="heading_a uk-margin-small-bottom">
                               Image
                           </h3>
-                            <img ngf-src="image">
+                            <img ngf-src="image" class="img_medium">
                         </div>
-                        {{ingredients_data}}
                     </div>
                 </div>
                 <div class="uk-grid" data-uk-grid-margin>
@@ -288,6 +291,33 @@
                     <p>
                         <span class="uk-text-muted uk-text-small uk-display-block uk-margin-small-bottom">Description</span> {{ meal.description }}
                     </p>
+                    <h3 class="heading_a uk-margin-small-bottom">
+                      Image
+                  </h3>
+                    <img ng-src="meal.image" ng-if="meal.image" class="img_medium">
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-2-10">
+                    <span class="uk-display-block uk-margin-small-top uk-text-large">Ingredients</span>
+                </div>
+                <div class="uk-width-medium-8-10">
+                    <table class="uk-table">
+                        <thead>
+                            <tr>
+                                <th class="uk-width-1-3">Ingredient</th>
+                                <th class="uk-width-1-3">Description</th>
+                                <th class="uk-width-1-3 uk-text-right">Calories</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ingredient in meal.mealItems">
+                                <td>{{ingredient.name}}</td>
+                                <td>{{ingredient.description}}</td>
+                                <td class="uk-text-right">{{ingredient.calories | number}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

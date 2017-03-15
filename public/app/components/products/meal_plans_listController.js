@@ -9,35 +9,32 @@ angular
         'Upload',
         'API',
         function ($scope, modals, meals_data, meal_plans_data, MealPlan, Upload, API) {
-            // meal plans data
-            $scope.meal_plans_data = meal_plans_data;
 
             $scope.pageSize = 10;
 
+            // meal plans data
+            $scope.meal_plans_data = meal_plans_data;
+
             $scope.filter_type_options = [
                 {
-                    value: 'breakfast',
-                    title: 'breakfast'
+                    value: 'weight loss',
+                    title: 'weight loss'
                 },
                 {
-                    value: 'lunch',
-                    title: 'lunch'
+                    value: 'normal',
+                    title: 'normal'
                 },
                 {
-                    value: 'dinner',
-                    title: 'dinner'
-                },
-                {
-                    value: 'snack',
-                    title: 'snack'
+                    value: 'weight gain',
+                    title: 'weight gain'
                 }
             ];
 
-            $scope.filter_status_config = {
+            $scope.filter_type_config = {
                 create: false,
                 valueField: 'value',
                 labelField: 'title',
-                placeholder: 'Status...'
+                placeholder: 'Type...'
             };
 
             $scope.filterData = {

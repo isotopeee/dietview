@@ -239,8 +239,8 @@ altairApp
                 })
                 // -- ADD MEAL PLANS --
                 .state("restricted.products.meal_plans_add", {
-                    url: "/meal_plans_add",
-                    templateUrl: 'app/components/products/meal_plans_add.html',
+                    url: "/meal_plans/add",
+                    templateUrl: 'app/components/products/meal_plans_addView.html',
                     controller: 'meal_plans_addCtrl',
                     resolve: {
                         meals_data: function(Meal){
@@ -252,6 +252,7 @@ altairApp
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 'lazy_pagination',
+                                'lazy_dropify',
                                 'app/components/products/meal_plans_addController.js'
                             ], { serie: true } );
                         }]
