@@ -19,7 +19,6 @@ angular
             });
 
             $('.dropify').dropify();
-
             var getMeal = function(id) {
                 var meal = {};
                 for (var i = 0; i < meals_data.length; i++) {
@@ -36,6 +35,16 @@ angular
                     }
                 }
                 return meal;
+            };
+
+            var getMealCalories = function(id){
+              var calories = 0;
+              for (var i = 0; i < meals_data.length; i++) {
+                  if (id === meals_data[i].id) {
+                    calories = meals_data[i].calories;
+                  }
+                }
+                return calories;
             };
 
             var filterMeal = function(meals_data, filter) {
@@ -77,7 +86,7 @@ angular
                 availCount: 0
             };
             $scope.meals = [];
-
+            $scope.totalCal = [];
 
 
 
@@ -92,6 +101,40 @@ angular
             };
 
             var create = function() {
+              //insert if
+              var min = $scope.meal_plan.targetCalories * .96 ;
+              var max = $scope.meal_plan.targetCalories * 1.04 ;
+              console.log(min , max);
+              if (min > $scope.meal_plan.averageCalories || max < $scope.meal_plan.averageCalories) {
+                modals.confirm('Average Calories of the meal plan is not within the range of the target. <br /> <br /> Continue?', function () {
+                  Upload.upload({
+                      url: API.URL_BASE + 'api/MealPlans/upload',
+                      data: {
+                          file: $scope.image
+                      }
+                  }).then(function(response) {
+                      MealPlan.create({
+                          meals: $scope.meal_plan.meals,
+                          feedbacks: $scope.meal_plan.feedbacks,
+                          code: $scope.meal_plan.code,
+                          name: $scope.meal_plan.name,
+                          description: $scope.meal_plan.description,
+                          averageCalories: $scope.meal_plan.averageCalories,
+                          type: $scope.meal_plan.type,
+                          remarks: $scope.meal_plan.remarks,
+                          image: API.URL_BASE + response.data.path,
+                          rating: $scope.meal_plan.rating,
+                          status: $scope.meal_plan.status,
+                          price: $scope.meal_plan.price
+                      }).$promise.then(function(data) {
+                          modals.alert('Meal Plan Added');
+                          clear_form();
+                      });
+                  }, null, function(event) {
+                      console.log(event);
+                  });
+                });
+              } else {
                 Upload.upload({
                     url: API.URL_BASE + 'api/MealPlans/upload',
                     data: {
@@ -118,10 +161,22 @@ angular
                 }, null, function(event) {
                     console.log(event);
                 });
+              }
             };
+
+            var calArray = new Array();
 
             $scope.onDurationChange = function(duration) {
                 $scope.meals = [];
+                var iMax = duration;
+                var jMax = 5;
+                for (i=0;i<iMax;i++) {
+                 calArray[i]=new Array();
+                for (j=0;j<jMax;j++) {
+                  calArray[i][j]=0;
+                 }
+                }
+
                 for (var i = 0; i < duration; i++) {
                     var dailyMeals = {
                         breakfast: {
@@ -159,27 +214,53 @@ angular
                 }
             };
 
+
+            var getITotal = function($index){
+              calArray[$index][4] = 0;
+              var totalCal = 0;
+              for(var i=0 ; i < 4 ; i ++)
+              {
+                calArray[$index][4] += calArray[$index][i];
+              }
+              $scope.totalCal[$index] = calArray[$index][4];
+              console.log(calArray[$index][4]);
+              for (var i=0 ; i < calArray.length ; i++)
+              {
+                totalCal += calArray[i][4];
+              }
+              $scope.meal_plan.averageCalories = totalCal/calArray.length;
+              console.log($scope.meal_plan.averageCalories);
+            }
+
             $scope.setBreakfast = function($index, mealId) {
                 var breakfast = getMeal(mealId);
                 $scope.meal_plan.meals[$index].breakfast = breakfast;
+                calArray[$index].splice(0, 1, getMealCalories(mealId));
+                getITotal($index);
                 console.log($scope.meal_plan);
             };
 
             $scope.setLunch = function($index, mealId) {
                 var lunch = getMeal(mealId);
                 $scope.meal_plan.meals[$index].lunch = lunch;
+                calArray[$index].splice(1, 1, getMealCalories(mealId));
+                getITotal($index);
                 console.log($scope.meal_plan);
             };
 
             $scope.setDinner = function($index, mealId) {
                 var dinner = getMeal(mealId);
                 $scope.meal_plan.meals[$index].dinner = dinner;
+                calArray[$index].splice(2, 1, getMealCalories(mealId));
+                getITotal($index);
                 console.log($scope.meal_plan);
             };
 
             $scope.setSnack = function($index, mealId) {
                 var snack = getMeal(mealId);
                 $scope.meal_plan.meals[$index].snack = snack;
+                calArray[$index].splice(3, 1, getMealCalories(mealId));
+                getITotal($index);
                 console.log($scope.meal_plan);
             };
 

@@ -4,12 +4,10 @@ angular
         '$scope',
         function ($scope) {
 
-            $scope.table = {
-                'row4': true
-            };
+            $scope.exportAction = function(){
+              $scope.$broadcast('export-pdf', {});
 
-            $scope.table2 = {
-                'row1': true
             }
+
         }
     ]);

@@ -13,7 +13,9 @@ angular
             $scope.meal_plan = {};
             $scope.duration = 0;
             $scope.meals = [];
-            console.log($scope.image);
+            $scope.totalCal = [];
+            var counter = 0;
+            var calArray = new Array();
 
             // populate models data
             MealPlan.findById({
@@ -34,7 +36,32 @@ angular
                 }
             });
 
-            console.log($scope.meals);
+            MealPlan.findById({
+              id: $stateParams.id
+            }).$promise.then(function(data) {
+                console.log(data.meals.length);
+                var iMax = data.meals.length;
+                var jMax = 5;
+                for (i=0;i<iMax;i++) {
+                 calArray[i]=new Array();
+                for (j=0;j<jMax;j++) {
+                  calArray[i][j]=0;
+                 }
+                }
+                for (var i = 0; i < data.meals.length; i++){
+                  calArray[i][0] = data.meals[i].breakfast.calories;
+                  calArray[i][1] = data.meals[i].lunch.calories;
+                  calArray[i][2] = data.meals[i].dinner.calories;
+                  if (data.meals[i].snack.hasOwnProperty('id')) {
+                      calArray[i][3] = data.meals[i].snack.calories;
+                  }
+                  calArray[i][4] = calArray[i][0] + calArray[i][1] + calArray[i][2] + calArray[i][3];
+                  $scope.totalCal[i] = calArray[i][4];
+                }
+
+            });
+
+            console.log(calArray);
 
             $rootScope.page_full_height = true;
             $rootScope.headerDoubleHeightActive = true;
@@ -160,7 +187,15 @@ angular
             };
 
             $scope.onDurationChange = function(duration) {
-                $scope.meals = [];
+                var iMax = duration;
+                var jMax = 5;
+                for (i=0;i<iMax;i++) {
+                 calArray[i]=new Array();
+                for (j=0;j<jMax;j++) {
+                  calArray[i][j]=0;
+                 }
+                }
+
                 for (var i = 0; i < duration; i++) {
                     var dailyMeals = {
                         breakfast: {
@@ -198,27 +233,62 @@ angular
                 }
             };
 
+            var getMealCalories = function(id){
+              var calories = 0;
+              for (var i = 0; i < meals_data.length; i++) {
+                  if (id === meals_data[i].id) {
+                    calories = meals_data[i].calories;
+                  }
+                }
+                return calories;
+            };
+
+            var getITotal = function($index){
+              calArray[$index][4] = 0;
+              var totalCal = 0;
+              for(var i=0 ; i < 4 ; i ++)
+              {
+                calArray[$index][4] += calArray[$index][i];
+              }
+              $scope.totalCal[$index] = calArray[$index][4];
+              console.log(calArray[$index][4]);
+              for (var i=0 ; i < calArray.length ; i++)
+              {
+                totalCal += calArray[i][4];
+              }
+              $scope.meal_plan.averageCalories = totalCal/calArray.length;
+              console.log($scope.meal_plan.averageCalories);
+            }
+
             $scope.setBreakfast = function($index, mealId) {
                 var breakfast = getMeal(mealId);
                 $scope.meal_plan.meals[$index].breakfast = breakfast;
+                calArray[$index].splice(0, 1, getMealCalories(mealId));
+                getITotal($index);
                 console.log($scope.meal_plan);
             };
 
             $scope.setLunch = function($index, mealId) {
                 var lunch = getMeal(mealId);
                 $scope.meal_plan.meals[$index].lunch = lunch;
+                calArray[$index].splice(1, 1, getMealCalories(mealId));
+                getITotal($index);
                 console.log($scope.meal_plan);
             };
 
             $scope.setDinner = function($index, mealId) {
                 var dinner = getMeal(mealId);
                 $scope.meal_plan.meals[$index].dinner = dinner;
+                calArray[$index].splice(2, 1, getMealCalories(mealId));
+                getITotal($index);
                 console.log($scope.meal_plan);
             };
 
             $scope.setSnack = function($index, mealId) {
                 var snack = getMeal(mealId);
                 $scope.meal_plan.meals[$index].snack = snack;
+                calArray[$index].splice(3, 1, getMealCalories(mealId));
+                getITotal($index);
                 console.log($scope.meal_plan);
             };
 
