@@ -5,7 +5,7 @@ angular
         '$scope',
         '$rootScope',
         function ($timeout,$scope,$rootScope) {
-    
+
             $scope.$on('onLastRepeat', function (scope, element, attrs) {
                 $timeout(function() {
                     if(!$rootScope.miniSidebarActive) {
@@ -16,7 +16,7 @@ angular
                         var tooltip_elem = $('#sidebar_main').find('.menu_tooltip');
                         tooltip_elem.each(function() {
                             var $this = $(this);
-    
+
                             $this.attr('title',$this.find('.menu_title').text());
                             UIkit.tooltip($this, {
                                 pos: 'right'
@@ -25,7 +25,7 @@ angular
                     }
                 })
             });
-    
+
             // language switcher
             $scope.langSwitcherModel = 'gb';
             var langData = $scope.langSwitcherOptions = [
@@ -59,7 +59,7 @@ angular
                     $('#lang_switcher').next().children('.selectize-input').find('input').attr('readonly',true);
                 }
             };
-    
+
             // menu entries
             $scope.sections = [
                 {
@@ -584,7 +584,7 @@ angular
                     ]
                 }
             ]
-    
+
         }
     ])
 ;

@@ -66,7 +66,7 @@ angular
                   function (data, headers) {
                     console.log(data);
                     console.log(headers);
-                    $state.go("restricted.dashboard");
+                    $state.go("restricted.pages.scrum_board");
                   },
                   function (response) {
                     console.log(response);

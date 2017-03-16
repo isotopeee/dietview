@@ -79,7 +79,17 @@ altairApp
                                 'lazy_themes'
                                 //'bower_components/angular-resource/angular-resource.min.js'
                             ]);
-                        }]
+                        }],
+                        user_data: function (User) {
+                            var user = User.getCachedCurrent();
+                            if(user !== null){
+                              return user;
+                            } else {
+                              return User.getCurrent().$promise.then(function (data) {
+                                return data;
+                              });
+                            }
+                        }
                     }
                 })
             // -- DASHBOARD --
@@ -309,6 +319,35 @@ altairApp
                         pageTitle: 'Meal Plan Details'
                     }
                 })
+                // -- SUBSCRIPTIONS --
+                .state("restricted.subscriptions", {
+                    url: "/subscriptions",
+                    template: '<div ui-view autoscroll="false"/>',
+                    abstract: true
+                })
+                // -- MEAL ITEMS --
+                .state("restricted.subscriptions.list", {
+                    url: "/list",
+                    templateUrl: 'app/components/subscriptions/subscriptions_listView.html',
+                    controller: 'subscriptions_listCtrl',
+                    resolve: {
+                        subscriptions_data: function(Subscription){
+                            return Subscription.find({}).$promise
+                            .then(function (data) {
+                              return data;
+                          });
+                        },
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'lazy_pagination',
+                                'app/components/subscriptions/subscriptions_listController.js'
+                            ], { serie: true } );
+                        }]
+                    },
+                    data: {
+                        pageTitle: 'Meal Items'
+                    }
+                })
                 // == NUTRITIONIST --
                 .state("restricted.nutritionist", {
                     url: "/nutritionist",
@@ -334,6 +373,60 @@ altairApp
                     },
                     data: {
                         pageTitle: 'Customers Vitals'
+                    }
+                })
+                // == REPORTS --
+                .state("restricted.reports", {
+                    url: "/reports",
+                    template: '<div ui-view autoscroll="false" ng-class="{ \'uk-height-1-1\': page_full_height }"/>',
+                    abstract: true,
+                    ncyBreadcrumb: {
+                        label: 'Reports'
+                    }
+                })
+                .state("restricted.reports.production", {
+                    url: "/production",
+                    templateUrl: 'app/components/reports/productionView.html',
+                    controller: 'productionCtrl',
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'app/components/reports/productionController.js'
+                            ],{serie: true});
+                        }]
+                    },
+                    data: {
+                        pageTitle: 'Production Assistance'
+                    }
+                })
+                .state("restricted.reports.deliveries", {
+                    url: "/deliveries",
+                    templateUrl: 'app/components/reports/deliveriesView.html',
+                    controller: 'deliveriesCtrl',
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'app/components/reports/deliveriesController.js'
+                            ],{serie: true});
+                        }]
+                    },
+                    data: {
+                        pageTitle: 'Delivery List'
+                    }
+                })
+                .state("restricted.reports.receipts", {
+                    url: "/receipts",
+                    templateUrl: 'app/components/reports/receiptsView.html',
+                    controller: 'receiptsCtrl',
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'app/components/reports/receiptsController.js'
+                            ],{serie: true});
+                        }]
+                    },
+                    data: {
+                        pageTitle: 'Receipts'
                     }
                 })
                 // -- FORMS --
