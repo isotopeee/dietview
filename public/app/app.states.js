@@ -261,6 +261,54 @@ altairApp
                         pageTitle: 'New Meal Plan'
                     }
                 })
+                // -- EDIT MEAL PLANS --
+                .state("restricted.products.meal_plans_edit", {
+                    url: "/meal_plans/edit?id",
+                    templateUrl: 'app/components/products/meal_plans_editView.html',
+                    controller: 'meal_plans_editCtrl',
+                    resolve: {
+                        meals_data: function(Meal){
+                          return Meal.find({}).$promise
+                          .then(function (data) {
+                            return data;
+                          })
+                        },
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'lazy_pagination',
+                                'lazy_dropify',
+                                'app/components/products/meal_plans_editController.js'
+                            ], { serie: true } );
+                        }]
+                    },
+                    data: {
+                        pageTitle: 'Edit Meal Plan'
+                    }
+                })
+                // -- DETAILS MEAL PLANS --
+                .state("restricted.products.meal_plans_details", {
+                    url: "/meal_plans/details?id",
+                    templateUrl: 'app/components/products/meal_plans_detailsView.html',
+                    controller: 'meal_plans_detailsCtrl',
+                    resolve: {
+                        meals_data: function(Meal){
+                          return Meal.find({}).$promise
+                          .then(function (data) {
+                            return data;
+                          })
+                        },
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'lazy_pagination',
+                                'lazy_dropify',
+                                'app/components/products/meal_plans_detailsController.js'
+                            ], { serie: true } );
+                        }]
+                    },
+                    data: {
+                        pageTitle: 'Meal Plan Details'
+                    }
+                })
                 // == NUTRITIONIST --
                 .state("restricted.nutritionist", {
                     url: "/nutritionist",

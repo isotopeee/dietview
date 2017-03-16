@@ -43,6 +43,22 @@ angular
 
             $scope.filter_pageSize = ['5', '10', '15'];
 
+            var remove = function(index, id) {
+                console.log(id);
+                modals.confirm('Are you sure you want to delete the meal plan', function() {
+                    MealPlan.deleteById({
+                        id: id
+                    }).$promise.then(function(data) {
+                        modals.alert('Meal Plan has been deleted');
+                        $scope.meal_plans_data.splice(index, 1);
+                    });
+                });
+            };
+
+            $scope.remove = function($event, $index, meal_plan) {
+                remove($index, meal_plan.id);
+            };
+
         }
     ])
 ;

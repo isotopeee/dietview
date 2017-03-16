@@ -1,14 +1,40 @@
 angular
     .module('altairApp')
-    .controller('meal_plans_addCtrl', [
+    .controller('meal_plans_detailsCtrl', [
         '$rootScope',
         '$scope',
+        '$stateParams',
         'modals',
         'meals_data',
         'MealPlan',
         'Upload',
         'API',
-        function($rootScope, $scope, modals, meals_data, MealPlan, Upload, API) {
+        function($rootScope, $scope, $stateParams, modals, meals_data, MealPlan, Upload, API) {
+            $scope.meal_plan = {};
+            $scope.duration = 0;
+            $scope.meals = [];
+            console.log($scope.image);
+
+            // populate models data
+            MealPlan.findById({
+                id: $stateParams.id
+            }).$promise.then(function(data) {
+                $scope.meal_plan = data;
+                $scope.duration = $scope.meal_plan.meals.length;
+                for (var i = 0; i < data.meals.length; i++) {
+                    var dailyMeals = {
+                        breakfast: data.meals[i].breakfast.id,
+                        lunch: data.meals[i].lunch.id,
+                        dinner: data.meals[i].dinner.id
+                    };
+                    if (data.meals[i].snack.hasOwnProperty('id')) {
+                        dailyMeals.snack = data.meals[i].snack.id;
+                    }
+                    $scope.meals.push(dailyMeals);
+                }
+            });
+
+            console.log($scope.meals);
 
             $rootScope.page_full_height = true;
             $rootScope.headerDoubleHeightActive = true;
@@ -51,7 +77,7 @@ angular
             var breakfast = filterMeal(meals_data, 'breakfast');
             var lunch = filterMeal(meals_data, 'lunch');
             var dinner = filterMeal(meals_data, 'dinner');
-            var snack = filterMeal(meals_data, 'snack');
+            var snack = filterMeal(meals_data, 'snack')
 
             $scope.options = {
                 meals: meals_data,
@@ -70,17 +96,6 @@ angular
                 ]
             };
 
-            $scope.meal_plan = {
-                feedbacks: [],
-                meals: [],
-                rating: 0,
-                availCount: 0
-            };
-            $scope.meals = [];
-
-
-
-
             var clear_form = function() {
                 $scope.meals = [];
                 $scope.meal_plan = {
@@ -89,6 +104,30 @@ angular
                     rating: 0,
                     availCount: 0
                 };
+                $scope.image = undefined;
+            };
+
+            var update = function() {
+                if ($scope.image) {
+                    modals.confirm('Do you want to overwrite the exisiting image?', function() {
+                        Upload.upload({
+                            url: API.URL_BASE + 'api/MealPlans/upload',
+                            data: {
+                                file: $scope.image
+                            }
+                        }).then(function(response) {
+                            $scope.meal_plan.image = API.URL_BASE + response.data.path;
+                            $scope.meal_plan.$save().then(function(data) {
+                                modals.alert('Changes made has been saved');
+                            });
+                        })
+                    });
+                } else {
+                    $scope.meal_plan.$save().then(function(data) {
+                        modals.alert('Changes made has been saved');
+                    });
+                }
+
             };
 
             var create = function() {
@@ -181,6 +220,10 @@ angular
                 var snack = getMeal(mealId);
                 $scope.meal_plan.meals[$index].snack = snack;
                 console.log($scope.meal_plan);
+            };
+
+            $scope.update = function($event) {
+                update();
             };
 
             $scope.create = function($event) {

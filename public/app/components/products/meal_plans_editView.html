@@ -1,9 +1,9 @@
 <div id="page_content">
     <div id="page_content_inner">
         <div class="md-card md-card-single main-print" id="meal_plans" single-card>
-            <form ng-submit="create($event)" class="uk-form-stacked">
+            <form ng-submit="update($event)" class="uk-form-stacked">
                 <div class="md-card-toolbar">
-                    <h1 class="md-card-toolbar-heading-text uk-text-primary">New Meal Plan</h1>
+                    <h1 class="md-card-toolbar-heading-text uk-text-warning">Edit Meal Plan</h1>
                 </div>
                 <div class="md-card-content large-padding">
                     <div class="uk-grid uk-grid-divider" data-uk-grid-margin>
@@ -58,11 +58,11 @@
                                 <input class="md-input" name="meal_plan_add_description_control" id="meal_plan_add_description_control" cols="30" rows="2" ng-model="meal_plan.description" md-input textarea-autosize></input>
                             </div>
                             <div class="uk-form-row">
-                                <h3 class="heading_a uk-margin-small-bottom">Upload Image</h3>
+                                <h3 class="heading_a uk-margin-small-bottom">Upload New Image</h3>
                                 <input type="file" class="dropify" ng-model="image" name="image" ngf-select ngf-drop ngf-accept="'image/*'" ngf-multiple="false" />
                             </div>
                             <div class="uk-form-row">
-                                <h3 class="heading_a uk-margin-small-bottom">Image</h3>
+                                <h3 class="heading_a uk-margin-small-bottom">New Image</h3>
                                 <img ngf-src="image" class="img_medium">
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                     <div class="uk-grid" data-uk-grid-margin>
                         <div class="uk-width-1-1">
                             <div id="form_invoice_service">
-                                <div class="uk-grid" data-uk-grid-margin ng-repeat="dailyPlan in meals">
+                                <div class="uk-grid" data-uk-grid-margin ng-repeat="dailyPlan in meal_plan.meals">
                                     <div class="uk-width-medium-1-10 uk-text-center">
                                         <p class="uk-text-large">Meals for Day {{$index +1}}</p>
                                     </div>
@@ -97,7 +97,7 @@
                                 </div>
                             </div>
                             <div class="uk-text-center uk-margin-medium-top uk-margin-bottom">
-                                <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Add Meal Plan</button>
+                                <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Save Changes</button>
                             </div>
                         </div>
                     </div>
