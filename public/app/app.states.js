@@ -412,6 +412,12 @@ altairApp
                     templateUrl: 'app/components/reports/productionView.html',
                     controller: 'productionCtrl',
                     resolve: {
+                      production_data: function(Subscription){
+                        return Subscription.find({}).$promise
+                        .then(function (data) {
+                          return data;
+                        })
+                      },
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 'app/components/reports/productionController.js'
@@ -427,6 +433,12 @@ altairApp
                     templateUrl: 'app/components/reports/deliveriesView.html',
                     controller: 'deliveriesCtrl',
                     resolve: {
+                      deliveries_data: function(Subscription){
+                        return Subscription.find({}).$promise
+                        .then(function (data) {
+                          return data;
+                        })
+                      },
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 'app/components/reports/deliveriesController.js'
@@ -442,6 +454,12 @@ altairApp
                     templateUrl: 'app/components/reports/receiptsView.html',
                     controller: 'receiptsCtrl',
                     resolve: {
+                      production_data: function(Subscription){
+                        return Subscription.find({}).$promise
+                        .then(function (data) {
+                          return data;
+                        })
+                      },
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 'app/components/reports/receiptsController.js'
