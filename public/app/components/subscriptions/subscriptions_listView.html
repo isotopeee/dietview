@@ -5,11 +5,11 @@
                 <div class="uk-grid" data-uk-grid-margin="">
                     <div class="uk-width-medium-2-10">
                         <label for="subscription_search_first_name">First name</label>
-                        <input type="text" class="md-input" id="subscription_search_first_name" ng-model="filter.customer.firstname" md-input>
+                        <input type="text" class="md-input" id="subscription_search_first_name" ng-model="filter.customer.account.profile.firstname" md-input>
                     </div>
                     <div class="uk-width-medium-2-10">
                         <label for="subscription_search_last_name">Last name</label>
-                        <input type="text" class="md-input" id="subscription_search_last_name" ng-model="filter.customer.lastname" md-input>
+                        <input type="text" class="md-input" id="subscription_search_last_name" ng-model="filter.customer.account.profile.lastname" md-input>
                     </div>
                     <div class="uk-width-medium-2-10">
                         <label for="subscription_search_plan">Plan name</label>
@@ -41,24 +41,26 @@
                                         <th>Customer</th>
                                         <th>Plan</th>
                                         <th>Subscription Date</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr dir-paginate="subscription in subscriptions_data | filter: filter | multiSelectFilter: multiSelectData | itemsPerPage: pageSize">
-                                        <td class="uk-width-3-10 uk-text-large">{{subscription.customer.account.profile.firstname}} {{subscription.customer.account.profile.lastname}}</td>
-                                        <td class="uk-width-2-10 uk-text-nowrap">A very long plan name</td>
-                                        <td class="uk-width-3-10">Subscription Date</td>
-                                        <td class="uk-width-2-10 uk-text-nowrap">
-                                            <span class="uk-badge uk-badge-success" ng-if="ingredient.status == 'active'">active</span>
-                                            <span class="uk-badge uk-badge-warning" ng-if="ingredient.status == 'pending'">pending</span>
-                                            <span class="uk-badge uk-badge-success" ng-if="ingredient.status == 'inactive'">inactive</span>
+                                        <td class="uk-width-2-10 uk-text-large">{{subscription.customer.account.profile.firstname}} {{subscription.customer.account.profile.lastname}}</td>
+                                        <td class="uk-width-1-10 uk-text-nowrap">{{subscription.mealPlan.name}}</td>
+                                        <td class="uk-width-2-10">{{subscription.subscriptionDate | date}}</td>
+                                        <td class="uk-width-2-10">{{subscription.startDate | date}}</td>
+                                        <td class="uk-width-2-10">{{subscription.endDate | date}}</td>
+                                        <td class="uk-width-1-10 uk-text-nowrap">
+                                            <span class="uk-badge uk-badge-success" ng-if="subscription.status == 'active'">active</span>
+                                            <span class="uk-badge uk-badge-warning" ng-if="subscription.status == 'pending'">pending</span>
+                                            <span class="uk-badge uk-badge-success" ng-if="subscription.status == 'inactive'">inactive</span>
                                         </td>
                                         <td class="uk-text-nowrap">
-                                            <a href="#" ng-click="changeSelectedItem($event,$index)" data-uk-modal="{target:'#modal_details'}"><i class="md-icon material-icons md-24">&#xE8F4;</i></a>
-                                            <a href="#" ng-click="changeSelectedItem($event,$index)" data-uk-modal="{target:'#modal_edit'}"><i class="md-icon material-icons md-24">&#xE3C9;</i></a>
-                                            <a href="#" ng-click="remove($event,$index)" data-uk-modal="{target:'#modal_delete'}"><i class="md-icon material-icons md-24">&#xE872;</i></a>
+                                            <a href="javascript:void(0)" ng-click="approve($event,$index)" ng-if="subscription.status === 'pending'" data-uk-tooltip="{pos:'top'}" title="Approve Subscription"><i class="md-icon material-icons md-24">&#xE86C;</i></a>
                                         </td>
                                     </tr>
                                 </tbody>

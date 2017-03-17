@@ -55,33 +55,4 @@
                 </div>
             </form>
         </div>
-        <div class="md-card-content large-padding" id="register_form" style="display: none">
-            <button type="button" class="uk-position-top-right uk-close uk-margin-right uk-margin-top back_to_login" ng-click="backToLogin($event)"></button>
-            <h2 class="heading_a uk-margin-medium-bottom">Create an account</h2>
-            <form>
-                <div class="uk-form-row">
-                    <label for="register_username">Username</label>
-                    <input class="md-input" type="text" id="register_username" ng-model="register_username" md-input />
-                </div>
-                <div class="uk-form-row">
-                    <label for="register_password">Password</label>
-                    <input class="md-input" type="password" id="register_password" ng-model="register_password" md-input />
-                </div>
-                <div class="uk-form-row">
-                    <label for="register_password_repeat">Repeat Password</label>
-                    <input class="md-input" type="password" id="register_password_repeat" ng-model="register_password_repeat" md-input />
-                </div>
-                <div class="uk-form-row">
-                    <label for="register_email">E-mail</label>
-                    <input class="md-input" type="text" id="register_email" ng-model="register_email" md-input />
-                </div>
-                <div class="uk-margin-medium-top">
-                    <a ui-sref="restricted.dashboard" class="md-btn md-btn-primary md-btn-block md-btn-large">Sign Up</a>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="uk-margin-top uk-text-center">
-        <a href="#" id="signup_form_show" ng-hide="registerFormActive" ng-click="registerForm($event)">Create an account</a>
-    </div>
 </div>

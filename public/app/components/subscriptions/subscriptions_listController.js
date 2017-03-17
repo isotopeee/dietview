@@ -27,7 +27,7 @@ angular
                     title: 'inactive'
                 }
             ];
-            
+
             $scope.filter_status_config = {
                 create: false,
                 valueField: 'value',
@@ -112,6 +112,16 @@ angular
             $scope.clearForm = function ($event) {
                 clear_form();
             };
+
+            $scope.approve = function ($event, $index) {
+              modals.confirm('Approve subscription?', function () {
+                $scope.subscriptions_data[$index].status = 'active';
+                $scope.subscriptions_data[$index].isActive = true;
+                $scope.subscriptions_data[$index].$save().then(function (data) {
+                  modals.alert('Subscription is now active!');
+                })
+              });
+            }
 
             $scope.refresh = function ($event) {
                 modals.confirm('Any unsaved changes will be discarded. Do you want to continue?', function () {
