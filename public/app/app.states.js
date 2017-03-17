@@ -408,68 +408,68 @@ altairApp
                     }
                 })
                 .state("restricted.reports.production", {
-                    url: "/production",
-                    templateUrl: 'app/components/reports/productionView.html',
-                    controller: 'productionCtrl',
-                    resolve: {
-                      production_data: function(Subscription){
-                        return Subscription.find({}).$promise
-                        .then(function (data) {
-                          return data;
-                        })
-                      },
-                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load([
-                                'app/components/reports/productionController.js'
-                            ],{serie: true});
-                        }]
-                    },
-                    data: {
-                        pageTitle: 'Production Assistance'
-                    }
-                })
-                .state("restricted.reports.deliveries", {
-                    url: "/deliveries",
-                    templateUrl: 'app/components/reports/deliveriesView.html',
-                    controller: 'deliveriesCtrl',
-                    resolve: {
-                      deliveries_data: function(Subscription){
-                        return Subscription.find({}).$promise
-                        .then(function (data) {
-                          return data;
-                        })
-                      },
-                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load([
-                                'app/components/reports/deliveriesController.js'
-                            ],{serie: true});
-                        }]
-                    },
-                    data: {
-                        pageTitle: 'Delivery List'
-                    }
-                })
-                .state("restricted.reports.receipts", {
-                    url: "/receipts",
-                    templateUrl: 'app/components/reports/receiptsView.html',
-                    controller: 'receiptsCtrl',
-                    resolve: {
-                      production_data: function(Subscription){
-                        return Subscription.find({}).$promise
-                        .then(function (data) {
-                          return data;
-                        })
-                      },
-                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load([
-                                'app/components/reports/receiptsController.js'
-                            ],{serie: true});
-                        }]
-                    },
-                    data: {
-                        pageTitle: 'Receipts'
-                    }
-                })
+                   url: "/production",
+                   templateUrl: 'app/components/reports/productionView.html',
+                   controller: 'productionCtrl',
+                   resolve: {
+                     production_data: function(Subscription){
+                       return Subscription.find({}).$promise
+                       .then(function (data) {
+                         return data;
+                       })
+                     },
+                       deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                           return $ocLazyLoad.load([
+                               'app/components/reports/productionController.js'
+                           ],{serie: true});
+                       }]
+                   },
+                   data: {
+                       pageTitle: 'Production Assistance'
+                   }
+               })
+               .state("restricted.reports.deliveries", {
+                   url: "/deliveries",
+                   templateUrl: 'app/components/reports/deliveriesView.html',
+                   controller: 'deliveriesCtrl',
+                   resolve: {
+                     deliveries_data: function(Subscription){
+                       return Subscription.find({}).$promise
+                       .then(function (data) {
+                         return data;
+                       })
+                     },
+                       deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                           return $ocLazyLoad.load([
+                               'app/components/reports/deliveriesController.js'
+                           ],{serie: true});
+                       }]
+                   },
+                   data: {
+                       pageTitle: 'Delivery List'
+                   }
+               })
+               .state("restricted.reports.receipts", {
+                   url: "/receipts",
+                   templateUrl: 'app/components/reports/receiptsView.html',
+                   controller: 'receiptsCtrl',
+                   resolve: {
+                     production_data: function(Subscription){
+                       return Subscription.find({}).$promise
+                       .then(function (data) {
+                         return data;
+                       })
+                     },
+                       deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                           return $ocLazyLoad.load([
+                               'app/components/reports/receiptsController.js'
+                           ],{serie: true});
+                       }]
+                   },
+                   data: {
+                       pageTitle: 'Receipts'
+                   }
+               })
 
             // -- PAGES --
                 .state("restricted.pages", {
