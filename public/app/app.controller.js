@@ -1,11 +1,13 @@
 /*
- *  Altair Admin angularjs
+ *  Dietview
  *  controller
  */
+(function() {
+  'use strict';
 
-angular
-    .module('altairApp')
+  angular
+    .module('dietviewApp')
     .controller('mainCtrl', [
-        function () {}
-    ])
-;
+      function() {}
+    ]);
+}());

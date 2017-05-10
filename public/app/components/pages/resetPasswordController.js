@@ -1,36 +1,42 @@
-angular
-    .module('altairApp')
+(function() {
+  'use strict';
+
+  angular
+    .module('dietviewApp')
     .controller('resetPasswordCtrl', [
-        '$scope',
-        '$state',
-        '$stateParams',
-        'User',
-        function ($scope,$state,$stateParams,User) {
+      '$scope',
+      '$state',
+      '$stateParams',
+      'User',
+      function($scope, $state, $stateParams, User) {
 
-          $scope.recaptcha = {};
+        $scope.recaptcha = {};
+        var info = {
+          accessToken: $stateParams.access_token,
+          userId: $stateParams.user_id
+        };
+        $scope.resetPassword = reset_password;
 
-          var info = {
-            accessToken: $stateParams.access_token,
-            userId: $stateParams.user_id
-          };
+        //////////////////////////////////////////////////////////////////////
 
-          console.log(info);
-
-          // reset password
-          var reset_password = function () {
-              if (!$scope.recaptcha.reset) {
-                alert('check recaptcha');
-              } else {
-                User.changePassword({}, info,
-                function (data, headers) {
-                  $state.go('login');
-                  console.log(data);
-                  console.log(headers);
-                },
-                function (response) {
-                  console.log(err);
-                });
-              }
-          };
+        // reset password
+        function reset_password($event) {
+          if (!$scope.recaptcha.reset) {
+            alert('check recaptcha');
+          } else {
+            info.password = $scope.password;
+            info.confirmation = $scope.confirmation;
+            User.changePassword({}, info,
+              function(data, headers) {
+                $state.go('login');
+                console.log(data);
+                console.log(headers);
+              },
+              function(response) {
+                console.log(err);
+              });
+          }
         }
+      }
     ]);
+}());
