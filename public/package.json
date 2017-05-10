@@ -1,21 +1,20 @@
 {
-  "name": "altair_admin_angularJS",
-  "version": "2.9.1",
-  "description": "Altair Admin Material Design UIkit Template",
+  "name": "dietview",
+  "version": "0.0.1",
+  "description": "AngularJS web application for Dietview platform",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "admin",
-    "panel",
-    "material design",
-    "dashboard",
-    "angular js"
+    "dietview",
+    "dietview management",
+    "dietview admin",
+    "dietview web"
   ],
-  "author": "tzd",
+  "author": "John Michael Doroy <johnmichael.doroy@gmail.com>",
   "license": "http://themeforest.net/licenses",
-  "homepage": "http://altair.tzdthemes.com",
+  "homepage": "https://dietview.mybluemix.net/",
   "private": true,
   "devDependencies": {
     "browser-sync": "^2.17.0",

@@ -1,5 +1,5 @@
 {
-  "name": "Dietview",
+  "name": "dietview",
   "version": "0.0.1",
   "private": true,
   "main": "app.js",
@@ -11,7 +11,10 @@
     "cors": "^2.8.1",
     "express": "4.13.x"
   },
-  "repository": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isotopeee/dietview.git"
+  },
   "engines": {
     "node": "4.x"
   }

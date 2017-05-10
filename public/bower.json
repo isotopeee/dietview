@@ -1,9 +1,9 @@
 {
-  "name": "altair_admin_angularJS",
+  "name": "dietview",
   "authors": [
-    "tzd"
+    "John Michael Doroy <johnmichael.doroy@gmail.com>"
   ],
-  "description": "Material Design Premium Admin Template",
+  "description": "AngularJS web application for Dietview platform",
   "main": [
     "index.html",
     "app/app.js"
@@ -17,7 +17,7 @@
     "angularjs"
   ],
   "license": "http://themeforest.net/licenses",
-  "homepage": "http://altair.tzdthemes.com",
+  "homepage": "https://dietview.mybluemix.net",
   "private": true,
   "ignore": [
     "**/.*",
