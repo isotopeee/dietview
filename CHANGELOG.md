@@ -4,6 +4,7 @@
     - Code Refactor
         - Change main app module name
         - Code clean-up on meal plans module (details, add, update)
+        - Fix jshint warnings
 
 # May 14, 2017
     - Products Module

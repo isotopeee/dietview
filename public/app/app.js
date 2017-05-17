@@ -70,8 +70,8 @@
     if (0 < b) return parseInt(a.substring(b + 5, a.indexOf(".", b)), 10);
     if (0 < a.indexOf("Trident/")) return b = a.indexOf("rv:"), parseInt(a.substring(b + 3, a.indexOf(".", b)), 10);
     b = a.indexOf("Edge/");
-    return 0 < b ? parseInt(a.substring(b + 5, a.indexOf(".", b)), 10) : !1
-  };
+    return 0 < b ? parseInt(a.substring(b + 5, a.indexOf(".", b)), 10) : !1;
+  }
 
   /* Run Block */
   angular
@@ -101,7 +101,7 @@
             $('svg,canvas,video').each(function() {
               $(this).css('height', 0);
             });
-          };
+          }
 
           $timeout(function() {
             $rootScope.pageLoading = false;
@@ -127,7 +127,7 @@
                 }
                 var peity = $this.prev('.peity_data,.peity');
                 if (peity.length) {
-                  peity.peity().change()
+                  peity.peity().change();
                 }
               });
             }
@@ -170,7 +170,7 @@
         $rootScope.largeScreen = w.width() >= 1220;
 
         w.on('resize', function() {
-          return $rootScope.largeScreen = w.width() >= 1220;
+          return ($rootScope.largeScreen = w.width() >= 1220);
         });
 
         // show/hide main menu on page load
