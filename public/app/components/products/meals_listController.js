@@ -20,7 +20,7 @@
           feedbacks: [],
           calories: 0,
           rating: 0,
-        }
+        };
         $scope.options = {
           ingredients: ingredients_data,
           type: [
@@ -33,7 +33,7 @@
             'available',
             'not available'
           ]
-        }
+        };
         //selectize config
         $scope.config = {
           ingredients: {
@@ -114,8 +114,8 @@
         };
         $scope.filter_pageSize = ['5', '10', '15'];
 
-        $scope.changeSelectedItem = function($event, $index) {
-          change_selected_item($index);
+        $scope.changeSelectedItem = function($event, meal) {
+          change_selected_item(meal);
         };
         $scope.clearForm = function($event) {
           clear_form();
@@ -132,9 +132,9 @@
         $scope.create = function($event) {
           create();
         };
-        $scope.remove = function($event, $index) {
-          $scope.changeSelectedItem($event, $index);
-          remove($index);
+        $scope.remove = function($event, meal) {
+          $scope.changeSelectedItem($event, meal);
+          remove(meal);
         };
 
         ////////////////////////////////////////////////////////////////////
@@ -146,14 +146,14 @@
             feedbacks: [],
             calories: 0,
             rating: 0,
-          }
+          };
           $scope.image = undefined;
           $scope.ingredients = [];
         }
 
-        function change_selected_item(index) {
+        function change_selected_item(meal) {
           clear_form();
-          $scope.meal = $scope.meals_data[index];
+          $scope.meal = meal;
           for (var i = 0; i < $scope.meal.mealItems.length; i++) {
             $scope.ingredients.push($scope.meal.mealItems[i].id);
           }
@@ -179,7 +179,7 @@
                 $scope.meal.$save().then(function(data) {
                   modals.alert('Changes made has been saved');
                 });
-              })
+              });
             });
           } else {
             $scope.meal.$save().then(function(data) {
@@ -219,13 +219,13 @@
           });
         }
 
-        function remove(index) {
+        function remove(meal) {
           modals.confirm('Are you sure you want to delete the meal', function() {
             Meal.deleteById({
               id: $scope.meal.id
             }).$promise.then(function(data) {
               modals.alert('Meal has been deleted');
-              $scope.meals_data.splice(index, 1);
+              // TODO: Remove deleted meal from $scope.meals_data
             });
           });
         }

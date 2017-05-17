@@ -89,7 +89,7 @@
         // authenticate User
         function authenticate() {
           if (!$scope.recaptcha.login) {
-            alert('check recaptcha');
+            modals.alert('Check recaptcha');
           } else {
             var credentials = $scope.credentials,
               rememberMe = $scope.rememberMe;
@@ -114,7 +114,7 @@
         //request reset password
         function request_reset_password() {
           if (!$scope.recaptcha.reset) {
-            alert('check recaptcha');
+            modals.alert('Check recaptcha');
           } else {
             User.resetPassword({}, $scope.reset,
               function(data, headers) {

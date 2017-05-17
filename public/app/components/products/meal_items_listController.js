@@ -49,8 +49,8 @@
           ]
         };
 
-        $scope.changeSelectedItem = function($event, $index) {
-          change_selected_item($index);
+        $scope.changeSelectedItem = function($event, ingredient) {
+          change_selected_item(ingredient);
         };
         $scope.clearForm = function($event) {
           clear_form();
@@ -67,15 +67,15 @@
         $scope.create = function($event) {
           create();
         };
-        $scope.remove = function($event, $index) {
-          $scope.changeSelectedItem($event, $index);
-          remove($index);
+        $scope.remove = function($event, ingredient) {
+          $scope.changeSelectedItem($event, ingredient);
+          remove(ingredient);
         };
 
         ////////////////////////////////////////////////////////////////////
 
-        function change_selected_item(index) {
-          $scope.ingredient = $scope.ingredients_data[index];
+        function change_selected_item(ingredient) {
+          $scope.ingredient = ingredient;
         }
 
         function clear_form() {
@@ -109,13 +109,13 @@
           });
         }
 
-        function remove(index) {
+        function remove(ingredient) {
           modals.confirm('Are you sure you want to delete the ingredient', function() {
             MealItem.deleteById({
               id: $scope.ingredient.id
             }).$promise.then(function(data) {
               modals.alert('Ingredient has been deleted');
-              $scope.ingredients_data.splice(index, 1);
+              // TODO: Remove the deleted ingredient from $scope.ingredients_data
             });
           });
         }

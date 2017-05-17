@@ -43,7 +43,7 @@
                                 </thead>
                                 <tbody>
                                     <tr dir-paginate="ingredient in ingredients_data | filter: filter | multiSelectFilter: multiSelectData | itemsPerPage: pageSize">
-                                        <td class="uk-width-3-10 uk-text-large"><a ng-click="changeSelectedItem($event,$index)" href="#" data-uk-modal="{target:'#modal_details'}">{{ ingredient.name }}</a></td>
+                                        <td class="uk-width-3-10 uk-text-large"><a ng-click="changeSelectedItem($event, ingredient)" href="#" data-uk-modal="{target:'#modal_details'}">{{ ingredient.name }}</a></td>
                                         <td class="uk-width-4-10 uk-text-nowrap">{{ ingredient.description }}</td>
                                         <td class="uk-width-1-10">{{ ingredient.calories | number }}</td>
                                         <td class="uk-width-2-10 uk-text-nowrap">
@@ -51,9 +51,9 @@
                                             <span class="uk-badge uk-badge-warning" ng-if="ingredient.status == 'not available'">not available</span>
                                         </td>
                                         <td class="uk-text-nowrap">
-                                            <a href="#" ng-click="changeSelectedItem($event,$index)" data-uk-modal="{target:'#modal_details'}"><i class="md-icon material-icons md-24">&#xE8F4;</i></a>
-                                            <a href="#" ng-click="changeSelectedItem($event,$index)" data-uk-modal="{target:'#modal_edit'}"><i class="md-icon material-icons md-24">&#xE3C9;</i></a>
-                                            <a href="#" ng-click="remove($event,$index)" data-uk-modal="{target:'#modal_delete'}"><i class="md-icon material-icons md-24">&#xE872;</i></a>
+                                            <a href="#" ng-click="changeSelectedItem($event, ingredient)" data-uk-modal="{target:'#modal_details'}"><i class="md-icon material-icons md-24">&#xE8F4;</i></a>
+                                            <a href="#" ng-click="changeSelectedItem($event, ingredient)" data-uk-modal="{target:'#modal_edit'}"><i class="md-icon material-icons md-24">&#xE3C9;</i></a>
+                                            <a href="#" ng-click="remove($event, ingredient)" data-uk-modal="{target:'#modal_delete'}"><i class="md-icon material-icons md-24">&#xE872;</i></a>
                                         </td>
                                     </tr>
                                 </tbody>

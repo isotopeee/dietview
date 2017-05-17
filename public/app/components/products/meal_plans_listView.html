@@ -57,7 +57,7 @@
                                 <tbody>
                                     <tr dir-paginate="meal_plan in meal_plans_data | filter: filter | multiSelectFilter: multiSelectData | itemsPerPage: pageSize">
                                         <td class="uk-width-1-10"><img class="img_thumb" ng-src="{{ meal_plan.image }}" alt=""></td>
-                                        <td class="uk-width-1-10 uk-text-large"><a ng-click="changeSelectedItem($event,$index)" href="#" data-uk-modal="{target:'#modal_details'}">{{ meal_plan.code }}</a></td>
+                                        <td class="uk-width-1-10 uk-text-large"><a ng-click="changeSelectedItem($event,meal_plan)" href="#" data-uk-modal="{target:'#modal_details'}">{{ meal_plan.code }}</a></td>
                                         <td class="uk-width-1-10 uk-text-large">{{ meal_plan.name }}</td>
                                         <td class="uk-width-1-10 uk-text-large">{{ meal_plan.description }}</a>
                                         </td>
@@ -71,7 +71,7 @@
                                         <td class="uk-text-nowrap">
                                             <a href="javascript:void(0)" ui-sref="restricted.products.meal_plans_details({id: meal_plan.id})"><i class="md-icon material-icons md-24">&#xE8F4;</i></a>
                                             <a href="javascript:void(0)" ui-sref="restricted.products.meal_plans_edit({id: meal_plan.id})"><i class="md-icon material-icons md-24">&#xE3C9;</i></a>
-                                            <a href="javascript:void(0)" ng-click="remove($event,$index, meal_plan)"><i class="md-icon material-icons md-24">&#xE872;</i></a>
+                                            <a href="javascript:void(0)" ng-click="remove($event, meal_plan)"><i class="md-icon material-icons md-24">&#xE872;</i></a>
                                         </td>
                                     </tr>
                                 </tbody>

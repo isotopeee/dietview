@@ -12,12 +12,8 @@
       'Upload',
       'API',
       function($scope, modals, meals_data, meal_plans_data, MealPlan, Upload, API) {
-
         $scope.pageSize = 10;
-
-        // meal plans data
         $scope.meal_plans_data = meal_plans_data;
-
         $scope.filter_type_options = [{
             value: 'weight loss',
             title: 'weight loss'
@@ -31,34 +27,30 @@
             title: 'weight gain'
           }
         ];
-
         $scope.filter_type_config = {
           create: false,
           valueField: 'value',
           labelField: 'title',
           placeholder: 'Type...'
         };
-
         $scope.filterData = {
           status: ["breakfast", "lunch", "dinner", "snack"]
         };
-
         $scope.filter_pageSize = ['5', '10', '15'];
 
-        var remove = function(index, id) {
-          console.log(id);
+        var remove = function(meal_plan) {
           modals.confirm('Are you sure you want to delete the meal plan', function() {
             MealPlan.deleteById({
-              id: id
+              id: meal_plan.id
             }).$promise.then(function(data) {
               modals.alert('Meal Plan has been deleted');
-              $scope.meal_plans_data.splice(index, 1);
+              // TODO: Remove deleted meal plan from $scope.meal_plans_data
             });
           });
         };
 
-        $scope.remove = function($event, $index, meal_plan) {
-          remove($index, meal_plan.id);
+        $scope.remove = function($event, meal_plan) {
+          remove(meal_plan);
         };
 
       }
