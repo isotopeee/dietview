@@ -209,7 +209,7 @@
                 return MealItem.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -234,13 +234,13 @@
                 return Meal.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               ingredients_data: function(MealItem) {
                 return MealItem.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -266,13 +266,13 @@
                 return Meal.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               meal_plans_data: function(MealPlan) {
                 return MealPlan.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -297,7 +297,7 @@
                 return Meal.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -323,7 +323,7 @@
                 return Meal.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -349,7 +349,7 @@
                 return Meal.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -443,7 +443,7 @@
                 return Subscription.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -466,7 +466,7 @@
                 return Subscription.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -489,7 +489,7 @@
                 return Subscription.find({}).$promise
                   .then(function(data) {
                     return data;
-                  })
+                  });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -587,7 +587,7 @@
             data: {
               pageTitle: 'User edit'
             }
-          })
+          });
       }
     ]);
 }());

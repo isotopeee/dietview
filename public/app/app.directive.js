@@ -24,7 +24,7 @@
             };
             $rootScope.$on('$stateChangeSuccess', listener);
           }
-        }
+        };
       }
     ])
     // add width/height properities to Image
@@ -40,7 +40,7 @@
                 var w = !utils.isHighDensity() ? $(elem).actual('width') : $(elem).actual('width') / 2,
                   h = !utils.isHighDensity() ? $(elem).actual('height') : $(elem).actual('height') / 2;
                 $(elem).attr('width', w).attr('height', h);
-              })
+              });
             });
           }
         };
@@ -54,7 +54,7 @@
         return {
           restrict: 'A',
           link: function(scope, elem, attrs) {
-            var message = attrs['printMessage'];
+            var message = attrs.printMessage;
             $(elem).on('click', function(e) {
               e.preventDefault();
               UIkit.modal.confirm(message ? message : 'Do you want to print this page?', function() {
@@ -64,7 +64,7 @@
                 // wait for dialog to fully hide
                 $timeout(function() {
                   window.print();
-                }, 300)
+                }, 300);
               }, {
                 labels: {
                   'Ok': 'print'
@@ -122,7 +122,7 @@
             });
 
           }
-        }
+        };
       }
     ])
     // outside list
@@ -155,7 +155,7 @@
             });
 
           }
-        }
+        };
       }
     ])
     // callback on last element in ng-repeat
@@ -164,7 +164,7 @@
         if (scope.$last) {
           $timeout(function() {
             scope.$emit('onLastRepeat', element, attrs);
-          })
+          });
         }
       };
     })
@@ -188,7 +188,7 @@
               });
 
           }
-        }
+        };
       }
     ])
     // table row check
@@ -214,7 +214,7 @@
             });
 
           }
-        }
+        };
       }
     ])
     // dynamic form fields
@@ -245,7 +245,7 @@
 
                   $thisInput
                     .val('')
-                    .attr('name', name ? name + '[s_' + section_number + ':i_' + index + ']' : '[s_' + section_number + ':i_' + index + ']')
+                    .attr('name', name ? name + '[s_' + section_number + ':i_' + index + ']' : '[s_' + section_number + ':i_' + index + ']');
 
                   //altair_md.update_input($thisInput);
                 })
@@ -291,7 +291,7 @@
                       .removeAttr('style').removeAttr('checked').unwrap().next('.iCheck-helper').remove();
 
                     $inputLabel.attr('for', newId);
-                  })
+                  });
                 })
                 .end()
                 // switchery
@@ -346,7 +346,7 @@
               var $newSection = $(section_to_clone).prev();
 
               if ($newSection.hasClass('form_section_separator')) {
-                $newSection.after('<hr class="form_hr">')
+                $newSection.after('<hr class="form_hr">');
               }
 
               // reinitialize checkboxes
@@ -367,10 +367,10 @@
                 .next('hr').remove()
                 .end()
                 .remove();
-            })
+            });
 
           }
-        }
+        };
       }
     ])
     // content sidebar
@@ -401,7 +401,7 @@
 
             }
           }
-        }
+        };
       }
     ])
     // attach events to document
@@ -449,7 +449,7 @@
                         complete: function() {
                           $('.header_main_search_input').blur().val('');
                         }
-                      })
+                      });
                   }
                 });
             };
@@ -538,7 +538,7 @@
                         complete: function() {
                           $('.header_main_search_input').focus();
                         }
-                      })
+                      });
                   }
                 });
             };
@@ -580,7 +580,7 @@
                         complete: function() {
                           $('.header_main_search_input').blur().val('');
                         }
-                      })
+                      });
                   }
                 });
 
@@ -616,7 +616,7 @@
                   easing: variables.easing_swiftOut,
                   begin: function() {
                     if (slideToogle == 'slideUp') {
-                      $(this).closest('.submenu_trigger').removeClass('act_section')
+                      $(this).closest('.submenu_trigger').removeClass('act_section');
                     } else {
                       if ($rootScope.menuAccordionMode) {
                         $this.closest('li').siblings('.submenu_trigger').each(function() {
@@ -624,12 +624,12 @@
                             duration: 500,
                             easing: variables.easing_swiftOut,
                             begin: function() {
-                              $(this).closest('.submenu_trigger').removeClass('act_section')
+                              $(this).closest('.submenu_trigger').removeClass('act_section');
                             }
-                          })
-                        })
+                          });
+                        });
                       }
-                      $(this).closest('.submenu_trigger').addClass('act_section')
+                      $(this).closest('.submenu_trigger').addClass('act_section');
                     }
                   },
                   complete: function() {
@@ -656,7 +656,7 @@
                   .mouseleave(function() {
                     $body.addClass('sidebar_slim_inactive');
                     $body.removeClass('sidebar_slim_active');
-                  })
+                  });
               }
             });
 
@@ -742,9 +742,9 @@
                         duration: 280,
                         easing: variables.easing_swiftOut,
                         begin: function() {
-                          $sidebar_secondary.addClass('chat_sidebar')
+                          $sidebar_secondary.addClass('chat_sidebar');
                         }
-                      })
+                      });
                   }
                 });
               });
@@ -763,19 +763,19 @@
                         $('.md-list.chat_users').velocity("transition.slideRightBigIn", {
                           duration: 280,
                           easing: variables.easing_swiftOut
-                        })
+                        });
                       }
-                    })
+                    });
                 });
 
               if ($sidebar_secondary.find('.uk-tab').length) {
                 $sidebar_secondary.find('.uk-tab').on('change.uk.tab', function(event, active_item, previous_item) {
                   if ($(active_item).hasClass('chat_sidebar_tab') && $sidebar_secondary.find('.chat_box_wrapper').hasClass('chat_box_active')) {
-                    $sidebar_secondary.addClass('chat_sidebar')
+                    $sidebar_secondary.addClass('chat_sidebar');
                   } else {
-                    $sidebar_secondary.removeClass('chat_sidebar')
+                    $sidebar_secondary.removeClass('chat_sidebar');
                   }
-                })
+                });
               }
             }
 
@@ -871,13 +871,13 @@
                       }
                     });
                     if (mdCardToolbarFixed) {
-                      $thisCard.addClass('mdToolbar_fixed')
+                      $thisCard.addClass('mdToolbar_fixed');
                     }
                   }
                 });
-            }
+            };
           }
-        }
+        };
       }
     ])
     // deactivate card fullscreen
@@ -920,7 +920,7 @@
                     });
                     $rootScope.card_fullscreen = false;
                     if (mdCardToolbarFixed) {
-                      $thisCard.removeClass('mdToolbar_fixed')
+                      $thisCard.removeClass('mdToolbar_fixed');
                     }
                   },
                   complete: function(elements) {
@@ -946,11 +946,10 @@
                     $thisPlaceholderCard.remove();
                     $(window).resize();
                   }
-                })
-
-            }
+                });
+            };
           }
-        }
+        };
       }
     ])
     // fullscren on card click
@@ -1006,7 +1005,7 @@
                     $rootScope.card_fullscreen = true;
                     $rootScope.hide_content_sidebar = true;
                     // add back button
-                    $thisCard.append('<span class="md-icon material-icons uk-position-top-right cardFSDeactivate" style="margin:10px 10px 0 0">&#xE5CD;</span>')
+                    $thisCard.append('<span class="md-icon material-icons uk-position-top-right cardFSDeactivate" style="margin:10px 10px 0 0">&#xE5CD;</span>');
                   }
                 })
                 // resize card to full width/height
@@ -1027,7 +1026,7 @@
                       }
                     });
                     if (mdCardToolbarFixed) {
-                      $thisCard.addClass('mdToolbar_fixed')
+                      $thisCard.addClass('mdToolbar_fixed');
                     }
                   }
                 });
@@ -1058,7 +1057,7 @@
                     });
                     $rootScope.card_fullscreen = false;
                     if (mdCardToolbarFixed) {
-                      $thisCard.removeClass('mdToolbar_fixed')
+                      $thisCard.removeClass('mdToolbar_fixed');
                     }
                     $thisCard.find('.cardFSDeactivate').remove();
                   },
@@ -1085,11 +1084,10 @@
                     $thisPlaceholderCard.remove();
                     $(window).resize();
                   }
-                })
-
+                });
             };
           }
-        }
+        };
       }
     ])
     // card close
@@ -1114,9 +1112,9 @@
 
               utils.card_show_hide(thisCard, undefined, removeCard);
 
-            }
+            };
           }
-        }
+        };
       }
     ])
     // card toggle
@@ -1162,7 +1160,7 @@
             }
 
           }
-        }
+        };
       }
     ])
     // card overlay toggle
@@ -1176,7 +1174,7 @@
           link: function(scope, el, attrs) {
 
             if (el.closest('.md-card').hasClass('md-card-overlay-active')) {
-              el.html('&#xE5CD;')
+              el.html('&#xE5CD;');
             }
 
             scope.toggleOverlay = function($event) {
@@ -1194,9 +1192,9 @@
                   .closest('.md-card').removeClass('md-card-overlay-active');
               }
 
-            }
+            };
           }
-        }
+        };
       }
     ])
     // card toolbar progress
@@ -1217,7 +1215,7 @@
 
               var bg_color = !bg_color_default ? $this.css('backgroundColor') : bg_color_default;
               if (!bg_color_default) {
-                $this.attr('card-bg-default', bg_color)
+                $this.attr('card-bg-default', bg_color);
               }
 
               $this
@@ -1238,13 +1236,13 @@
             updateCard(bg_percent);
 
             scope.$watch(function() {
-              return $(el).attr('card-progress')
+              return $(el).attr('card-progress');
             }, function(newValue) {
               updateCard(newValue);
             });
 
           }
-        }
+        };
       }
     ])
     // custom scrollbar
@@ -1258,7 +1256,7 @@
           link: function(scope, el, attrs) {
 
             // check if mini sidebar is enabled
-            if (attrs['id'] == 'sidebar_main' && $rootScope.miniSidebarActive) {
+            if (attrs.id == 'sidebar_main' && $rootScope.miniSidebarActive) {
               return;
             }
 
@@ -1275,11 +1273,11 @@
                   scrollx: false,
                   duration: 100
                 });
-              })
+              });
             }
 
           }
-        }
+        };
       }
     ])
     // material design inputs
@@ -1298,19 +1296,19 @@
               $elem.closest('.md-input-wrapper').removeClass('md-input-wrapper-danger md-input-wrapper-success md-input-wrapper-disabled');
 
               if ($elem.hasClass('md-input-danger')) {
-                $elem.closest('.md-input-wrapper').addClass('md-input-wrapper-danger')
+                $elem.closest('.md-input-wrapper').addClass('md-input-wrapper-danger');
               }
               if ($elem.hasClass('md-input-success')) {
-                $elem.closest('.md-input-wrapper').addClass('md-input-wrapper-success')
+                $elem.closest('.md-input-wrapper').addClass('md-input-wrapper-success');
               }
               if ($elem.prop('disabled')) {
-                $elem.closest('.md-input-wrapper').addClass('md-input-wrapper-disabled')
+                $elem.closest('.md-input-wrapper').addClass('md-input-wrapper-disabled');
               }
               if ($elem.hasClass('label-fixed')) {
-                $elem.closest('.md-input-wrapper').addClass('md-input-filled')
+                $elem.closest('.md-input-wrapper').addClass('md-input-filled');
               }
-              if ($elem.val() != '') {
-                $elem.closest('.md-input-wrapper').addClass('md-input-filled')
+              if ($elem.val() !== '') {
+                $elem.closest('.md-input-wrapper').addClass('md-input-filled');
               }
             };
           },
@@ -1327,7 +1325,7 @@
                   for (var i = 0; i < elClasses.length; i++) {
                     var classPart = elClasses[i].substr(0, 14);
                     if (classPart == "uk-form-width-") {
-                      var extraClass = elClasses[i];
+                        extraClass = elClasses[i];
                     }
                   }
                 }
@@ -1371,21 +1369,21 @@
 
             $elem
               .on('focus', function() {
-                $elem.closest('.md-input-wrapper').addClass('md-input-focus')
+                $elem.closest('.md-input-wrapper').addClass('md-input-focus');
               })
               .on('blur', function() {
                 $timeout(function() {
                   $elem.closest('.md-input-wrapper').removeClass('md-input-focus');
-                  if ($elem.val() == '') {
-                    $elem.closest('.md-input-wrapper').removeClass('md-input-filled')
+                  if ($elem.val() === '') {
+                    $elem.closest('.md-input-wrapper').removeClass('md-input-filled');
                   } else {
-                    $elem.closest('.md-input-wrapper').addClass('md-input-filled')
+                    $elem.closest('.md-input-wrapper').addClass('md-input-filled');
                   }
-                }, 100)
+                }, 100);
               });
 
           }
-        }
+        };
       }
     ])
     // material design fab speed dial
@@ -1422,16 +1420,16 @@
                     }, {
                       duration: 140,
                       easing: variables.easing_swiftOut
-                    })
+                    });
                   }
-                })
+                });
               })
               .closest('.md-fab-wrapper').find('.md-fab-small')
               .on('click', function() {
                 $(elem).trigger('click');
               });
           }
-        }
+        };
       }
     ])
     // material design fab toolbar
@@ -1460,7 +1458,7 @@
 
                 setTimeout(function() {
                   $fab_toolbar
-                    .width((toolbarItems * FAB_size + FAB_padding))
+                    .width((toolbarItems * FAB_size + FAB_padding));
                 }, 140);
 
                 setTimeout(function() {
@@ -1485,7 +1483,7 @@
               }
             });
           }
-        }
+        };
       }
     ])
     // material design fab sheet
@@ -1539,7 +1537,7 @@
               }
             });
           }
-        }
+        };
       }
     ])
     // hierarchical show
@@ -1563,7 +1561,7 @@
                   $(this).css({
                     '-webkit-animation-delay': (index * baseDelay) + "ms",
                     'animation-delay': (index * baseDelay) + "ms"
-                  })
+                  });
                 })
                 .end()
                 .waypoint({
@@ -1592,14 +1590,14 @@
                   children_length = children.length;
 
                 $timeout(function() {
-                  add_animation(children, children_length)
-                }, 560)
+                  add_animation(children, children_length);
+                }, 560);
 
               }
             });
 
           }
-        }
+        };
       }
     ])
     // hierarchical slide in
@@ -1620,7 +1618,7 @@
                 $(this).css({
                   '-webkit-animation-delay': (index * baseDelay) + "ms",
                   'animation-delay': (index * baseDelay) + "ms"
-                })
+                });
               });
               $this.waypoint({
                 handler: function() {
@@ -1641,20 +1639,20 @@
 
             $rootScope.$watch('pageLoaded', function() {
               if ($rootScope.pageLoaded) {
-                var thisChildren = attrs['slideChildren'] ? $this.children(attrs['slideChildren']) : $this.children(),
-                  thisContext = attrs['slideContext'] ? $this.closest(attrs['slideContext']) : 'window',
+                var thisChildren = attrs.slideChildren ? $this.children(attrs.slideChildren) : $this.children(),
+                  thisContext = attrs.slideContext ? $this.closest(attrs.slideContext) : 'window',
                   thisChildrenLength = thisChildren.length;
 
                 if (thisChildrenLength >= 1) {
                   $timeout(function() {
-                    add_animation(thisChildren, thisContext, thisChildrenLength)
-                  }, 560)
+                    add_animation(thisChildren, thisContext, thisChildrenLength);
+                  }, 560);
                 }
               }
             });
 
           }
-        }
+        };
       }
     ])
     // preloaders
@@ -1676,19 +1674,19 @@
             scope.strokeWidth = scope.strokeWidth ? scope.strokeWidth : 4;
 
             attr.$observe('warning', function() {
-              scope.style = ' md-preloader-warning'
+              scope.style = ' md-preloader-warning';
             });
 
             attr.$observe('success', function() {
-              scope.style = ' md-preloader-success'
+              scope.style = ' md-preloader-success';
             });
 
             attr.$observe('danger', function() {
-              scope.style = ' md-preloader-danger'
+              scope.style = ' md-preloader-danger';
             });
 
           }
-        }
+        };
       }
     ])
     .directive('preloader', [
@@ -1711,31 +1709,31 @@
             scope.imgDensity = utils.isHighDensity() ? '@2x' : '';
 
             attrs.$observe('warning', function() {
-              scope.style = 'spinner_warning'
+              scope.style = 'spinner_warning';
             });
 
             attrs.$observe('success', function() {
-              scope.style = 'spinner_success'
+              scope.style = 'spinner_success';
             });
 
             attrs.$observe('danger', function() {
-              scope.style = 'spinner_danger'
+              scope.style = 'spinner_danger';
             });
 
             attrs.$observe('small', function() {
-              scope.style = 'spinner_small'
+              scope.style = 'spinner_small';
             });
 
             attrs.$observe('medium', function() {
-              scope.style = 'spinner_medium'
+              scope.style = 'spinner_medium';
             });
 
             attrs.$observe('large', function() {
-              scope.style = 'spinner_large'
+              scope.style = 'spinner_large';
             });
 
           }
-        }
+        };
       }
     ])
     // uikit components
@@ -1752,7 +1750,7 @@
               });
             });
           }
-        }
+        };
       }
     ])
     .directive('ukNotification', [
@@ -1812,15 +1810,15 @@
               if ($('body').find('.uk-notify-message').length) {
                 $('body').find('.uk-notify-message').click();
                 setTimeout(function() {
-                  scope.showNotify()
-                }, 450)
+                  scope.showNotify();
+                }, 450);
               } else {
-                scope.showNotify()
+                scope.showNotify();
               }
             });
 
           }
-        }
+        };
       }
     ])
     .directive('exportTable', [
@@ -1847,7 +1845,7 @@
               });
             });
           }
-        }
+        };
       }
     ]);
 }());

@@ -293,9 +293,9 @@
             {
               name: 'lazy_gantt_chart',
               files: [
-                <!-- jquery ui -->
+                // <!-- jquery ui -->
                 'bower_components/jquery-ui/jquery-ui.min.js',
-                <!-- gantt chart -->
+                // <!-- gantt chart -->
                 'assets/js/custom/gantt_chart.min.js'
               ],
               serie: true
@@ -334,9 +334,9 @@
               name: 'lazy_tree',
               files: [
                 'assets/skins/jquery.fancytree/ui.fancytree.min.css',
-                <!-- jquery ui -->
+                // <!-- jquery ui -->
                 'bower_components/jquery-ui/jquery-ui.min.js',
-                <!-- fancytree -->
+                // <!-- fancytree -->
                 'bower_components/jquery.fancytree/dist/jquery.fancytree-all.min.js'
               ],
               insertBefore: '#main_stylesheet',
@@ -457,7 +457,7 @@
             }
 
           ]
-        })
+        });
       }
     ]);
 }());

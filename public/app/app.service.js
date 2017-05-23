@@ -33,8 +33,8 @@
         $rootScope.content_preloader_show = function(style, variant, container, width, height) {
           var $body = $('body');
           if (!$body.find('.content-preloader').length) {
-            var image_density = utils.isHighDensity() ? '@2x' : '',
-              width = width ? width : 48,
+            var image_density = utils.isHighDensity() ? '@2x' : '';
+              width = width ? width : 48;
               height = height ? height : 48;
 
             var preloader_content = (style == 'regular') ?

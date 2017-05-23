@@ -1,3 +1,7 @@
+# May 23, 2017
+    - Code Refactor
+        - Fix jshint warnings
+
 # May 17, 2017
     - Login
         - Change alert implementation

@@ -5,7 +5,7 @@
     .module('dietviewApp')
     .filter('multiSelectFilter', function() {
       return function(items, filterData) {
-        if (filterData == undefined)
+        if (filterData === undefined)
           return items;
         var keys = Object.keys(filterData);
         var filtered = [];
@@ -15,8 +15,8 @@
           var item = items[i];
           populate = true;
           for (var j = 0; j < keys.length; j++) {
-            if (filterData[keys[j]] != undefined) {
-              if (filterData[keys[j]].length == 0 || filterData[keys[j]].contains(item[keys[j]])) {
+            if (filterData[keys[j]] !== undefined) {
+              if (filterData[keys[j]].length === 0 || filterData[keys[j]].contains(item[keys[j]])) {
                 populate = true;
               } else {
                 populate = false;
@@ -41,9 +41,9 @@
       return function(x, date_format_i, date_format_o) {
         if (x) {
           if (date_format_i) {
-            return moment(x, date_format_i).format(date_format_o)
+            return moment(x, date_format_i).format(date_format_o);
           } else {
-            return moment(new Date(x)).format(date_format_o)
+            return moment(new Date(x)).format(date_format_o);
           }
         } else return null;
       };
@@ -67,6 +67,6 @@
     .filter("trust", ['$sce', function($sce) {
       return function(htmlCode) {
         return $sce.trustAsHtml(htmlCode);
-      }
+      };
     }]);
 }());
