@@ -4,6 +4,7 @@
 (function() {
   'use strict';
 
+
   angular
     .module('dietviewApp', [
       'ui.router',
@@ -14,7 +15,8 @@
       'ConsoleLogger',
       'lbServices',
       'vcRecaptcha',
-      'ngFileUpload'
+      'ngFileUpload',
+      angularDragula(angular)
     ]);
 
   angular

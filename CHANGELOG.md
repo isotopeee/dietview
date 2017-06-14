@@ -1,3 +1,12 @@
+# June 13, 2017
+    - Generate new 'lb-services.js'
+    - Code Refactor
+        - Use the 'getter syntax' for module declaration (scrum_boardController.js)
+        - Include 'angularjs-dragula' script in index.html
+        - Declare 'angularjs-dragula' dependency on main app module (app.js)
+    - Daily Activities
+        - Change implementation to make data persistent
+
 # May 23, 2017
     - Code Refactor
         - Fix jshint warnings

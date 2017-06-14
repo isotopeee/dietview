@@ -524,13 +524,10 @@
                   serie: true
                 });
               }],
-              tasks_list: function($http) {
-                return $http({
-                    method: 'GET',
-                    url: 'data/tasks_list.json'
-                  })
+              tasks_list: function(Task) {
+                return Task.find({}).$promise
                   .then(function(data) {
-                    return data.data;
+                    return data;
                   });
               }
             },
