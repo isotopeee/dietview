@@ -101,7 +101,9 @@
     "weather-icons": "~2.0.10",
     "Waves": "waves#~0.7.4",
     "angular-recaptcha": "^4.0.1",
-    "ng-file-upload": "^12.2.13"
+    "ng-file-upload": "^12.2.13",
+    "angular-toastr": "^2.1.1",
+    "angular-animate": "^1.6.4"
   },
   "resolutions": {
     "jquery": "~2.2.x",
