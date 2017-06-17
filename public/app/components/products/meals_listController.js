@@ -16,8 +16,6 @@
         // selectize options
         $scope.meal = {
           mealItems: [],
-          mealPlans: [],
-          feedbacks: [],
           calories: 0,
           rating: 0,
         };
@@ -142,8 +140,6 @@
         function clear_form() {
           $scope.meal = {
             mealItems: [],
-            mealPlans: [],
-            feedbacks: [],
             calories: 0,
             rating: 0,
           };
@@ -197,10 +193,6 @@
             }
           }).then(function(response) {
             Meal.create({
-              mealItems: $scope.meal.mealItems,
-              mealPlans: $scope.meal.mealPlans,
-              feedbacks: $scope.meal.feedbacks,
-              code: $scope.meal.code,
               name: $scope.meal.name,
               description: $scope.meal.description,
               calories: $scope.meal.calories,

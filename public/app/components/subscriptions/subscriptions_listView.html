@@ -60,7 +60,7 @@
                                             <span class="uk-badge uk-badge-success" ng-if="subscription.status == 'inactive'">inactive</span>
                                         </td>
                                         <td class="uk-text-nowrap">
-                                            <a href="javascript:void(0)" ng-click="approve($event,$index)" ng-if="subscription.status === 'pending'" data-uk-tooltip="{pos:'top'}" title="Approve Subscription"><i class="md-icon material-icons md-24">&#xE86C;</i></a>
+                                            <a href="javascript:void(0)" ng-click="approve($event,subscription)" ng-if="subscription.status === 'pending'" data-uk-tooltip="{pos:'top'}" title="Approve Subscription"><i class="md-icon material-icons md-24">&#xE86C;</i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -76,11 +76,6 @@
 <div class="md-fab-wrapper md-fab-speed-dial">
     <a class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-tooltip="{pos:'right'}" title="Menu" md-fab-speed-dial><i class="material-icons">&#xE5D2;</i></a>
     <div class="md-fab-wrapper-small">
-        <a class="md-fab md-fab-small md-fab-success" href="javascript:void(0)"
-        data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}"
-        title="Add New Ingredient"
-        data-uk-modal="{target:'#modal_add'}"
-        ng-click="clearForm($event)"><i class="material-icons">&#xE145;</i></a>
         <a class="md-fab md-fab-small md-fab-warning" href="javascript:void(0)"
         data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}"
         title="Refresh"
@@ -90,113 +85,13 @@
 
 <!-- MODALS -->
 
-<!-- EDIT -->
-<div id="modal_edit" class="uk-modal">
+<!-- DETAILS -->
+<div id="modal_details" class="uk-modal">
     <div class="uk-modal-dialog md-card">
         <button type="button" class="uk-modal-close uk-close"></button>
         <div class="md-card-toolbar">
-            <h3 class="md-card-toolbar-heading-text uk-text-warning">
-                Edit Ingredient
-            </h3>
-        </div>
-        <form ng-submit="update($event)" class="uk-form-stacked" id="edit_form">
-          <div class="md-card-content large-padding">
-              <div class="uk-grid uk-grid-divider uk-grid-medium">
-                  <div class="uk-width-large-1-2">
-                      <div class="uk-form-row">
-                          <label for="ingredient_edit_name_control">Ingredient Name</label>
-                          <input type="text" class="md-input" name="ingredient_edit_name_control" id="ingredient_edit_name_control" ng-model="ingredient.name" md-input />
-                      </div>
-                      <div class="uk-form-row">
-                          <label for="ingredient_edit_calories_control">Calories</label>
-                          <input type="number" class="md-input" name="ingredient_calories_calories_control" id="ingredient_edit_calories_control" ng-model="ingredient.calories" md-input />
-                      </div>
-                      <div class="uk-form-row">
-                          <label class="uk-form-label">Type</label>
-                          <input config="{ create:false, maxItems: 1 }" options="options.type" ng-model="ingredient.type" name="ingredient_edit_memory_control" selectize />
-                      </div>
-                      <div class="uk-form-row">
-                          <label class="uk-form-label">Status</label>
-                          <input config="{ create:false, maxItems: 1 }" options="options.status" ng-model="ingredient.status" name="ingredient_edit_color_control" selectize />
-                      </div>
-                  </div>
-                  <div class="uk-width-large-1-2">
-                    <div class="uk-form-row">
-                        <label for="ingredient_edit_remarks_control">Remarks</label>
-                        <textarea class="md-input" name="ingredient_edit_remarks_control" id="ingredient_edit_remarks_control" cols="30" rows="2" ng-model="ingredient.remarks" md-input textarea-autosize></textarea>
-                    </div>
-                      <div class="uk-form-row">
-                          <label for="ingredient_edit_description_control">Description</label>
-                          <textarea class="md-input" name="ingredient_edit_description_control" id="ingredient_edit_description_control" cols="30" rows="2" ng-model="ingredient.description" md-input textarea-autosize></textarea>
-                      </div>
-                      <div class="uk-form-row">
-                        <button type="submit" class="md-btn md-btn-primary md-btn-wave-light">Save changes</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </form>
-    </div>
-</div>
-
-<!-- ADD -->
-<div id="modal_add" class="uk-modal">
-    <div class="uk-modal-dialog md-card">
-        <button type="button" class="uk-modal-close uk-close"></button>
-        <div class="md-card-toolbar">
-            <h3 class="md-card-toolbar-heading-text uk-text-success">
-                New Ingredient
-            </h3>
-        </div>
-        <form ng-submit="create($event)" class="uk-form-stacked" id="add_form">
-          <div class="md-card-content large-padding">
-              <div class="uk-grid uk-grid-divider uk-grid-medium">
-                  <div class="uk-width-large-1-2">
-                      <div class="uk-form-row">
-                          <label for="ingredient_add_name_control">Ingredient Name</label>
-                          <input type="text" class="md-input" name="ingredient_add_name_control" id="ingredient_add_name_control" ng-model="ingredient.name" md-input />
-                      </div>
-                      <div class="uk-form-row">
-                          <label for="ingredient_add_calories_control">Calories</label>
-                          <input type="number" class="md-input" name="ingredient_add_calories_control" id="ingredient_add_calories_control" ng-model="ingredient.calories" md-input />
-                      </div>
-                      <div class="uk-form-row">
-                          <label class="uk-form-label">Type</label>
-                          <input config="{ create:false, maxItems: 1 }" options="options.type" ng-model="ingredient.type" name="ingredient_add_type_control" selectize />
-                      </div>
-                      <div class="uk-form-row">
-                          <label class="uk-form-label">Status</label>
-                          <input config="{ create:false, maxItems: 1 }" options="options.status" ng-model="ingredient.status" name="ingredient_add_status_control" selectize />
-                      </div>
-                  </div>
-                  <div class="uk-width-large-1-2">
-                    <div class="uk-form-row">
-                        <label for="ingredient_add_remarks_control">Remarks</label>
-                        <textarea class="md-input" name="ingredient_add_remarks_control" id="ingredient_add_remarks_control" cols="30" rows="2" ng-model="ingredient.remarks" md-input textarea-autosize></textarea>
-                    </div>
-                      <div class="uk-form-row">
-                          <label for="ingredient_add_description_control">Description</label>
-                          <textarea class="md-input" name="ingredient_add_description_control" id="ingredient_add_description_control" cols="30" rows="2" ng-model="ingredient.description" md-input textarea-autosize></textarea>
-                      </div>
-                      <div class="uk-form-row">
-                          <div class="uk-form-row">
-                            <button type="submit" class="md-btn md-btn-primary md-btn-wave-light">Save New Ingredient</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </form>
-    </div>
-</div>
-
-<!-- DELETE -->
-<div id="modal_delete" class="uk-modal">
-    <div class="uk-modal-dialog md-card">
-        <button type="button" class="uk-modal-close uk-close"></button>
-        <div class="md-card-toolbar">
-            <h3 class="md-card-toolbar-heading-text uk-text-danger">
-                Delete Ingredient
+            <h3 class="md-card-toolbar-heading-text uk-text-primary">
+                Details
             </h3>
         </div>
         <div class="md-card-content large-padding">
@@ -256,13 +151,13 @@
     </div>
 </div>
 
-<!-- DETAILS -->
-<div id="modal_details" class="uk-modal">
+<!-- DELETE -->
+<div id="modal_delete" class="uk-modal">
     <div class="uk-modal-dialog md-card">
         <button type="button" class="uk-modal-close uk-close"></button>
         <div class="md-card-toolbar">
-            <h3 class="md-card-toolbar-heading-text uk-text-primary">
-                Details
+            <h3 class="md-card-toolbar-heading-text uk-text-danger">
+                Delete Ingredient
             </h3>
         </div>
         <div class="md-card-content large-padding">

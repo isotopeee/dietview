@@ -371,7 +371,7 @@
             template: '<div ui-view autoscroll="false"/>',
             abstract: true
           })
-          // -- MEAL ITEMS --
+          // -- Subscription --
           .state("restricted.subscriptions.list", {
             url: "/list",
             templateUrl: 'app/components/subscriptions/subscriptions_listView.html',
