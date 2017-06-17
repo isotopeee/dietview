@@ -1,4 +1,4 @@
-#June 17, 2017
+# June 17, 2017
     - Code Refactor
         - Use function declaration (subscriptions_listCtrl)
         - Remove unused codes (subscriptions_listCtrl)
