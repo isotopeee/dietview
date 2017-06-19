@@ -9,7 +9,8 @@
       'modals',
       'ingredients_data',
       'MealItem',
-      function($scope, $state, modals, ingredients_data, MealItem) {
+      'toastr',
+      function($scope, $state, modals, ingredients_data, MealItem, toastr) {
         $scope.ingredients_data = ingredients_data;
         $scope.pageSize = 10;
         $scope.filter_status_options = [{
@@ -56,10 +57,7 @@
           clear_form();
         };
         $scope.refresh = function($event) {
-          modals.confirm('Any unsaved changes will be discarded. Do you want to continue?', function() {
-            get_ingredients();
-            modals.alert('Ingredients list has been updated');
-          });
+          refresh();
         };
         $scope.update = function($event) {
           update();
@@ -90,7 +88,8 @@
 
         function update() {
           $scope.ingredient.$save().then(function(data) {
-            modals.alert('Changes made has been saved');
+            $('#modal_edit').hide();
+            toastr.warning($scope.ingredient.name + ' has been updated.', "Ingredient Updated")
           });
         }
 
@@ -103,7 +102,8 @@
             remarks: $scope.ingredient.remarks,
             description: $scope.ingredient.description
           }).$promise.then(function(data) {
-            modals.alert('New ingredient added');
+            $('#modal_add').hide();
+            toastr.success(data.name + ' has been added to ingredients list.', 'Ingredient Added');
             $scope.ingredients_data.push(data);
             clear_form();
           });
@@ -114,9 +114,19 @@
             MealItem.deleteById({
               id: $scope.ingredient.id
             }).$promise.then(function(data) {
-              modals.alert('Ingredient has been deleted');
+              $('#modal_delete').hide();
+              toastr.error(ingredient.name + ' has been removed from ingredients list.', 'Ingredient Removed');
               // TODO: Remove the deleted ingredient from $scope.ingredients_data
+              var  index = $scope.ingredients_data.findIndex(ing => ing.id === ingredient.id);
+              $scope.ingredients_data.splice(index, 1);
             });
+          });
+        }
+
+        function refresh() {
+          modals.confirm('Any unsaved changes will be discarded. Do you want to continue?', function() {
+            get_ingredients();
+            toastr.info("Ingredient list has been updated.", 'Ingredient List Updated');
           });
         }
       }

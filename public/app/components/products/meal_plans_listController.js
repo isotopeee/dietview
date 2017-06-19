@@ -11,7 +11,8 @@
       'MealPlan',
       'Upload',
       'API',
-      function($scope, modals, meals_data, meal_plans_data, MealPlan, Upload, API) {
+      'toastr',
+      function($scope, modals, meals_data, meal_plans_data, MealPlan, Upload, API, toastr) {
         $scope.pageSize = 10;
         $scope.meal_plans_data = meal_plans_data;
         $scope.filter_type_options = [{
@@ -43,7 +44,8 @@
             MealPlan.deleteById({
               id: meal_plan.id
             }).$promise.then(function(data) {
-              modals.alert('Meal Plan has been deleted');
+              $('#modal_delete').hide();
+              toastr.error(meal_plan.name + " has been removed from Meal Plans list.", "Meal Plan Removed");
               // TODO: Remove deleted meal plan from $scope.meal_plans_data
             });
           });

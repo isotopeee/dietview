@@ -11,7 +11,8 @@
       'MealPlan',
       'Upload',
       'API',
-      function($rootScope, $scope, modals, meals_data, MealPlan, Upload, API) {
+      'toastr',
+      function($rootScope, $scope, modals, meals_data, MealPlan, Upload, API, toastr) {
 
         $rootScope.page_full_height = true;
         $rootScope.headerDoubleHeightActive = true;
@@ -211,7 +212,8 @@
                 status: $scope.meal_plan.status,
                 price: $scope.meal_plan.price
               }).$promise.then(function(data) {
-                modals.alert('Meal Plan Added');
+                $('#modal_add').hide();
+                toastr.success(data.name + " has been added to Meal Plans list.", "Meal Plan Added");
                 clear_form();
               });
             }, null, function(event) {

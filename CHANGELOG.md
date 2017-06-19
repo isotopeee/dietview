@@ -1,3 +1,9 @@
+# June 19, 2017
+    - Add 'angular animate' module
+    - Add 'angular-toastr' module
+    - Products Module
+        - Implement 'toast' notification (toastr)
+
 # June 17, 2017
     - Code Refactor
         - Use function declaration (subscriptions_listCtrl)

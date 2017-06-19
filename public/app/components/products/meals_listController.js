@@ -11,7 +11,8 @@
       'Meal',
       'Upload',
       'API',
-      function($scope, modals, meals_data, ingredients_data, Meal, Upload, API) {
+      'toastr',
+      function($scope, modals, meals_data, ingredients_data, Meal, Upload, API, toastr) {
         $('.dropify').dropify();
         // selectize options
         $scope.meal = {
@@ -119,10 +120,7 @@
           clear_form();
         };
         $scope.refresh = function($event) {
-          modals.confirm('Any unsaved changes will be discarded. Do you want to continue?', function() {
-            get_ingredients();
-            modals.alert('Meals list has been updated');
-          });
+          refresh();
         };
         $scope.update = function($event) {
           update();
@@ -173,13 +171,15 @@
               }).then(function(response) {
                 $scope.meal.image = API.URL_BASE + response.data.path;
                 $scope.meal.$save().then(function(data) {
-                  modals.alert('Changes made has been saved');
+                  $('#modal_edit').hide();
+                  toastr.warning($scope.meal.name + " has been updated.", "Meal Updated");
                 });
               });
             });
           } else {
             $scope.meal.$save().then(function(data) {
-              modals.alert('Changes made has been saved');
+              $('#modal_edit').hide();
+              toastr.warning($scope.meal.name + " has been updated.", "Meal Updated");
             });
           }
 
@@ -202,7 +202,8 @@
               rating: $scope.meal.rating,
               status: $scope.meal.status
             }).$promise.then(function(data) {
-              modals.alert('New Meal Added');
+              $('#modal_add').hide();
+              toastr.success(data.name + " has been added to ingredient list.", "Meal Added")
               $scope.meals_data.push(data);
               clear_form();
             });
@@ -216,9 +217,18 @@
             Meal.deleteById({
               id: $scope.meal.id
             }).$promise.then(function(data) {
-              modals.alert('Meal has been deleted');
-              // TODO: Remove deleted meal from $scope.meals_data
+              $('#modal_delete').hide();
+              toastr.error(meal.name + " has been removed from meals list.", "Meal Removed");
+              var index = $scope.meals_data.findIndex(m => m.id === meal.id);
+              meals_data.splice(index, 1);
             });
+          });
+        }
+
+        function refresh() {
+          modals.confirm('Any unsaved changes will be discarded. Do you want to continue?', function() {
+            get_ingredients();
+            toastr.info("Meal list has been updated.", "Meal List Updated");
           });
         }
       }

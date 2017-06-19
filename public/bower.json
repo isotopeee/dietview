@@ -103,7 +103,7 @@
     "angular-recaptcha": "^4.0.1",
     "ng-file-upload": "^12.2.13",
     "angular-toastr": "^2.1.1",
-    "angular-animate": "^1.6.4"
+    "angular-animate": "~1.5.11"
   },
   "resolutions": {
     "jquery": "~2.2.x",
