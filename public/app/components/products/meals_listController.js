@@ -13,7 +13,6 @@
       'API',
       'toastr',
       function($scope, modals, meals_data, ingredients_data, Meal, Upload, API, toastr) {
-        $('.dropify').dropify();
         // selectize options
         $scope.meal = {
           mealItems: [],
@@ -149,7 +148,13 @@
           remove(meal);
         };
 
-        ////////////////////////////////////////////////////////////////////
+        activate();
+
+        ////////////////////////////////////////////////////////////////////////
+
+        function activate() {
+          $('.dropify').dropify();
+        }
 
         function clear_form() {
           $scope.meal = {

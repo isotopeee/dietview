@@ -4,6 +4,7 @@
     - Code Refactor
         - Wrap user_profileCtrl in an IIFE
         - Wrap user_editCtrl in an IIFE
+        - Wrap meals_listCtrl initialization code in 'activate' function
     - Products Module
         - Implement 'toast' notification (toastr)
     - User profile
