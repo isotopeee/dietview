@@ -203,14 +203,14 @@
               }).then(function(response) {
                 $scope.meal_plan.image = API.URL_BASE + response.data.path;
                 $scope.meal_plan.$save().then(function(data) {
-                  $('#modal_edit').hide();
+                  UIkit.modal('#modal_edit').hide();
                   toastr.warning(meal_plan.name + " has beed updated.", "Meal Plan Updated");
                 });
               });
             });
           } else {
             $scope.meal_plan.$save().then(function(data) {
-              $('#modal_edit').hide();
+              UIkit.modal('#modal_edit').hide();
               toastr.warning(meal_plan.name + " has beed updated.", "Meal Plan Updated");
             });
           }
@@ -238,7 +238,7 @@
               status: $scope.meal_plan.status,
               price: $scope.meal_plan.price
             }).$promise.then(function(data) {
-              $('#modal_add').hide();
+              UIkit.modal('#modal_edit').hide();
               toastr.success(data.name + " has been added to Meal Plans list.", "Meal Plan Added");
               clear_form();
             });

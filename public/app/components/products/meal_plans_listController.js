@@ -44,7 +44,7 @@
             MealPlan.deleteById({
               id: meal_plan.id
             }).$promise.then(function(data) {
-              $('#modal_delete').hide();
+              UIkit.modal('#modal_delete').hide();
               toastr.error(meal_plan.name + " has been removed from Meal Plans list.", "Meal Plan Removed");
               // TODO: Remove deleted meal plan from $scope.meal_plans_data
             });

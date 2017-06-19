@@ -63,7 +63,15 @@
               if ($scope.ingredients.indexOf(value) === -1) {
                 for (var i = 0; i < ingredients_data.length; i++) {
                   if (ingredients_data[i].id === value) {
-                    value = ingredients_data[i];
+                    value = {
+                      id: value,
+                      name: ingredients_data[i].name,
+                      description: ingredients_data[i].description,
+                      calories: ingredients_data[i].calories,
+                      type: ingredients_data[i].type,
+                      remarks: ingredients_data[i].remarks,
+                      status: ingredients_data[i].status
+                    };
                     $scope.meal.mealItems.push(value);
                     $scope.meal.calories += value.calories;
                   }
@@ -73,7 +81,15 @@
             onItemRemove: function(value) {
               for (var i = 0; i < $scope.meal.mealItems.length; i++) {
                 if ($scope.meal.mealItems[i].id === value) {
-                  value = $scope.meal.mealItems[i];
+                  value = {
+                    id: value,
+                    name: ingredients_data[i].name,
+                    description: ingredients_data[i].description,
+                    calories: ingredients_data[i].calories,
+                    type: ingredients_data[i].type,
+                    remarks: ingredients_data[i].remarks,
+                    status: ingredients_data[i].status
+                  };
                   var deleted = $scope.meal.mealItems.splice(i, 1);
                   $scope.meal.calories -= deleted[0].calories;
                 }
@@ -148,9 +164,6 @@
         function change_selected_item(meal) {
           clear_form();
           $scope.meal = meal;
-          for (var i = 0; i < $scope.meal.mealItems.length; i++) {
-            $scope.ingredients.push($scope.meal.mealItems[i].id);
-          }
           console.log($scope.meal);
         }
 
@@ -171,14 +184,14 @@
               }).then(function(response) {
                 $scope.meal.image = API.URL_BASE + response.data.path;
                 $scope.meal.$save().then(function(data) {
-                  $('#modal_edit').hide();
+                  UIkit.modal('#modal_edit').hide();
                   toastr.warning($scope.meal.name + " has been updated.", "Meal Updated");
                 });
               });
             });
           } else {
             $scope.meal.$save().then(function(data) {
-              $('#modal_edit').hide();
+              UIkit.modal('#modal_edit').hide();
               toastr.warning($scope.meal.name + " has been updated.", "Meal Updated");
             });
           }
@@ -186,6 +199,7 @@
         }
 
         function create() {
+          console.log($scope.meal);
           Upload.upload({
             url: API.URL_BASE + 'api/Meals/upload',
             data: {
@@ -200,12 +214,13 @@
               remarks: $scope.meal.remarks,
               image: API.URL_BASE + response.data.path,
               rating: $scope.meal.rating,
-              status: $scope.meal.status
+              status: $scope.meal.status,
+              mealItems: $scope.meal.mealItems
             }).$promise.then(function(data) {
-              $('#modal_add').hide();
-              toastr.success(data.name + " has been added to ingredient list.", "Meal Added")
+              UIkit.modal('#modal_add').hide();
+              toastr.success(data.name + " has been added to ingredient list.", "Meal Added");
               $scope.meals_data.push(data);
-              clear_form();
+              console.log(data);
             });
           }, null, function(event) {
             console.log(event);
@@ -217,7 +232,7 @@
             Meal.deleteById({
               id: $scope.meal.id
             }).$promise.then(function(data) {
-              $('#modal_delete').hide();
+              UIkit.modal('#modal_delete').hide();
               toastr.error(meal.name + " has been removed from meals list.", "Meal Removed");
               var index = $scope.meals_data.findIndex(m => m.id === meal.id);
               meals_data.splice(index, 1);

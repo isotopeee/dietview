@@ -88,7 +88,7 @@
 
         function update() {
           $scope.ingredient.$save().then(function(data) {
-            $('#modal_edit').hide();
+            UIkit.modal('#modal_edit').hide();
             toastr.warning($scope.ingredient.name + ' has been updated.', "Ingredient Updated")
           });
         }
@@ -102,7 +102,7 @@
             remarks: $scope.ingredient.remarks,
             description: $scope.ingredient.description
           }).$promise.then(function(data) {
-            $('#modal_add').hide();
+            UIkit.modal('#modal_add').hide();
             toastr.success(data.name + ' has been added to ingredients list.', 'Ingredient Added');
             $scope.ingredients_data.push(data);
             clear_form();
@@ -114,7 +114,7 @@
             MealItem.deleteById({
               id: $scope.ingredient.id
             }).$promise.then(function(data) {
-              $('#modal_delete').hide();
+              UIkit.modal('#modal_delete').hide();
               toastr.error(ingredient.name + ' has been removed from ingredients list.', 'Ingredient Removed');
               // TODO: Remove the deleted ingredient from $scope.ingredients_data
               var  index = $scope.ingredients_data.findIndex(ing => ing.id === ingredient.id);
