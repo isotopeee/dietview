@@ -1,7 +1,14 @@
 # June 19, 2017
     - Add 'angular animate' module
     - Add 'angular-toastr' module
+    - Code Refactor
+        - Wrap user_profileCtrl in an IIFE
+        - Wrap user_editCtrl in an IIFE
     - Products Module
+        - Implement 'toast' notification (toastr)
+    - User profile
+        - Fix module declaration on user_profileCtrl
+        - Fix module declaration on user_editCtrl
         - Implement 'toast' notification (toastr)
 
 # June 17, 2017
