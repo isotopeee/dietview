@@ -240,7 +240,7 @@
               UIkit.modal('#modal_delete').hide();
               toastr.error(meal.name + " has been removed from meals list.", "Meal Removed");
               var index = $scope.meals_data.findIndex(m => m.id === meal.id);
-              meals_data.splice(index, 1);
+              $scope.meals_data.splice(index, 1);
             });
           });
         }
