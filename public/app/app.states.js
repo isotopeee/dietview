@@ -231,7 +231,8 @@
             controller: 'meals_listCtrl',
             resolve: {
               meals_data: function(Meal) {
-                return Meal.find({}).$promise
+                var filter = {include: 'mealItems'};
+                return Meal.find({filter: filter}).$promise
                   .then(function(data) {
                     return data;
                   });

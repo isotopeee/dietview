@@ -62,15 +62,7 @@
               if ($scope.ingredients.indexOf(value) === -1) {
                 for (var i = 0; i < ingredients_data.length; i++) {
                   if (ingredients_data[i].id === value) {
-                    value = {
-                      id: value,
-                      name: ingredients_data[i].name,
-                      description: ingredients_data[i].description,
-                      calories: ingredients_data[i].calories,
-                      type: ingredients_data[i].type,
-                      remarks: ingredients_data[i].remarks,
-                      status: ingredients_data[i].status
-                    };
+                    value = ingredients_data[i];
                     $scope.meal.mealItems.push(value);
                     $scope.meal.calories += value.calories;
                   }
@@ -80,15 +72,7 @@
             onItemRemove: function(value) {
               for (var i = 0; i < $scope.meal.mealItems.length; i++) {
                 if ($scope.meal.mealItems[i].id === value) {
-                  value = {
-                    id: value,
-                    name: ingredients_data[i].name,
-                    description: ingredients_data[i].description,
-                    calories: ingredients_data[i].calories,
-                    type: ingredients_data[i].type,
-                    remarks: ingredients_data[i].remarks,
-                    status: ingredients_data[i].status
-                  };
+                  value = ingredients_data[i];
                   var deleted = $scope.meal.mealItems.splice(i, 1);
                   $scope.meal.calories -= deleted[0].calories;
                 }
@@ -154,6 +138,7 @@
 
         function activate() {
           $('.dropify').dropify();
+          console.log(meals_data);
         }
 
         function clear_form() {
@@ -169,16 +154,21 @@
         function change_selected_item(meal) {
           clear_form();
           $scope.meal = meal;
+          _populateIngredients();
           console.log($scope.meal);
         }
 
-        function get_ingredients() {
-          Meal.find({}).$promise.then(function(data) {
+        function get_meals() {
+          var filter = {
+            include: 'mealItems'
+          };
+          Meal.find({filter:filter}).$promise.then(function(data) {
             $scope.meals_data = data;
           });
         }
 
         function update() {
+          var mealItems = $scope.meal.mealItems;
           if ($scope.image) {
             modals.confirm('Do you want to overwrite the exisiting image?', function() {
               Upload.upload({
@@ -187,20 +177,23 @@
                   file: $scope.image
                 }
               }).then(function(response) {
+                $scope.meal.$upsert().then(function(data) {
                 $scope.meal.image = API.URL_BASE + response.data.path;
-                $scope.meal.$save().then(function(data) {
+                  _bindMealItems(mealItems);
+                  _populateIngredients();
                   UIkit.modal('#modal_edit').hide();
                   toastr.warning($scope.meal.name + " has been updated.", "Meal Updated");
                 });
               });
             });
           } else {
-            $scope.meal.$save().then(function(data) {
+            $scope.meal.$upsert().then(function(data) {
+              _bindMealItems(mealItems);
+              _populateIngredients();
               UIkit.modal('#modal_edit').hide();
               toastr.warning($scope.meal.name + " has been updated.", "Meal Updated");
             });
           }
-
         }
 
         function create() {
@@ -224,8 +217,10 @@
             }).$promise.then(function(data) {
               UIkit.modal('#modal_add').hide();
               toastr.success(data.name + " has been added to ingredient list.", "Meal Added");
+              data.mealItems = $scope.meal.mealItems;
               $scope.meals_data.push(data);
               console.log(data);
+              console.log($scope.meal);
             });
           }, null, function(event) {
             console.log(event);
@@ -247,9 +242,19 @@
 
         function refresh() {
           modals.confirm('Any unsaved changes will be discarded. Do you want to continue?', function() {
-            get_ingredients();
+            get_meals();
             toastr.info("Meal list has been updated.", "Meal List Updated");
           });
+        }
+
+        function _bindMealItems(mealItems) {
+          $scope.meal.mealItems = mealItems;
+        }
+
+        function _populateIngredients() {
+          for (var i = 0; i < $scope.meal.mealItems.length; i++) {
+            $scope.ingredients.push($scope.meal.mealItems[i].id);
+          }
         }
       }
     ]);
