@@ -320,11 +320,54 @@
             templateUrl: 'app/components/products/meal_plans_editView.html',
             controller: 'meal_plans_editCtrl',
             resolve: {
+              meal_plan_data: function ($stateParams, MealPlan) {
+                return MealPlan.findById({id: $stateParams.id}).$promise
+                  .then(function (data) {
+                    console.log(data);
+                    return data;
+                  });
+              },
               meals_data: function(Meal) {
                 return Meal.find({}).$promise
                   .then(function(data) {
                     return data;
                   });
+              },
+              meal_plan_meals_data: function ($stateParams, TM_MealMealPlan) {
+                var mealPlanMeals = [];
+                var mealPlanMeal = null;
+                var lastItem = null;
+                var filter = {
+                  where: {
+                    mealPlanId: $stateParams.id
+                  },
+                  include: {
+                    relation: 'meal',
+                    scope: {
+                      fields: ['type']
+                    }
+                  },
+                  order: 'day ASC'
+                };
+
+                return TM_MealMealPlan.find({filter:filter}).$promise.then(function (data) {
+                  lastItem = data[data.length-1];
+
+                  for (var i = 0; i < lastItem.day; i++) {
+                    mealPlanMeal = {
+                      breakfast: null,
+                      lunch: null,
+                      dinner: null,
+                      snack: null
+                    }
+                    mealPlanMeals.push(mealPlanMeal);
+                  }
+                  // TODO: Sort meal plan meals data
+                  data.forEach(function (mealPlanMeal) {
+                    mealPlanMeals[mealPlanMeal.day - 1][mealPlanMeal.meal.type] = mealPlanMeal.mealId;
+                  });
+                  return mealPlanMeals;
+                });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
