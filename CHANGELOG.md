@@ -1,3 +1,27 @@
+#  June 24, 2017
+    - Code Refactor
+        - Resolve 'meal_plan_meals_data' in state resove to improve performance
+        - Code cleanup on meal_plans_editCtrl
+        - Optimized functionalities implementations of meal_plans_editCtrl
+        - Improve content of meal_plans_editView
+    - Products Module
+        - Change '$save' method to '$upsert' on meal_plans_editCtrl
+        - Fix implementation of 'set' breakfast, lunch, dinner, and snack function on meal_plans_addCtrl and meal_plans_editCtrl
+        - Remove deleted mealPlan on meal_plans_data (meal_plans_listCtrl)
+
+# June 23, 2017
+    - Code Refactor
+        - Code cleanup on meal_plans_addCtrl
+        - Optimized functionalities implementations of meal_plans_addCtrl
+        - Improve content of meal_plans_addView
+    - Products Module
+        - Implement Create functionality on meal plans module
+    - Generate new 'lb-services.js'
+
+# June 22, 2017
+    - Products Module
+        - Implement CRUD functionality on meals module
+
 # June 19, 2017
     - Add 'angular animate' module
     - Add 'angular-toastr' module
