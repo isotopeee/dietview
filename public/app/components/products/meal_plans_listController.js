@@ -45,8 +45,9 @@
               id: meal_plan.id
             }).$promise.then(function(data) {
               UIkit.modal('#modal_delete').hide();
+              var index = $scope.meal_plans_data.findIndex(mp => mp.id === meal_plan.id);
+              $scope.meal_plans_data.splice(index, 1);
               toastr.error(meal_plan.name + " has been removed from Meal Plans list.", "Meal Plan Removed");
-              // TODO: Remove deleted meal plan from $scope.meal_plans_data
             });
           });
         };
