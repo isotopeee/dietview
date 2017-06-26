@@ -72,8 +72,6 @@
           // TODO: Populate model data
           onDurationChange(3);
           $scope.meals = meal_plan_meals_data;
-          console.log($scope.meals);
-          console.log($scope.meal_plan.meals);
         }
 
         function clear_form () {
