@@ -1,8 +1,6 @@
 <div id="page_content">
     <div id="page_content_inner">
-
         <h3 class="heading_b uk-margin-bottom">Production For Today</h3>
-
         <h4 class="heading_a uk-margin-bottom">{{date.today}}</h4>
         <div class="md-card uk-margin-medium-bottom">
             <div class="md-card-content">
@@ -29,9 +27,7 @@
                                 <td>{{production_list[$index].lunch.name}}</td>
                                 <td>{{production_list[$index].dinner.name}}</td>
                                 <td>{{production_list[$index].snack.name}}</td>
-
                             </tr>
-
                             </tr>
                         </tbody>
                     </table>
@@ -43,6 +39,6 @@
 <div class="md-fab-wrapper md-fab-speed-dial">
     <a class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-tooltip="{pos:'right'}" title="Menu" md-fab-speed-dial><i class="material-icons">&#xE5D2;</i></a>
     <div class="md-fab-wrapper-small">
-        <a class="md-fab md-fab-small md-fab-success" href="javascript:void(0)" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Generate PDF" data-uk-modal="{target:'#modal_add'}" ng-click="exportAction()"><i class="material-icons">&#xE415;</i></a>
+        <a class="md-fab md-fab-small md-fab-success" href="javascript:void(0)" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Generate PDF" data-uk-modal="{target:'#modal_add'}" ng-click="exportToPDF()"><i class="material-icons">&#xE415;</i></a>
     </div>
 </div>
