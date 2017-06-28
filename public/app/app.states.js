@@ -484,7 +484,13 @@
             controller: 'productionCtrl',
             resolve: {
               production_data: function(Subscription) {
-                return Subscription.find({}).$promise
+                var filter = {
+                  where: {
+                    status: 'active'
+                  },
+                  include: ['user', {mealPlan: 'meals'}]
+                }
+                return Subscription.find({filter: filter}).$promise
                   .then(function(data) {
                     return data;
                   });
