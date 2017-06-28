@@ -1,4 +1,14 @@
-#  June 24, 2017
+# June 28, 2017
+    - Code Refactor
+        - Wrap productionCtrl in an IIFE
+        - Optimized functionalities implementations of productionCtrl
+        - Code cleanup on productionCtrl
+        - Improve content of productionView
+    - Products Module
+        - Fix module declaration of productionCtrl
+        - Add filter on productionCtrl state resolve
+
+# June 24, 2017
     - Code Refactor
         - Resolve 'meal_plan_meals_data' in state resove to improve performance
         - Code cleanup on meal_plans_editCtrl
