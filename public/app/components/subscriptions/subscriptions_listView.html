@@ -1,218 +1,92 @@
 <div id="page_content">
-    <div id="page_content_inner">
-        <div class="md-card">
-            <div class="md-card-content">
-                <div class="uk-grid" data-uk-grid-margin="">
-                    <div class="uk-width-medium-2-10">
-                        <label for="subscription_search_first_name">First name</label>
-                        <input type="text" class="md-input" id="subscription_search_first_name" ng-model="filter.customer.account.profile.firstname" md-input>
-                    </div>
-                    <div class="uk-width-medium-2-10">
-                        <label for="subscription_search_last_name">Last name</label>
-                        <input type="text" class="md-input" id="subscription_search_last_name" ng-model="filter.customer.account.profile.lastname" md-input>
-                    </div>
-                    <div class="uk-width-medium-2-10">
-                        <label for="subscription_search_plan">Plan name</label>
-                        <input type="text" class="md-input" id="subscription_search_plan" ng-model="filter.mealPlan.name" md-input>
-                    </div>
-                    <div class="uk-width-medium-2-10">
-                        <div class="uk-margin-small-top">
-                            <selectize config="filter_status_config" options="filter_status_options" ng-model="multiSelectData.status" position="bottom"></selectize>
-                        </div>
-                    </div>
-                    <div class="uk-width-medium-2-10">
-                        <div class="uk-margin-small-top">
-                            <input type="text" class="md-input" config="{ create:false, maxItems: 1 }" options="filter_pageSize" ng-model="pageSize" selectize>
-                        </div>
-                    </div>
-                </div>
+  <div id="page_content_inner">
+    <div class="md-card">
+      <div class="md-card-content">
+        <div class="uk-grid" data-uk-grid-margin="">
+          <div class="uk-width-medium-2-10">
+            <label for="subscription_search_first_name">First name</label>
+            <input type="text" class="md-input" id="subscription_search_first_name" ng-model="filter.user.account.profile.firstname" md-input>
+          </div>
+          <div class="uk-width-medium-2-10">
+            <label for="subscription_search_last_name">Last name</label>
+            <input type="text" class="md-input" id="subscription_search_last_name" ng-model="filter.user.account.profile.lastname" md-input>
+          </div>
+          <div class="uk-width-medium-2-10">
+            <label for="subscription_search_plan">Plan name</label>
+            <input type="text" class="md-input" id="subscription_search_plan" ng-model="filter.mealPlan.name" md-input>
+          </div>
+          <div class="uk-width-medium-2-10">
+            <div class="uk-margin-small-top">
+              <selectize config="filter_status_config" options="filter_status_options" ng-model="multiSelectData.status" position="bottom"></selectize>
             </div>
+          </div>
+          <div class="uk-width-medium-2-10">
+            <div class="uk-margin-small-top">
+              <input type="text" class="md-input" config="{ create:false, maxItems: 1 }" options="filter_pageSize" ng-model="pageSize" selectize>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <div class="md-card">
-            <div class="md-card-content">
-                <div class="uk-grid" data-uk-grid-margin>
-                    <div class="uk-width-1-1">
-                        {{ filter_status }}
-                        <div class="uk-overflow-container">
-                            <table class="uk-table uk-table-nowrap uk-table-align-vertical">
-                                <thead>
-                                    <tr>
-                                        <th>Customer</th>
-                                        <th>Plan</th>
-                                        <th>Subscription Date</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr dir-paginate="subscription in subscriptions_data | filter: filter | multiSelectFilter: multiSelectData | itemsPerPage: pageSize">
-                                        <td class="uk-width-2-10 uk-text-large">{{subscription.customer.account.profile.firstname}} {{subscription.customer.account.profile.lastname}}</td>
-                                        <td class="uk-width-1-10 uk-text-nowrap">{{subscription.mealPlan.name}}</td>
-                                        <td class="uk-width-2-10">{{subscription.subscriptionDate | date}}</td>
-                                        <td class="uk-width-2-10">{{subscription.startDate | date}}</td>
-                                        <td class="uk-width-2-10">{{subscription.endDate | date}}</td>
-                                        <td class="uk-width-1-10 uk-text-nowrap">
-                                            <span class="uk-badge uk-badge-success" ng-if="subscription.status == 'active'">active</span>
-                                            <span class="uk-badge uk-badge-warning" ng-if="subscription.status == 'pending'">pending</span>
-                                            <span class="uk-badge uk-badge-success" ng-if="subscription.status == 'inactive'">inactive</span>
-                                        </td>
-                                        <td class="uk-text-nowrap">
-                                            <a href="javascript:void(0)" ng-click="approve($event,subscription)" ng-if="subscription.status === 'pending'" data-uk-tooltip="{pos:'top'}" title="Approve Subscription"><i class="md-icon material-icons md-24">&#xE86C;</i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <dir-pagination-controls boundary-links="true" template-url="app/templates/dirPagination.tpl.html"></dir-pagination-controls>
-                    </div>
-                </div>
+    <div class="md-card">
+      <div class="md-card-content">
+        <div class="uk-grid" data-uk-grid-margin>
+          <div class="uk-width-1-1">
+            {{ filter_status }}
+            <div class="uk-overflow-container">
+              <table class="uk-table uk-table-nowrap uk-table-align-vertical">
+                <thead>
+                  <tr>
+                    <th>user</th>
+                    <th>Plan</th>
+                    <th>Subscription Date</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr dir-paginate="subscription in subscriptions_data | filter: filter | multiSelectFilter: multiSelectData | itemsPerPage: pageSize">
+                    <td class="uk-width-2-10 uk-text-large">{{subscription.user.account.profile.firstname}} {{subscription.user.account.profile.lastname}}</td>
+                    <td class="uk-width-1-10 uk-text-nowrap">{{subscription.mealPlan.name}}</td>
+                    <td class="uk-width-2-10">{{subscription.subscriptionDate | date}}</td>
+                    <td class="uk-width-2-10">{{subscription.startDate | date}}</td>
+                    <td class="uk-width-2-10">{{subscription.endDate | date}}</td>
+                    <td class="uk-width-1-10 uk-text-nowrap">
+                      <span class="uk-badge uk-badge-success" ng-if="subscription.status == 'active'">active</span>
+                      <span class="uk-badge uk-badge-warning" ng-if="subscription.status == 'pending'">pending</span>
+                      <span class="uk-badge uk-badge-success" ng-if="subscription.status == 'inactive'">inactive</span>
+                    </td>
+                    <td class="uk-text-nowrap">
+                      <a href="javascript:void(0)" ng-click="approve($event,subscription)" ng-if="subscription.status === 'pending'" data-uk-tooltip="{pos:'top'}" title="Approve Subscription"><i class="md-icon material-icons md-24">&#xE86C;</i></a>
+                      <a href="javascript:void(0)"
+                      ng-if="subscription.paymentDetails.isPaid"
+                      ng-click="viewPayment($event, subscription)"
+                      data-uk-tooltip="{pos:'top'}"
+                      data-uk-modal="{target:'#modal_lightbox'}"
+                      title="Payment Details"><i class="md-icon material-icons md-24">&#xE227;</i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <dir-pagination-controls boundary-links="true" template-url="app/templates/dirPagination.tpl.html"></dir-pagination-controls>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<div class="md-fab-wrapper md-fab-speed-dial">
-    <a class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-tooltip="{pos:'right'}" title="Menu" md-fab-speed-dial><i class="material-icons">&#xE5D2;</i></a>
-    <div class="md-fab-wrapper-small">
-        <a class="md-fab md-fab-small md-fab-warning" href="javascript:void(0)"
-        data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}"
-        title="Refresh"
-        ng-click="refresh($event)"><i class="material-icons">&#xE5D5;</i></a>
-    </div>
+  </div>
 </div>
 
 <!-- MODALS -->
 
-<!-- DETAILS -->
-<div id="modal_details" class="uk-modal">
-    <div class="uk-modal-dialog md-card">
-        <button type="button" class="uk-modal-close uk-close"></button>
-        <div class="md-card-toolbar">
-            <h3 class="md-card-toolbar-heading-text uk-text-primary">
-                Details
-            </h3>
-        </div>
-        <div class="md-card-content large-padding">
-            <div class="uk-grid uk-grid-divider uk-grid-medium">
-                <div class="uk-width-large-1-2">
-                    <div class="uk-grid uk-grid-small">
-                        <div class="uk-width-large-1-3">
-                            <span class="uk-text-muted uk-text-small">Ingredient Name</span>
-                        </div>
-                        <div class="uk-width-large-2-3">
-                            <span class="uk-text-large uk-text-middle">{{ ingredient.name }}</span>
-                        </div>
-                    </div>
-                    <hr class="uk-grid-divider">
-                    <div class="uk-grid uk-grid-small">
-                        <div class="uk-width-large-1-3">
-                            <span class="uk-text-muted uk-text-small">Calories</span>
-                        </div>
-                        <div class="uk-width-large-2-3">
-                            <span class="uk-text-large uk-text-middle">{{ ingredient.calories }}</span>
-                        </div>
-                    </div>
-                    <hr class="uk-grid-divider">
-                    <div class="uk-grid uk-grid-small">
-                        <div class="uk-width-large-1-3">
-                            <span class="uk-text-muted uk-text-small">Type</span>
-                        </div>
-                        <div class="uk-width-large-2-3">
-                            {{ ingredient.type }}
-                        </div>
-                    </div>
-                    <hr class="uk-grid-divider">
-                    <div class="uk-grid uk-grid-small">
-                        <div class="uk-width-large-1-3">
-                            <span class="uk-text-muted uk-text-small">Status</span>
-                        </div>
-                        <div class="uk-width-large-2-3">
-                            {{ ingredient.status }}
-                        </div>
-                    </div>
-                    <hr class="uk-grid-divider uk-hidden-large">
-                </div>
-                <div class="uk-width-large-1-2">
-                    <p>
-                        <span class="uk-text-muted uk-text-small uk-display-block uk-margin-small-bottom">Remarks</span>
-                        {{ ingredient.remarks }}
-                        <!--<span class="uk-badge uk-margin-small-right" ng-class="{'uk-badge-success': $index != 1, 'uk-badge-primary': $index == 1}" ng-repeat="tag in product.tags"></span>-->
-                    </p>
-                    <hr class="uk-grid-divider">
-                    <p>
-                        <span class="uk-text-muted uk-text-small uk-display-block uk-margin-small-bottom">Description</span>
-                        {{ ingredient.description }}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- DELETE -->
-<div id="modal_delete" class="uk-modal">
-    <div class="uk-modal-dialog md-card">
-        <button type="button" class="uk-modal-close uk-close"></button>
-        <div class="md-card-toolbar">
-            <h3 class="md-card-toolbar-heading-text uk-text-danger">
-                Delete Ingredient
-            </h3>
-        </div>
-        <div class="md-card-content large-padding">
-            <div class="uk-grid uk-grid-divider uk-grid-medium">
-                <div class="uk-width-large-1-2">
-                    <div class="uk-grid uk-grid-small">
-                        <div class="uk-width-large-1-3">
-                            <span class="uk-text-muted uk-text-small">Ingredient Name</span>
-                        </div>
-                        <div class="uk-width-large-2-3">
-                            <span class="uk-text-large uk-text-middle">{{ ingredient.name }}</span>
-                        </div>
-                    </div>
-                    <hr class="uk-grid-divider">
-                    <div class="uk-grid uk-grid-small">
-                        <div class="uk-width-large-1-3">
-                            <span class="uk-text-muted uk-text-small">Calories</span>
-                        </div>
-                        <div class="uk-width-large-2-3">
-                            <span class="uk-text-large uk-text-middle">{{ ingredient.calories }}</span>
-                        </div>
-                    </div>
-                    <hr class="uk-grid-divider">
-                    <div class="uk-grid uk-grid-small">
-                        <div class="uk-width-large-1-3">
-                            <span class="uk-text-muted uk-text-small">Type</span>
-                        </div>
-                        <div class="uk-width-large-2-3">
-                            {{ ingredient.type }}
-                        </div>
-                    </div>
-                    <hr class="uk-grid-divider">
-                    <div class="uk-grid uk-grid-small">
-                        <div class="uk-width-large-1-3">
-                            <span class="uk-text-muted uk-text-small">Status</span>
-                        </div>
-                        <div class="uk-width-large-2-3">
-                            {{ ingredient.status }}
-                        </div>
-                    </div>
-                    <hr class="uk-grid-divider uk-hidden-large">
-                </div>
-                <div class="uk-width-large-1-2">
-                    <p>
-                        <span class="uk-text-muted uk-text-small uk-display-block uk-margin-small-bottom">Remarks</span>
-                        {{ ingredient.remarks }}
-                        <!--<span class="uk-badge uk-margin-small-right" ng-class="{'uk-badge-success': $index != 1, 'uk-badge-primary': $index == 1}" ng-repeat="tag in product.tags"></span>-->
-                    </p>
-                    <hr class="uk-grid-divider">
-                    <p>
-                        <span class="uk-text-muted uk-text-small uk-display-block uk-margin-small-bottom">Description</span>
-                        {{ ingredient.description }}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- Payment Details -->
+<div class="uk-modal" id="modal_lightbox">
+  <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+    <button type="button" class="uk-modal-close uk-close uk-close-alt"></button>
+    <img ng-src="{{subscription.paymentDetails.image}}" alt="" />
+    <!-- <div class="uk-modal-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias animi autem consequuntur deleniti dolor ea expedita facere ipsum labore, libero magni, minus quas quibusdam quod quos saepe sequi veritatis vitae!</div> -->
+  </div>
 </div>

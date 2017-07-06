@@ -1,5 +1,5 @@
-var express = require('express')
-  , Chart = require('./chart')
+var express = require('express'),
+    Chart = require('./chart');
 
 var sendfile = function(filename, root) {
   return function(_, res) {

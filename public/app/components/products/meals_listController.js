@@ -177,8 +177,8 @@
                   file: $scope.image
                 }
               }).then(function(response) {
-                $scope.meal.$upsert().then(function(data) {
                 $scope.meal.image = API.URL_BASE + response.data.path;
+                $scope.meal.$upsert().then(function(data) {
                   _bindMealItems(mealItems);
                   _populateIngredients();
                   UIkit.modal('#modal_edit').hide();

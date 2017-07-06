@@ -37,5 +37,6 @@
     "os-utils": "0.0.14",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.2"
-  }
+  },
+  "dependencies": {}
 }

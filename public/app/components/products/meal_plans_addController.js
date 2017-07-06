@@ -102,7 +102,8 @@
                   image: API.URL_BASE + response.data.path,
                   rating: $scope.meal_plan.rating,
                   status: $scope.meal_plan.status,
-                  price: $scope.meal_plan.price
+                  price: $scope.meal_plan.price,
+                  duration: $scope.duration
                 }).$promise.then(function(data) {
                   UIkit.modal('#modal_add').hide();
                   toastr.success(data.name + " has been added to Meal Plans list.", "Meal Plan Added");

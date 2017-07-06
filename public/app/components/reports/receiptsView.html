@@ -1,47 +1,25 @@
 <div id="page_content">
     <div id="page_content_inner">
-
-        <h3 class="heading_b uk-margin-bottom">Deliveries For Today</h3>
-
+        <h3 class="heading_b uk-margin-bottom">Receipts</h3>
         <h4 class="heading_a uk-margin-bottom">{{date.today}}</h4>
         <div class="md-card uk-margin-medium-bottom">
             <div class="md-card-content">
                 <div class="uk-overflow-container">
-                    <table class="uk-table export-table uk-table-hover" ng-repeat = "delivery in delivery_list">
-                        <caption>DietView Production</caption>
+                    <table class="uk-table export-table uk-table-hover">
+                        <caption>DietView Customer Receipts</caption>
                         <thead>
                             <tr>
-                                <th>Dietview Delivery for:</th>
-                                <th>{{delivery_list[$index].name}}</th>
-                                <th></th>
-                                <th>{{date.today}}</th>
+                                <th>Customer Name</th>
+                                <th>Meal Plan</th>
+                                <th>Price</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody ng-repeat = "receipt in receipts_list">
                             <tr>
-                              <td>{{delivery_list[$index].line}}</td>
-                              <td>{{delivery_list[$index].city}}</td>
+                              <td>{{receipt.name}}</td>
+                              <td>{{receipt.mealPlan.name}}</td>
+                              <td>PHP {{receipt.mealPlan.price | number}}.00
                             </tr>
-                            <tr>
-                                <td>Breakfast</td>
-                                <td>Lunch</td>
-                                <td>Dinner</td>
-                                <td>Snack</td>
-                            </tr>
-                            <tr>
-                                <td>{{delivery_list[$index].breakfast.name}}</td>
-                                <td>{{delivery_list[$index].lunch.name}}</td>
-                                <td>{{delivery_list[$index].dinner.name}}</td>
-                                <td>{{delivery_list[$index].snack.name}}</td>
-                            </tr>
-                            <tr>
-                              <td>{{delivery_list[$index].breakfast.calories}} calories</td>
-                              <td>{{delivery_list[$index].lunch.calories}} calories</td>
-                              <td>{{delivery_list[$index].dinner.calories}} calories</td>
-                              <td>{{delivery_list[$index].snack.calories}} calories</td>
-                            </tr>
-
-
                         </tbody>
                     </table>
                 </div>
@@ -52,6 +30,6 @@
 <div class="md-fab-wrapper md-fab-speed-dial">
     <a class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-tooltip="{pos:'right'}" title="Menu" md-fab-speed-dial><i class="material-icons">&#xE5D2;</i></a>
     <div class="md-fab-wrapper-small">
-        <a class="md-fab md-fab-small md-fab-success" href="javascript:void(0)" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Generate PDF" data-uk-modal="{target:'#modal_add'}" ng-click="exportAction()"><i class="material-icons">&#xE415;</i></a>
+        <a class="md-fab md-fab-small md-fab-success" href="javascript:void(0)" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Generate PDF" data-uk-modal="{target:'#modal_add'}" ng-click="exportToPDF()"><i class="material-icons">&#xE415;</i></a>
     </div>
 </div>

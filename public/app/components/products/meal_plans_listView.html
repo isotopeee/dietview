@@ -4,11 +4,7 @@
         <div class="md-card">
             <div class="md-card-content">
                 <div class="uk-grid" data-uk-grid-margin="">
-                    <div class="uk-width-medium-2-10">
-                        <label for="meal_plan_search_code">Code</label>
-                        <input type="text" class="md-input" id="meal_plan_search_code" ng-model="filter.code" md-input>
-                    </div>
-                    <div class="uk-width-medium-2-10">
+                    <div class="uk-width-medium-3-10">
                         <label for="meal_plan_search_name">Plan name</label>
                         <input type="text" class="md-input" id="meal_plan_search_name" ng-model="filter.name" md-input>
                     </div>
@@ -16,7 +12,7 @@
                         <label for="meal_plan_search_name">Average Calories</label>
                         <input type="text" class="md-input" id="meal_plan_search_average_calories" ng-model="filter.averageCalories" md-input>
                     </div>
-                    <div class="uk-width-medium-1-10">
+                    <div class="uk-width-medium-2-10">
                         <label for="meal_plan_search_price">Price</label>
                         <input type="text" class="md-input" id="meal_plan_search_price" ng-model="filter.price" md-input>
                     </div>
@@ -44,22 +40,19 @@
                                 <thead>
                                     <tr>
                                         <th>Image</th>
-                                        <th>Code</th>
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Price</th>
                                         <th>Type</th>
                                         <th>Status</th>
-                                        <th>Rating</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr dir-paginate="meal_plan in meal_plans_data | filter: filter | multiSelectFilter: multiSelectData | itemsPerPage: pageSize">
                                         <td class="uk-width-1-10"><img class="img_thumb" ng-src="{{ meal_plan.image }}" alt=""></td>
-                                        <td class="uk-width-1-10 uk-text-large"><a ng-click="changeSelectedItem($event,meal_plan)" href="#" data-uk-modal="{target:'#modal_details'}">{{ meal_plan.code }}</a></td>
-                                        <td class="uk-width-1-10 uk-text-large">{{ meal_plan.name }}</td>
-                                        <td class="uk-width-1-10 uk-text-large">{{ meal_plan.description }}</a>
+                                        <td class="uk-width-1-10 uk-text-large"><a ng-click="changeSelectedItem($event,meal_plan)" href="#" data-uk-modal="{target:'#modal_details'}">{{ meal_plan.name }}</a></td>
+                                        <td class="uk-width-2-10 uk-text-large">{{ meal_plan.description }}</a>
                                         </td>
                                         <td class="uk-width-1-10 uk-text-nowrap">{{ meal_plan.price | currency : "Php. " : 2 }}</td>
                                         <td class="uk-width-1-10">{{ meal_plan.type }}</td>
@@ -67,7 +60,6 @@
                                             <span class="uk-badge uk-badge-success" ng-if="meal_plan.status == 'available'">available</span>
                                             <span class="uk-badge uk-badge-warning" ng-if="meal_plan.status == 'not available'">not available</span>
                                         </td>
-                                        <td class="uk-text-nowrap">{{ meal.rating }}</td>
                                         <td class="uk-text-nowrap">
                                             <a href="javascript:void(0)" ui-sref="restricted.products.meal_plans_details({id: meal_plan.id})"><i class="md-icon material-icons md-24">&#xE8F4;</i></a>
                                             <a href="javascript:void(0)" ui-sref="restricted.products.meal_plans_edit({id: meal_plan.id})"><i class="md-icon material-icons md-24">&#xE3C9;</i></a>
@@ -82,7 +74,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <div class="md-fab-wrapper md-fab-speed-dial">

@@ -359,7 +359,7 @@
                       lunch: null,
                       dinner: null,
                       snack: null
-                    }
+                    };
                     mealPlanMeals.push(mealPlanMeal);
                   }
                   // TODO: Sort meal plan meals data
@@ -389,11 +389,54 @@
             templateUrl: 'app/components/products/meal_plans_detailsView.html',
             controller: 'meal_plans_detailsCtrl',
             resolve: {
+              meal_plan_data: function ($stateParams, MealPlan) {
+                return MealPlan.findById({id: $stateParams.id}).$promise
+                  .then(function (data) {
+                    console.log(data);
+                    return data;
+                  });
+              },
               meals_data: function(Meal) {
                 return Meal.find({}).$promise
                   .then(function(data) {
                     return data;
                   });
+              },
+              meal_plan_meals_data: function ($stateParams, TM_MealMealPlan) {
+                var mealPlanMeals = [];
+                var mealPlanMeal = null;
+                var lastItem = null;
+                var filter = {
+                  where: {
+                    mealPlanId: $stateParams.id
+                  },
+                  include: {
+                    relation: 'meal',
+                    scope: {
+                      fields: ['type']
+                    }
+                  },
+                  order: 'day ASC'
+                };
+
+                return TM_MealMealPlan.find({filter:filter}).$promise.then(function (data) {
+                  lastItem = data[data.length-1];
+
+                  for (var i = 0; i < lastItem.day; i++) {
+                    mealPlanMeal = {
+                      breakfast: null,
+                      lunch: null,
+                      dinner: null,
+                      snack: null
+                    };
+                    mealPlanMeals.push(mealPlanMeal);
+                  }
+                  // TODO: Sort meal plan meals data
+                  data.forEach(function (mealPlanMeal) {
+                    mealPlanMeals[mealPlanMeal.day - 1][mealPlanMeal.meal.type] = mealPlanMeal.mealId;
+                  });
+                  return mealPlanMeals;
+                });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -422,7 +465,10 @@
             controller: 'subscriptions_listCtrl',
             resolve: {
               subscriptions_data: function(Subscription) {
-                return Subscription.find({}).$promise
+                var filter = {
+                  include: ['user', 'mealPlan']
+                }
+                return Subscription.find({filter: filter}).$promise
                   .then(function(data) {
                     return data;
                   });
@@ -483,13 +529,14 @@
             templateUrl: 'app/components/reports/productionView.html',
             controller: 'productionCtrl',
             resolve: {
-              production_data: function(Subscription) {
+              production_data: function(Subscription, TM_MealMealPlan) {
                 var filter = {
                   where: {
                     status: 'active'
                   },
-                  include: ['user', {mealPlan: 'meals'}]
-                }
+                  include: ['user', 'mealPlan'],
+                  order: 'mealPlanId ASC'
+                };
                 return Subscription.find({filter: filter}).$promise
                   .then(function(data) {
                     return data;
@@ -513,7 +560,14 @@
             controller: 'deliveriesCtrl',
             resolve: {
               deliveries_data: function(Subscription) {
-                return Subscription.find({}).$promise
+                var filter = {
+                  where: {
+                    status: 'active'
+                  },
+                  include: ['user', 'mealPlan'],
+                  order: 'mealPlanId ASC'
+                };
+                return Subscription.find({filter:filter}).$promise
                   .then(function(data) {
                     return data;
                   });
@@ -535,10 +589,18 @@
             templateUrl: 'app/components/reports/receiptsView.html',
             controller: 'receiptsCtrl',
             resolve: {
-              production_data: function(Subscription) {
-                return Subscription.find({}).$promise
-                  .then(function(data) {
-                    return data;
+              receipts_data: function(Subscription, TM_MealMealPlan) {
+                var filter = {
+                  where: {
+                    status: 'active'
+                  },
+                  include: ['user', 'mealPlan'],
+                  order: 'mealPlanId ASC'
+                };
+                var subscriptions_list = [];
+                return Subscription.find({filter:filter}).$promise
+                  .then(function(subscriptions) {
+                    return subscriptions;
                   });
               },
               deps: ['$ocLazyLoad', function($ocLazyLoad) {

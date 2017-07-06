@@ -1,33 +1,24 @@
 <div id="page_content">
     <div id="page_content_inner">
-
         <h3 class="heading_b uk-margin-bottom">Deliveries for Today</h3>
-
         <h4 class="heading_a uk-margin-bottom">{{date.today}}</h4>
         <div class="md-card uk-margin-medium-bottom">
             <div class="md-card-content">
                 <div class="uk-overflow-container">
                     <table class="uk-table export-table uk-table-hover">
-                        <caption>DietView Production</caption>
+                        <caption>DietView Delivery List</caption>
                         <thead>
                             <tr>
-                                <th>Dietview Production for Date:</th>
-                                <th>{{date.today}}</th>
-                                <th></th>
-                                <th></th>
+                                <th>Customer</th>
+                                <th>Line</th>
+                                <th>City</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Customer Name</td>
-                                <td>Line</td>
-                                <td>City</td>
-                            </tr>
                             <tr ng-repeat = "delivery in deliveries_list">
-                                <td>{{deliveries_list[$index].name}}</td>
-                                <td>{{deliveries_list[$index].line}}</td>
-                                <td>{{deliveries_list[$index].city}}</td>
-                            </tr>
+                                <td>{{delivery.name}}</td>
+                                <td>{{delivery.line}}</td>
+                                <td>{{delivery.city}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -39,6 +30,6 @@
 <div class="md-fab-wrapper md-fab-speed-dial">
     <a class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-tooltip="{pos:'right'}" title="Menu" md-fab-speed-dial><i class="material-icons">&#xE5D2;</i></a>
     <div class="md-fab-wrapper-small">
-        <a class="md-fab md-fab-small md-fab-success" href="javascript:void(0)" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Generate PDF" data-uk-modal="{target:'#modal_add'}" ng-click="exportAction()"><i class="material-icons">&#xE415;</i></a>
+        <a class="md-fab md-fab-small md-fab-success" href="javascript:void(0)" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Generate PDF" data-uk-modal="{target:'#modal_add'}" ng-click="exportToPDF()"><i class="material-icons">&#xE415;</i></a>
     </div>
 </div>

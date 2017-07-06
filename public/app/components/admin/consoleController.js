@@ -10,6 +10,7 @@
       'User',
       function($scope, user_list, modals, User) {
         $scope.user_list = user_list;
+        console.log(user_list);
         $scope.options = {
           role: [
             'chef',
@@ -66,7 +67,7 @@
               },
               created: new Date(),
               lastUpdated: new Date(),
-              realm: $scope.user.realm,
+              realm: 'dietview',
               status: 'active'
             }).$promise.then(function(data) {
               $scope.user_list_roles = eliminateDuplicates(user_list);

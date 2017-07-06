@@ -70,7 +70,7 @@
         function activate() {
           $('.dropify').dropify();
           // TODO: Populate model data
-          onDurationChange(3);
+          onDurationChange(meal_plan_meals_data.length);
           $scope.meals = meal_plan_meals_data;
         }
 
@@ -122,6 +122,7 @@
                   file: $scope.image
                 }
               }).then(function(response) {
+                $scope.meal_plan.duration = $scope.duration;
                 $scope.meal_plan.image = API.URL_BASE + response.data.path;
                 $scope.meal_plan.$upsert().then(function(data) {
                   UIkit.modal('#modal_edit').hide();
@@ -131,6 +132,7 @@
               });
             });
           } else {
+            $scope.meal_plan.duration = $scope.duration;
             $scope.meal_plan.$upsert().then(function(data) {
               UIkit.modal('#modal_edit').hide();
               $scope.meal_plan.meals = mealPlanMeals;

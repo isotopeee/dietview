@@ -9,25 +9,18 @@
                         <caption>DietView Production</caption>
                         <thead>
                             <tr>
-                                <th>Dietview Production for Date:</th>
-                                <th>{{date.today}}</th>
-                                <th></th>
-                                <th></th>
+                                <th>Customer</th>
+                                <th>Meal Plan</th>
+                                <th>Subscription Start Date</th>
+                                <th>Subscription Expiration Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Breakfast</td>
-                                <td>Lunch</td>
-                                <td>Dinner</td>
-                                <td>Snack</td>
-                            </tr>
                             <tr ng-repeat = "production in production_list">
-                                <td>{{production_list[$index].breakfast.name}}</td>
-                                <td>{{production_list[$index].lunch.name}}</td>
-                                <td>{{production_list[$index].dinner.name}}</td>
-                                <td>{{production_list[$index].snack.name}}</td>
-                            </tr>
+                                <td>{{production.user.account.profile.firstname}} {{production.user.account.profile.lastname}}</td>
+                                <td>{{production.mealPlan.name}}</td>
+                                <td>{{production.startDate | date}}</td>
+                                <td>{{production.endDate | date}}</td>
                             </tr>
                         </tbody>
                     </table>

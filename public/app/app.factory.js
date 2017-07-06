@@ -109,8 +109,32 @@
     .factory('API', [
       function() {
         return {
-          //URL_BASE: 'http://localhost:3000/'
-          URL_BASE: 'https://dietview-api.mybluemix.net/'
+          URL_BASE: 'http://localhost:3000/'
+          //URL_BASE: 'https://dietview-api.mybluemix.net/'
+        };
+      }
+    ])
+    .factory('reports', [
+      '$http',
+      function ($http) {
+        const REPORTING_SERVER_API = 'http://localhost:5488/api/report';
+        return {
+          exportToPDF: function (shortid, data) {
+            var config = {
+              responseType: 'arraybuffer'
+            };
+            var postData = {
+              "template" : {
+                "shortid": shortid
+              },
+              "data": data
+            };
+            return $http.post(REPORTING_SERVER_API, postData, config).then(function (response) {
+              var report = new Blob([response.data], {type: 'application/pdf'});
+              var reportUrl = URL.createObjectURL(report);
+              return reportUrl;
+            });
+          }
         };
       }
     ]);
