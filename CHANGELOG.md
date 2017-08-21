@@ -1,3 +1,28 @@
+# July 03, 2017
+    - Reports Module
+        - Create 'Receipts' template on reporting server (jsreport)
+        - Implement 'exportToPDF' functionality on receiptsCtrl
+        - Re-implement functionalities of receiptsCtrl
+        - Improve content receiptsView
+
+# July 01, 2017
+    - Add 'reports' factory for generating reports
+    - Reports Module
+        - Create 'Daily Production' template on reporting server (jsreport)
+        - Create 'Delivery List' template on reporting server (jsreport)
+        - Implement 'exportToPDF' functionality of productionCtrl
+        - Implement 'exportToPDF' functionality of deliveriesCtrl
+        - Order subscriptions by mealPlanId on state resolve
+        - Re-implement functionalities of deliveriesCtrl
+        - Improve content deliveriesView
+
+# June 30, 2017
+    - Reports Module
+        - Re-implement functionalities of productionCtrl
+        - Improve content productionCtrl
+    - Subscriptions Module
+        - Add filter in state resolve to include 'user' and 'mealPlan'
+
 # June 28, 2017
     - Code Refactor
         - Wrap productionCtrl in an IIFE
