@@ -10,7 +10,8 @@
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
         $urlRouterProvider
           .when('/login', '/')
-          .otherwise('/');
+          .when('', '/')
+          .otherwise('/error/404');
 
         $stateProvider
           // -- ERROR PAGES --
@@ -69,12 +70,6 @@
             abstract: true,
             url: "",
             templateUrl: 'app/views/restricted.html',
-            controller: function(User, $state) {
-              if (!User.isAuthenticated) {
-                console.log('not authenticated');
-                $state.go('login');
-              }
-            },
             resolve: {
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -85,18 +80,14 @@
                   'lazy_autosize',
                   'lazy_iCheck',
                   'lazy_themes'
-                  //'bower_components/angular-resource/angular-resource.min.js'
                 ]);
               }],
-              user_data: function(User) {
-                var user = User.getCachedCurrent();
-                if (user !== null) {
-                  return user;
-                } else {
-                  return User.getCurrent().$promise.then(function(data) {
-                    return data;
-                  });
-                }
+              currentAuth: function($q, User){
+                // check if user is authenticated
+                return User.getCurrent()
+                    .$promise
+                    .then(data => console.log(data))
+                    .catch(err => $q.reject("AUTH_REQUIRED"));
               }
             }
           })
@@ -153,11 +144,6 @@
             url: "/admin",
             template: '<div ui-view autoscroll="false" ng-class="{ \'uk-height-1-1\': page_full_height }" />',
             abstract: true,
-            controller: function(user_data, $state) {
-              if (user_data.account.role !== 'admin') {
-                $state.go('error.404');
-              }
-            },
             resolve: {
               user_data: function(User) {
                 var user = User.getCachedCurrent();

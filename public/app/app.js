@@ -95,50 +95,15 @@
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
-        $rootScope.$on('$stateChangeSuccess', function() {
-
-          // scroll view to top
-          $("html, body").animate({
-            scrollTop: 0
-          }, 200);
-
-          if (detectIE()) {
-            $('svg,canvas,video').each(function() {
-              $(this).css('height', 0);
-            });
+        $rootScope.$on('$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
+          event.preventDefault();
+          if (error) {
+            $state.go('login');
           }
-
-          $timeout(function() {
-            $rootScope.pageLoading = false;
-          }, 300);
-
-          $timeout(function() {
-            $rootScope.pageLoaded = true;
-            $rootScope.appInitialized = true;
-            // wave effects
-            $window.Waves.attach('.md-btn-wave,.md-fab-wave', ['waves-button']);
-            $window.Waves.attach('.md-btn-wave-light,.md-fab-wave-light', ['waves-button', 'waves-light']);
-            if (detectIE()) {
-              $('svg,canvas,video').each(function() {
-                var $this = $(this),
-                  height = $(this).attr('height'),
-                  width = $(this).attr('width');
-
-                if (height) {
-                  $this.css('height', height);
-                }
-                if (width) {
-                  $this.css('width', width);
-                }
-                var peity = $this.prev('.peity_data,.peity');
-                if (peity.length) {
-                  peity.peity().change();
-                }
-              });
-            }
-          }, 600);
-
+          stateChangeSuccessCB();
         });
+        
+        $rootScope.$on('$stateChangeSuccess', stateChangeSuccessCB);
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
           // main search
@@ -186,6 +151,48 @@
         // wave effects
         $window.Waves.init();
 
+        function stateChangeSuccessCB() {
+          // scroll view to top
+          $("html, body").animate({
+           scrollTop: 0
+          }, 200);
+    
+          if (detectIE()) {
+            $('svg,canvas,video').each(function() {
+              $(this).css('height', 0);
+            });
+          }
+    
+          $timeout(function() {
+            $rootScope.pageLoading = false;
+          }, 300);
+    
+          $timeout(function() {
+            $rootScope.pageLoaded = true;
+            $rootScope.appInitialized = true;
+            // wave effects
+            $window.Waves.attach('.md-btn-wave,.md-fab-wave', ['waves-button']);
+            $window.Waves.attach('.md-btn-wave-light,.md-fab-wave-light', ['waves-button', 'waves-light']);
+            if (detectIE()) {
+              $('svg,canvas,video').each(function() {
+                var $this = $(this),
+                  height = $(this).attr('height'),
+                  width = $(this).attr('width');
+    
+                if (height) {
+                  $this.css('height', height);
+                }
+                if (width) {
+                  $this.css('width', width);
+                }
+                var peity = $this.prev('.peity_data,.peity');
+                if (peity.length) {
+                  peity.peity().change();
+                }
+              });
+            }
+          }, 600);
+        }
       }
     ])
     .run(['PrintToConsole', function(PrintToConsole) {

@@ -12,7 +12,6 @@
       'user_data',
       'variables',
       function($rootScope, $scope, $interval, $timeout, sale_chart_data, user_data, variables) {
-
         // statistics
         $scope.dynamicStats = [{
             id: '1',
