@@ -10,11 +10,13 @@
       'utils',
       'modals',
       'User',
-      function($scope, $state, $rootScope, utils, modals, User) {
-
+      'vcRecaptchaService',
+      function($scope, $state, $rootScope, utils, modals, User, vcRecaptchaService) {
         $scope.registerFormActive = false;
         $scope.rememberMe = false;
         $scope.recaptcha = {};
+        $scope.onProcess = false;
+        $scope.invalid = false;
 
         var $login_card = $('#login_card'),
           $login_form = $('#login_form'),
@@ -52,7 +54,23 @@
           request_reset_password();
         };
 
+        activate();
+
         //////////////////////////////////////////////////////////////////////////
+
+        function activate() {
+          // validate form on login
+          $('#loginForm')
+            .parsley()
+            .on('form:validated',function() {
+                $scope.$apply();
+            })
+            .on('field:validated',function(parsleyField) {
+                if($(parsleyField.$element).hasClass('md-input')) {
+                    $scope.$apply();
+                }
+            });
+        }
 
         // show login form (hide other forms)
         function login_form_show() {
@@ -91,6 +109,8 @@
           if (!$scope.recaptcha.login) {
             modals.alert('Check recaptcha');
           } else {
+            showProgressbar();
+
             var credentials = $scope.credentials,
               rememberMe = $scope.rememberMe;
 
@@ -106,6 +126,8 @@
                 $state.go("restricted.pages.scrum_board");
               },
               function(response) {
+                hideProgressbar();
+                $scope.invalid = true;
                 console.log(response);
               });
           }
@@ -125,6 +147,18 @@
                 console.log(response);
               });
           }
+        }
+
+        function showProgressbar(){
+          $scope.onProcess = true;
+        }
+
+        function hideProgressbar(){
+          $scope.onProcess = false;
+        }
+
+        function toggleProgressbar(){
+          $scope.onProcess = !$scope.onProcess;
         }
       }
     ]);

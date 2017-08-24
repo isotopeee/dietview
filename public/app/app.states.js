@@ -43,6 +43,7 @@
                 return $ocLazyLoad.load([
                   'lazy_uikit',
                   'lazy_iCheck',
+                  'lazy_parsleyjs',
                   'app/components/pages/loginController.js'
                 ]);
               }]

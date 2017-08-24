@@ -17,6 +17,8 @@
       'ngFileUpload',
       angularDragula(angular),
       'ngAnimate',
+      'ngMessages',
+      'ngMaterial',
       'toastr'
     ]);
 
