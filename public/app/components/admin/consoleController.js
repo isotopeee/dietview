@@ -73,6 +73,7 @@
               $scope.user_list_roles = eliminateDuplicates(user_list);
               $scope.user_list.push(data);
               clear_form();
+              $('#modal_add').hide();
               modals.alert('An email has been sent for account verification');
             });
           });

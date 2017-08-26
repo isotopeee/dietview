@@ -2,6 +2,9 @@
     - Display username and role on main header navbar dropdown
     - Add navigation for admin console
     - Prevent unauthorized access for admin console
+    - Admin Console
+        - Close add modal after employee registration
+
 
 # August 25, 2017
     - add 'angular-material' module
