@@ -10,6 +10,8 @@
         - Prevent done tasks to be dragged to another section.
     - Products Module
         - Sort products by name in ascending order
+    -Subscriptions Module
+        - Sort subscription by 'subscriptionDate' in descending order
 
 # August 25, 2017
     - add 'angular-material' module
