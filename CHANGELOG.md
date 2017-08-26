@@ -4,7 +4,8 @@
     - Prevent unauthorized access for admin console
     - Admin Console
         - Close add modal after employee registration
-
+    - Add account-verified page
+    - Add page title
 
 # August 25, 2017
     - add 'angular-material' module
