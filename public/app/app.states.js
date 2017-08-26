@@ -28,11 +28,17 @@
           })
           .state("error.404", {
             url: "/404",
-            templateUrl: 'app/components/pages/error_404View.html'
+            templateUrl: 'app/components/pages/error_404View.html',
+            data: {
+              pageTitle: '404'
+            }
           })
           .state("error.unauthorized", {
             url: "/unauthorized",
-            templateUrl: 'app/components/pages/error_unauthorizedView.html'
+            templateUrl: 'app/components/pages/error_unauthorizedView.html',
+            data: {
+              pageTitle: 'Unauthorized'
+            }
           })
           .state("error.500", {
             url: "/500",
@@ -52,6 +58,24 @@
                   'app/components/pages/loginController.js'
                 ]);
               }]
+            },
+            data: {
+              pageTitle: 'Login'
+            }
+          })
+          // -- ACCOUNT-VERIFIED PAGE --
+          .state("accountVerified", {
+            url: "/account-verified",
+            templateUrl: 'app/components/pages/accountVerifiedView.html',
+            resolve: {
+              deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([
+                  'lazy_uikit',
+                ]);
+              }]
+            },
+            data: {
+              pageTitle: 'Account verified'
             }
           })
           // -- RESET-PASSWORD PAGE --
@@ -68,6 +92,9 @@
                   'app/components/pages/resetPasswordController.js'
                 ]);
               }]
+            },
+            data: {
+              pageTitle:'Reset password'
             }
           })
           // -- RESTRICTED --
