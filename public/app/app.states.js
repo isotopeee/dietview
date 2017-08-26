@@ -504,7 +504,8 @@
             resolve: {
               subscriptions_data: function(Subscription) {
                 var filter = {
-                  include: ['user', 'mealPlan']
+                  include: ['user', 'mealPlan'],
+                  order: 'subscriptionDate desc'
                 }
                 return Subscription.find({filter: filter}).$promise
                   .then(function(data) {
