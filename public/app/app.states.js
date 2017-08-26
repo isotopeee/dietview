@@ -235,7 +235,10 @@
             controller: 'meal_items_listCtrl',
             resolve: {
               ingredients_data: function(MealItem) {
-                return MealItem.find({}).$promise
+                var filter = {
+                  order: 'name asc'
+                };
+                return MealItem.find({filter: filter}).$promise
                   .then(function(data) {
                     return data;
                   });
@@ -260,7 +263,10 @@
             controller: 'meals_listCtrl',
             resolve: {
               meals_data: function(Meal) {
-                var filter = {include: 'mealItems'};
+                var filter = {
+                  include: 'mealItems',
+                  order: 'name asc'
+                };
                 return Meal.find({filter: filter}).$promise
                   .then(function(data) {
                     return data;
@@ -299,7 +305,10 @@
                   });
               },
               meal_plans_data: function(MealPlan) {
-                return MealPlan.find({}).$promise
+                var filter = {
+                  order: 'name asc'
+                };
+                return MealPlan.find({filter: filter}).$promise
                   .then(function(data) {
                     return data;
                   });
