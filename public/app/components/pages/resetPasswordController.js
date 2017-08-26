@@ -17,7 +17,20 @@
         };
         $scope.resetPassword = reset_password;
 
+        activate();
+
         //////////////////////////////////////////////////////////////////////
+
+        function activate() {
+          $('#resetPasswordForm')
+            .parsley()
+            .on('form:validated', () => {$scope.$apply})
+            .on('field:validated', parsleyField => {
+              if($(parsleyField.$element).hasClass('md-input')) {
+                $scope.$apply();
+              }
+            })
+        }
 
         // reset password
         function reset_password($event) {

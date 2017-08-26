@@ -60,6 +60,7 @@
                 return $ocLazyLoad.load([
                   'lazy_uikit',
                   'lazy_iCheck',
+                  'lazy_parsleyjs',
                   'app/components/pages/resetPasswordController.js'
                 ]);
               }]
@@ -663,6 +664,7 @@
             resolve: {
               deps: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load([
+                  'lazy_parsleyjs',
                   'assets/js/custom/uikit_fileinput.min.js',
                   'app/components/pages/user_editController.js'
                 ], {

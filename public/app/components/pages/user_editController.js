@@ -24,7 +24,21 @@
                 changePassword();
               };
 
+              activate();
+
               /////////////////////////////////////////////////////////////////.
+
+              function activate() {
+                // validate password
+                $('#user_change_password_form')
+                  .parsley()
+                  .on('form:validated', () => { $scope.$apply() } )
+                  .on('field:validated', parsleyField => {
+                    if($(parsleyField.$element).hasClass('md-input')) {
+                      $scope.$apply();
+                    }
+                  });
+              }
 
               // update User
               function update () {

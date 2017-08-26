@@ -96,13 +96,24 @@
                                   <form ng-submit="changePassword($event)" class="uk-form-stacked" id="user_change_password_form">
                                     <div class="uk-margin-top">
                                         <div class="uk-grid" data-uk-grid-margin>
-                                            <div class="uk-width-medium-1-2">
+                                            <div class="uk-width-medium-1-2 parsley-row">
                                                 <label for="user_edit_password_control">New password</label>
-                                                <input class="md-input" type="password" id="user_edit_password_control" name="user_edit_password_control" ng-model="user_data.password" md-input />
+                                                <input class="md-input" type="password" id="user_edit_password_control"
+                                                    name="user_edit_password_control" ng-model="user_data.password" md-input 
+                                                    required
+                                                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}"
+                                                    data-parsley-pattern-message="The new password must contains at least eight characters, 
+                                                    one uppercase letter, one lowercase letter,one number, and one special character."
+                                                    />
                                             </div>
-                                            <div class="uk-width-medium-1-2">
+                                            <div class="uk-width-medium-1-2 parsley-row">
                                                 <label for="user_edit_confirm_control">Confirm new password</label>
-                                                <input class="md-input" type="password" id="user_edit_confirm_control" name="user_edit_confirm_control" ng-model="confirm" md-input />
+                                                <input class="md-input" type="password" id="user_edit_confirm_control" 
+                                                    name="user_edit_confirm_control" ng-model="confirm" md-input 
+                                                    required
+                                                    data-parsley-equalto="#user_edit_password_control"
+                                                    data-parsley-equalto-message="Confirmation does not match with the new password."
+                                                    />
                                             </div>
                                             <div class="uk-width-medium-1-1">
                                                 <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-wave-light">Change password</button>
