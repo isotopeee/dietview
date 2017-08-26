@@ -1,3 +1,14 @@
+# August 26, 2017
+    - Display username and role on main header navbar dropdown
+
+# August 25, 2017
+    - add 'angular-material' module
+    - Login
+        - Add indeterminate progress bar component)
+        - Field validation
+    - Accounts module
+        - Implement password strength validation
+
 # July 03, 2017
     - Reports Module
         - Create 'Receipts' template on reporting server (jsreport)
