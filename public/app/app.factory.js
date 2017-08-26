@@ -100,8 +100,8 @@
           alert: function(message) {
             UIkit.modal.alert(message);
           },
-          confirm: function(prompt, callback) {
-            UIkit.modal.confirm(prompt, callback);
+          confirm: function(prompt, callback, cancelCB) {
+            UIkit.modal.confirm(prompt, callback, cancelCB);
           }
         };
       }

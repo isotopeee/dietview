@@ -6,6 +6,8 @@
         - Close add modal after employee registration
     - Add account-verified page
     - Add page title
+    - Scrum Board
+        - Prevent done tasks to be dragged to another section.
 
 # August 25, 2017
     - add 'angular-material' module

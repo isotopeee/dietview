@@ -9,8 +9,9 @@
       'tasks_list',
       'dragulaService',
       'modals',
+      'toastr',
       'Task',
-      function($rootScope, $scope, tasks_list, dragulaService, modals, Task) {
+      function($rootScope, $scope, tasks_list, dragulaService, modals, toastr, Task) {
         $scope.tasks_list = tasks_list;
         $scope.task_groups = [{
             id: 'todo',
@@ -73,12 +74,34 @@
         $scope.$on('tasks.drop', function(e, el, target, source) {
           var group = target[0].id;
           var task = getTaskById(el.attr('id'));
-
           task.group = group;
-          task.$save().then(function (data) {
-            // TODO: Notify user for updates
-          });
 
+          // prevent done tasks to be dragged to another section
+          if (source[0].id === 'done' && target[0].id !== 'done') {
+            $(el).remove();
+            $(source).append(el);
+            task.group = 'done';
+            toastr.error("You cannot dragged done tasks to other sections.", "Invalid");
+          } else if (target[0].id === 'done') {
+              modals.confirm('Are you sure you want to add the task to done section? Note: you cannot drag done task to other sections.', 
+              function() {
+                // save task on save
+                task.$save()
+                    .then(function (data) {
+                      // TODO: Notify user for updates
+                    });
+              }, 
+              function() {
+                // revert task on cancel
+                $(el).remove();
+                $(source).append(el);
+                task.group = source[0].id;
+              });
+          } else if (source[0].id !== 'done' && (source[0].id !== target[0].id)) {
+            task.$save().then(function (data) {
+              // TODO: Notify user for updates
+            });
+          }
         });
 
 
