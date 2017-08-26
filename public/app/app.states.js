@@ -30,6 +30,10 @@
             url: "/404",
             templateUrl: 'app/components/pages/error_404View.html'
           })
+          .state("error.unauthorized", {
+            url: "/unauthorized",
+            templateUrl: 'app/components/pages/error_unauthorizedView.html'
+          })
           .state("error.500", {
             url: "/500",
             templateUrl: 'app/components/pages/error_500View.html'
@@ -146,6 +150,16 @@
             template: '<div ui-view autoscroll="false" ng-class="{ \'uk-height-1-1\': page_full_height }" />',
             abstract: true,
             resolve: {
+              currentAuth: function($q, User){
+                // check if user is authenticated and logged in as admin
+                return User.getCurrent()
+                    .$promise
+                    .then(user => {
+                      if (user.account.role !== 'admin') {
+                        return $q.reject("UNAUTHORIZED");
+                      }
+                    });
+              },
               user_data: function(User) {
                 var user = User.getCachedCurrent();
                 if (user !== null) {

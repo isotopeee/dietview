@@ -1,5 +1,7 @@
 # August 26, 2017
     - Display username and role on main header navbar dropdown
+    - Add navigation for admin console
+    - Prevent unauthorized access for admin console
 
 # August 25, 2017
     - add 'angular-material' module

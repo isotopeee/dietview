@@ -98,7 +98,11 @@
         $rootScope.$on('$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
           event.preventDefault();
           if (error) {
-            $state.go('login');
+            if (error === 'UNAUTHORIZED') {
+              $state.go('error.unauthorized');
+            } else {
+              $state.go('login');
+            } 
           }
           stateChangeSuccessCB();
         });

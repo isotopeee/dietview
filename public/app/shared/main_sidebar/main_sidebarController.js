@@ -7,28 +7,8 @@
       '$timeout',
       '$scope',
       '$rootScope',
-      function($timeout, $scope, $rootScope) {
-
-        $scope.$on('onLastRepeat', function(scope, element, attrs) {
-          $timeout(function() {
-            if (!$rootScope.miniSidebarActive) {
-              // activate current section
-              $('#sidebar_main').find('.current_section > a').trigger('click');
-            } else {
-              // add tooltips to mini sidebar
-              var tooltip_elem = $('#sidebar_main').find('.menu_tooltip');
-              tooltip_elem.each(function() {
-                var $this = $(this);
-
-                $this.attr('title', $this.find('.menu_title').text());
-                UIkit.tooltip($this, {
-                  pos: 'right'
-                });
-              });
-            }
-          });
-        });
-
+      'User',
+      function($timeout, $scope, $rootScope, User) {
         // menu entries
         $scope.sections = [{
             id: 0,
@@ -90,9 +70,46 @@
             icon: '&#xE87C;',
             link: 'restricted.pages.user_profile'
           },
-
         ];
 
+        $scope.$on('onLastRepeat', function(scope, element, attrs) {
+          $timeout(function() {
+            if (!$rootScope.miniSidebarActive) {
+              // activate current section
+              $('#sidebar_main').find('.current_section > a').trigger('click');
+            } else {
+              // add tooltips to mini sidebar
+              var tooltip_elem = $('#sidebar_main').find('.menu_tooltip');
+              tooltip_elem.each(function() {
+                var $this = $(this);
+
+                $this.attr('title', $this.find('.menu_title').text());
+                UIkit.tooltip($this, {
+                  pos: 'right'
+                });
+              });
+            }
+          });
+        });
+
+        activate();
+
+        ////////////////////////////////////////////////////////////////////
+
+        function activate() {
+          User.getCurrent()
+              .$promise
+              .then(user => {
+                if (user.account.role === 'admin') {
+                  $scope.sections.push({
+                    id: 6,
+                    title: 'Admin Console',
+                    icon: '&#xE8D3;',
+                    link: 'restricted.admin.console'
+                  });
+                }
+              });
+        }
       }
     ]);
 }());
