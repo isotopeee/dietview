@@ -118,7 +118,7 @@
                 // check if user is authenticated
                 return User.getCurrent()
                     .$promise
-                    .then(data => console.log(data))
+                    .then(data => data)
                     .catch(err => $q.reject("AUTH_REQUIRED"));
               }
             }
@@ -361,7 +361,6 @@
               meal_plan_data: function ($stateParams, MealPlan) {
                 return MealPlan.findById({id: $stateParams.id}).$promise
                   .then(function (data) {
-                    console.log(data);
                     return data;
                   });
               },
@@ -430,7 +429,6 @@
               meal_plan_data: function ($stateParams, MealPlan) {
                 return MealPlan.findById({id: $stateParams.id}).$promise
                   .then(function (data) {
-                    console.log(data);
                     return data;
                   });
               },
