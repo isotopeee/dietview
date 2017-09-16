@@ -7,20 +7,27 @@
       '$window',
       'production_data',
       'reports',
-      function($scope, $window, production_data, reports) {
+      'Subscription',
+      function($scope, $window, production_data, reports, Subscription) {
         $scope.production_list = [];
         var today = new Date();
         var tod = today.getDate();
-        $scope.date = { today: today.toLocaleDateString() };
+        $scope.productionDate = today;
+        $scope.date = { 
+          today: today.toLocaleDateString(),
+        };
+        $scope.onProcess = false;
+        
 
         $scope.exportToPDF = exportToPDF;
+        $scope.generateProductionList = generateProductionList;
 
         activate();
 
         ////////////////////////////////////////////////////////////////////////
 
         function activate() {
-          _filterProductionList();
+          _filterProductionList(today);
         }
 
         function exportToPDF() {
@@ -29,7 +36,7 @@
           var shortid = 'SJmGtagEZ';
           var data = {
             subscriptions: $scope.production_list,
-            date: $scope.date.today
+            date: $scope.productionDate.toLocaleDateString()
           };
 
           reports.exportToPDF(shortid, data).then(function (reportFileUrl) {
@@ -37,12 +44,44 @@
           });
         }
 
-        function _filterProductionList() {
+        function generateProductionList() {
+          showProgressbar();
+          const filter = {
+            where: {
+              status: 'active'
+            },
+            include: ['user', 'mealPlan'],
+            order: 'mealPlanId ASC'
+          };
+
+          Subscription.find({filter: filter})
+            .$promise
+            .then(data => {
+              production_data = data;
+              _filterProductionList($scope.productionDate);
+              hideProgressbar();
+            });
+        }
+
+        function showProgressbar(){
+          $scope.onProcess = true;
+        }
+
+        function hideProgressbar(){
+          $scope.onProcess = false;
+        }
+
+        function toggleProgressbar(){
+          $scope.onProcess = !$scope.onProcess;
+        }
+
+        function _filterProductionList(productionDate) {
+          $scope.production_list = [];
           for (var i = 0; i < production_data.length; i++) {
             var startDate = new Date(production_data[i].startDate);
             var endDate = new Date(production_data[i].endDate);
             var start = startDate.getDate();
-            if (startDate < today && today < endDate) {
+            if (startDate < productionDate && productionDate < endDate) {
               // IDEA: Format Date
               production_data[i].startDate = startDate.toLocaleDateString();
               production_data[i].endDate = endDate.toLocaleDateString();
