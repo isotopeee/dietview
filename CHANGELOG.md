@@ -1,3 +1,7 @@
+# September 07, 2017
+    - Reports
+        - Allow generation of reports for a given date
+
 # August 26, 2017
     - Display username and role on main header navbar dropdown
     - Add navigation for admin console
