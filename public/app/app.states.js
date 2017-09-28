@@ -634,7 +634,6 @@
                   include: ['user', 'mealPlan'],
                   order: 'mealPlanId ASC'
                 };
-                var subscriptions_list = [];
                 return Subscription.find({filter:filter}).$promise
                   .then(function(subscriptions) {
                     return subscriptions;
@@ -650,6 +649,36 @@
             },
             data: {
               pageTitle: 'Receipts'
+            }
+          })
+          .state("restricted.reports.rawIngredients", {
+            url: "/rawIngredients",
+            templateUrl: 'app/components/reports/rawIngredientsView.html',
+            controller: 'rawIngredientsCtrl',
+            resolve: {
+              rawIngredients_data: function(Subscription, TM_MealMealPlan) {
+                const filter = {
+                  where: {
+                    status: 'active'
+                  },
+                  include: ['user', {mealPlan: {meals: 'mealItems'}}],
+                  order: 'mealPlanId ASC'
+                };
+                return Subscription.find({filter:filter}).$promise
+                  .then(function(subscriptions) {
+                    return subscriptions;
+                  });
+              },
+              deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([
+                  'app/components/reports/rawIngredientsController.js'
+                ], {
+                  serie: true
+                });
+              }]
+            },
+            data: {
+              pageTitle: 'Raw Ingredients'
             }
           })
 

@@ -55,6 +55,10 @@
               {
                 title: 'Receipts',
                 link: 'restricted.reports.receipts'
+              },
+              {
+                title: 'Raw Ingredients',
+                link: 'restricted.reports.rawIngredients'
               }
             ]
           },
