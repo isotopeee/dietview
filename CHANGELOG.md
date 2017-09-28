@@ -1,3 +1,7 @@
+# September 20, 2017
+    - Reports
+        - Raw ingredients reports
+
 # September 07, 2017
     - Reports
         - Allow generation of reports for a given date
