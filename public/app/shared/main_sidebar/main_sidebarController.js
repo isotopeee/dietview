@@ -110,6 +110,12 @@
                     title: 'Admin Console',
                     icon: '&#xE8D3;',
                     link: 'restricted.admin.console'
+                  },
+                  {
+                    id: 7,
+                    title: 'Audit Logs',
+                    icon: 'announcement',
+                    link: 'restricted.admin.audit_logs'
                   });
                 }
               });

@@ -222,6 +222,36 @@
               pageTitle: 'Management Console'
             }
           })
+          // -- AUDIT LOGS --
+          .state("restricted.admin.audit_logs", {
+            url: "/audit_logs",
+            templateUrl: 'app/components/admin/audit_logsView.html',
+            controller: 'audit_logsCtrl',
+            resolve: {
+              audit_logs_data: function(AuditLog) {
+                const filter = {
+                  include: 'user',
+                  order: 'eventDate DESC'
+                };
+                return AuditLog.find({filter: filter}).$promise
+                  .then(function(data) {
+                    console.log(data);
+                    return data;
+                  });
+              },
+              deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load([
+                  'lazy_pagination',
+                  'app/components/admin/audit_logsController.js'
+                ], {
+                  serie: true
+                });
+              }]
+            },
+            data: {
+              pageTitle: 'Audit Logs'
+            }
+          })
           // -- PRODUCTS --
           .state("restricted.products", {
             url: "/products",

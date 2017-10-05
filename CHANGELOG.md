@@ -1,3 +1,6 @@
+# September 30, 2017
+    - Implement Audit Logs
+
 # September 20, 2017
     - Reports
         - Raw ingredients reports
