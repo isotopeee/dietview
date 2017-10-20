@@ -8,14 +8,14 @@
       '$scope',
       '$interval',
       '$timeout',
-      'sale_chart_data',
-      'user_data',
+      'subscriptions_data',
+      'users_data',
       'variables',
-      function($rootScope, $scope, $interval, $timeout, sale_chart_data, user_data, variables) {
+      function($rootScope, $scope, $interval, $timeout, subscriptions_data, users_data, variables) {
         // statistics
         $scope.dynamicStats = [{
             id: '1',
-            title: 'Visitors (last 7d)',
+            title: 'Pending Subscriptions',
             count: '0',
             chart_data: [5, 3, 9, 6, 5, 9, 7],
             chart_options: {
@@ -27,7 +27,7 @@
           },
           {
             id: '2',
-            title: 'Sale',
+            title: 'Deliveries Today',
             count: '0',
             chart_data: [5, 3, 9, 6, 5, 9, 7, 3, 5, 2],
             chart_options: {
@@ -39,7 +39,7 @@
           },
           {
             id: '3',
-            title: 'Orders Completed',
+            title: 'Registered Customers',
             count: '0',
             chart_data: ['64/100'],
             chart_options: {
@@ -47,253 +47,19 @@
               width: 24,
               fill: ["#8bc34a", "#eee"]
             }
-          },
-          {
-            id: '4',
-            title: 'Visitors (live)',
-            count: '1',
-            chart_data: [5, 3, 9, 6, 5, 9, 7, 3, 5, 2, 5, 3, 9, 6, 5, 9, 7, 3, 5, 2],
-            chart_options: {
-              height: 28,
-              width: 64,
-              fill: "#efebe9",
-              stroke: "#5d4037"
-            }
           }
         ];
 
         // countUp update
         $scope.$on('onLastRepeat', function(scope, element, attrs) {
-          $scope.dynamicStats[0].count = '12456';
-          $scope.dynamicStats[1].count = '142384';
-          $scope.dynamicStats[2].count = '64';
-
-          // update live statistics
-          function getRandomVal(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-          }
-
-          $interval(function() {
-            var random = Math.round(Math.random() * 10);
-            var live_values = $scope.dynamicStats[3].chart_data.toString().split(",");
-
-            live_values.shift();
-            live_values.push(random);
-            live_values.join(",");
-
-            var countTo = getRandomVal(20, 100);
-
-            $scope.dynamicStats[3].chart_data = live_values;
-            $scope.dynamicStats[3].count = ($scope.dynamicStats[3].count == countTo) ? countTo : getRandomVal(20, 120);
-
-          }, 2000)
+          const pendingSubscriptions = subscriptions_data.filter(subscription => subscription.status === 'pending').length;
+          const deliveries = subscriptions_data.filter(s => s.status === 'active' && new Date() >= s.startDate).length;
+          const registeredCustomers = users_data.filter(users => users.account.role === 'customer').length;
+          
+          $scope.dynamicStats[0].count = pendingSubscriptions;
+          $scope.dynamicStats[1].count = deliveries;
+          $scope.dynamicStats[2].count = registeredCustomers;
         });
-
-        // large chart
-        $scope.sale_chart_data = [sale_chart_data];
-
-        for (var i = 0; i < $scope.sale_chart_data.length; i++) {
-          $scope.sale_chart_data[i] = MG.convert.date($scope.sale_chart_data[i], 'date');
-        }
-        $scope.sale_chart_options = {
-          data: $scope.sale_chart_data,
-          y_scale_type: 'log',
-          right: 20,
-          x_accessor: 'date',
-          y_accessor: 'value',
-          markers: [{
-              'date': new Date('2016-02-26T00:00:00.000Z'),
-              'label': 'Winter Sale'
-            },
-            {
-              'date': new Date('2016-06-02T00:00:00.000Z'),
-              'label': 'Spring Sale'
-            }
-          ]
-        };
-
-        // circular statistics
-        $scope.stat_conversions_data = [5, 3, 9, 6, 5, 9, 7];
-        $scope.stat_conversions_options = {
-          height: 64,
-          width: 96,
-          fill: ["#d84315"],
-          padding: 0.2
-        };
-
-        $scope.epc_user_messages = {
-          barColor: '#03a9f4',
-          scaleColor: false,
-          trackColor: '#f5f5f5',
-          lineWidth: 5,
-          size: 110,
-          easing: variables.bez_easing_swiftOut
-        };
-
-        $scope.epc_tasks_list = {
-          barColor: '#9c27b0',
-          scaleColor: false,
-          trackColor: '#f5f5f5',
-          lineWidth: 5,
-          size: 110,
-          easing: variables.bez_easing_swiftOut
-        };
-
-        $scope.epc_orders = {
-          barColor: '#009688',
-          scaleColor: false,
-          trackColor: '#f5f5f5',
-          lineWidth: 5,
-          size: 110,
-          easing: variables.bez_easing_swiftOut
-        };
-
-        $scope.epc_user_registrations = {
-          barColor: '#607d8b',
-          scaleColor: false,
-          trackColor: '#f5f5f5',
-          lineWidth: 5,
-          size: 110,
-          easing: variables.bez_easing_swiftOut
-        };
-
-        // statistics (chartist)
-        $scope.chartist_stat_data = {
-          labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
-          series: [
-            [5, 4, 3, 7],
-            [3, 2, 9, 5],
-            [1, 5, 8, 4],
-            [2, 3, 4, 6],
-            [4, 1, 2, 1]
-          ]
-        };
-        $scope.chartist_stat_options = {
-          stackBars: true,
-          axisX: {
-            labelInterpolationFnc: function(value) {
-              return value.split(/\s+/).map(function(word) {
-                return word[0];
-              }).join('');
-            }
-          },
-          axisY: {
-            offset: 20
-          }
-        };
-        $scope.chartist_stat_options_responsive = [
-          // Options override for media > 400px
-          ['screen and (min-width: 400px)', {
-            reverseData: true,
-            horizontalBars: true,
-            axisX: {
-              labelInterpolationFnc: Chartist.noop
-            },
-            axisY: {
-              offset: 60
-            }
-          }],
-          // Options override for media > 800px
-          ['screen and (min-width: 800px)', {
-            stackBars: false,
-            seriesBarDistance: 10
-          }],
-          // Options override for media > 1000px
-          ['screen and (min-width: 1000px)', {
-            reverseData: false,
-            horizontalBars: false,
-            seriesBarDistance: 15
-          }]
-        ];
-
-        // video player
-        $scope.video_data = [{
-            id: '-CYs99M7hzA',
-            name: 'Unboxing the HERO4',
-            source: 'Mashable'
-          },
-          {
-            id: 'te689fEo2pY',
-            name: 'Apple Watch Unboxing & Setup',
-            source: 'Unbox Therapy'
-          },
-          {
-            id: '7AFJeaYojhU',
-            name: 'Energous WattUp Power Transmitter',
-            source: 'TechCrunch'
-          },
-          {
-            id: 'hajnEpCq5SE',
-            name: 'The new MacBook - Design',
-            source: 'Apple'
-          }
-        ];
-
-        var $video_player = $('#video_player'),
-          $video_playlist = $('#video_player_playlist'),
-          active_class = 'md-list-item-active';
-
-        $scope.videoChange = function($event, videoID) {
-
-          var $this = $($event.currentTarget);
-          if (!$this.hasClass(active_class)) {
-            var iframe_embed = '<iframe height="150" width="300" data-uk-cover src="https://www.youtube.com/embed/' + videoID + '?rel=0" frameborder="0" allowfullscreen style="max-height:100%"></iframe>';
-
-            $video_playlist.children('li').removeClass(active_class);
-            $this.addClass(active_class);
-
-            $video_player.velocity({
-              translateZ: 0,
-              scale: 0,
-              opacity: 0
-            }, {
-              duration: 280,
-              easing: variables.easing_swiftOut,
-              complete: function() {
-                $video_player.html(iframe_embed);
-                setTimeout(function() {
-                  $video_player.velocity('reverse');
-                }, 280)
-              }
-            });
-
-          }
-
-        };
-
-        // weather
-        $scope.weatherToday = {
-          city: 'Some City',
-          backgroundImg: 'assets/img/gallery/Image17.jpg',
-          icon: 'wi-day-sunny-overcast',
-          temperature: '14'
-        };
-        $scope.weatherData = [{
-            icon: 'wi-day-sunny-overcast',
-            temperature: '22',
-            description: 'Mostly Sunny',
-            date: moment().add(1, 'days').format('DD MMM (dddd)')
-          },
-          {
-            icon: 'wi-cloudy',
-            temperature: '19',
-            description: 'Partly Cloudy',
-            date: moment().add(2, 'days').format('DD MMM (dddd)')
-          },
-          {
-            icon: 'wi-day-rain',
-            temperature: '16',
-            description: 'Rainy',
-            date: moment().add(3, 'days').format('DD MMM (dddd)')
-          },
-          {
-            icon: 'wi-day-sunny uk-text-warning',
-            temperature: '24',
-            description: 'Sunny',
-            date: moment().add(4, 'days').format('DD MMM (dddd)')
-          }
-        ];
-
 
         // calendar
         var $clndr_events = $('#clndr_events'),
@@ -547,119 +313,6 @@
 
           ($clndr_events.width() < (calMinWidth)) ? $clndr_events.addClass('events_over'): $clndr_events.removeClass('events_over');
         };
-
-        // timeline
-        $scope.user_data = user_data[0];
-
-        // secondary sidebar
-        $scope.sSidebar = {
-          site_online: true,
-          top_bar: true,
-          minify_assets: true
-        };
-
-        $scope.sSidebar_users = [{
-            name: 'Catalina Weber',
-            avatar: 'avatar_02'
-          },
-          {
-            name: 'Jayme Hermiston',
-            avatar: 'avatar_03'
-          },
-          {
-            name: 'Enid Roob',
-            avatar: 'avatar_06'
-          },
-          {
-            name: 'Lelah Leffler',
-            avatar: 'avatar_04'
-          }
-        ];
-
       }
     ])
-    // google maps
-    .controller('userMapsCtrl', [
-      '$rootScope',
-      '$scope',
-      '$timeout',
-      'utils',
-      'NgMap',
-      function($rootScope, $scope, $timeout, utils, NgMap) {
-
-        // marker icon
-        $scope.marker_icon = {
-          url: utils.isHighDensity() ? 'assets/img/md-images/ic_location_history_black_48dp.png' : 'assets/img/md-images/ic_location_history_black_24dp.png',
-          size: utils.isHighDensity() ? [48, 48] : [24, 24],
-          scaledSize: [24, 24]
-        };
-
-        NgMap.getMap().then(function(map) {
-          //console.log(map.markers);
-        });
-
-        // show info window on marker click
-        $scope.showInfo = function(evt, id) {
-          $scope.user = $scope.gmap_users[id];
-          $scope.showInfoWindow.apply(this, [evt, 'infoWindow']);
-        };
-
-        // show marker
-        $scope.showMarker = function(evt, id) {
-          $scope.user = $scope.gmap_users[id];
-          $scope.showInfoWindow.apply(this, [evt, 'infoWindow', $scope.map.markers[id]]);
-          $scope.map_center = [$scope.user.lat, $scope.user.lon];
-          $scope.map_zoom = '14';
-        };
-
-
-        // users
-        $scope.gmap_users = [{
-            id: "1",
-            name: "Jackson Heathcote",
-            company: "Larson, Langosh and Fritsch",
-            avatar: "assets/img/avatars/avatar_01_tn.png",
-            pos: [37.406267, -122.06742],
-            lat: "37.406267",
-            lon: "-122.06742"
-          },
-          {
-            id: "2",
-            name: "Lelah Leffler",
-            company: "Rowe PLC",
-            avatar: "assets/img/avatars/avatar_02_tn.png",
-            pos: [37.379267, -122.02148],
-            lat: "37.379267",
-            lon: "-122.02148"
-          },
-          {
-            id: "3",
-            name: "Lawson Kiehn",
-            company: "Legros Inc",
-            avatar: "assets/img/avatars/avatar_03_tn.png",
-            pos: [37.410267, -122.11048],
-            lat: "37.410267",
-            lon: "-122.11048"
-          },
-          {
-            id: "4",
-            name: "Jacques VonRueden",
-            company: "Legros, Balistreri and Adams",
-            avatar: "assets/img/avatars/avatar_04_tn.png",
-            pos: [37.397267, -122.084417],
-            lat: "37.397267",
-            lon: "-122.084417"
-          }, {
-            id: "5",
-            name: "Neoma Littel",
-            company: "Conn-Ferry",
-            avatar: "assets/img/avatars/avatar_05_tn.png",
-            pos: [37.372267, -122.090417],
-            lat: "37.372267",
-            lon: "-122.090417"
-          }
-        ];
-
-      }
-    ]);
 }());

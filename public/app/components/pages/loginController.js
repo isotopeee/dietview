@@ -123,7 +123,7 @@
               function(data, headers) {
                 console.log(data);
                 console.log(headers);
-                $state.go("restricted.pages.scrum_board");
+                $state.go("restricted.dashboard");
               },
               function(response) {
                 hideProgressbar();

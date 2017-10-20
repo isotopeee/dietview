@@ -145,22 +145,16 @@
                   serie: true
                 });
               }],
-              sale_chart_data: function($http) {
-                return $http({
-                    method: 'GET',
-                    url: 'data/mg_dashboard_chart.min.json'
-                  })
+              subscriptions_data: function(Subscription) {
+                return Subscription.find({}).$promise
                   .then(function(data) {
-                    return data.data;
+                    return data;
                   });
               },
-              user_data: function($http) {
-                return $http({
-                    method: 'GET',
-                    url: 'data/user_data.json'
-                  })
+              users_data: function(User) {
+                return User.find({}).$promise
                   .then(function(data) {
-                    return data.data;
+                    return data;
                   });
               }
             },

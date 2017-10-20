@@ -10,20 +10,27 @@
       'User',
       function($timeout, $scope, $rootScope, User) {
         // menu entries
-        $scope.sections = [{
+        $scope.sections = [
+          {
             id: 0,
+            title: 'Dashboard',
+            icon: '&#xE871;',
+            link: 'restricted.dashboard'
+          },
+          {
+            id: 1,
             title: 'Scrum Board',
             icon: '&#xE85C;',
             link: 'restricted.pages.scrum_board'
           },
           {
-            id: 1,
+            id: 2,
             title: 'Customer Vitals',
             icon: '&#xEB43;',
             link: 'restricted.nutritionist.customers_vitals'
           },
           {
-            id: 2,
+            id: 3,
             title: 'Products',
             icon: '&#xE561;',
             submenu: [{
@@ -41,7 +48,7 @@
             ]
           },
           {
-            id: 3,
+            id: 4,
             title: 'Reports',
             icon: '&#xE85D;',
             submenu: [{
@@ -63,13 +70,13 @@
             ]
           },
           {
-            id: 4,
+            id: 5,
             title: 'Subscription',
             icon: '&#xE064;',
             link: 'restricted.subscriptions.list'
           },
           {
-            id: 5,
+            id: 6,
             title: 'User Profile',
             icon: '&#xE87C;',
             link: 'restricted.pages.user_profile'

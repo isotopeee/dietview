@@ -1,3 +1,6 @@
+# October 12, 2017
+    - Add Dashboard
+
 # September 30, 2017
     - Implement Audit Logs
 
