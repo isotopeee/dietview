@@ -1,3 +1,6 @@
+# October 20, 2017
+    - Disable read-only controls of meal_plans_detailsView
+
 # October 12, 2017
     - Add Dashboard
 
