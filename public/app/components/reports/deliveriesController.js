@@ -9,8 +9,10 @@
       'deliveries_data',
       'reports',
       'Subscription',
-      function($scope, $window, deliveries_data, reports, Subscription) {
+      'User',
+      function($scope, $window, deliveries_data, reports, Subscription, User) {
         $scope.deliveries_list = [];
+        let currentUser = null;
         var today = new Date();
         var tod = today.getDate();
         $scope.deliveryDate = today;
@@ -28,6 +30,9 @@
 
         function activate() {
           _filterDeliveryList(today);
+          User.getCurrent().$promise.then(({account: {profile: {firstname, lastname}}}) => {
+            currentUser = `${firstname} ${lastname}`;
+          });
         }
 
         function _filterDeliveryList(deliveryDate) {
@@ -53,7 +58,8 @@
           var shortid = 'rJMKTaNEW';
           var data = {
             subscriptions: $scope.deliveries_list,
-            date: $scope.deliveryDate.toLocaleDateString()
+            date: $scope.deliveryDate.toLocaleDateString(),
+            preparedBy: currentUser
           };
           reports.exportToPDF(shortid, data).then(function (reportFileUrl) {
               $window.open(reportFileUrl, '_self', '');

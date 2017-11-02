@@ -8,8 +8,10 @@
       'production_data',
       'reports',
       'Subscription',
-      function($scope, $window, production_data, reports, Subscription) {
+      'User',
+      function($scope, $window, production_data, reports, Subscription, User) {
         $scope.production_list = [];
+        let currentUser = null;
         var today = new Date();
         var tod = today.getDate();
         $scope.productionDate = today;
@@ -28,6 +30,10 @@
 
         function activate() {
           _filterProductionList(today);
+          User.getCurrent().$promise.then(({account: {profile: {firstname, lastname}}}) => {
+            currentUser = `${firstname} ${lastname}`;
+          });
+          
         }
 
         function exportToPDF() {
@@ -36,7 +42,8 @@
           var shortid = 'SJmGtagEZ';
           var data = {
             subscriptions: $scope.production_list,
-            date: $scope.productionDate.toLocaleDateString()
+            date: $scope.productionDate.toLocaleDateString(),
+            preparedBy: currentUser
           };
 
           reports.exportToPDF(shortid, data).then(function (reportFileUrl) {

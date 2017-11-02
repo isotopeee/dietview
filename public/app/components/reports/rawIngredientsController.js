@@ -9,8 +9,10 @@
           'rawIngredients_data' ,
           'reports',
           'Subscription',
-          function ($scope, $window, rawIngredients_data, reports, Subscription) {
+          'User',
+          function ($scope, $window, rawIngredients_data, reports, Subscription, User) {
             $scope.production_list = [];
+            let currentUser = null;
             var today = new Date();
             var tod = today.getDate();
             $scope.productionDate = today;
@@ -30,6 +32,9 @@
             function activate() {
               _filterRawIngredientsList(today);
               $scope.rawIngredients = _normalizeRawIngredientsRequirements(_aggregateIngredientsRequirements($scope.production_list));
+              User.getCurrent().$promise.then(({account: {profile: {firstname, lastname}}}) => {
+                currentUser = `${firstname} ${lastname}`;
+              });
             }
 
             function exportToPDF() {
@@ -38,7 +43,8 @@
               var shortid = 'r1az9X5jW';
               var data = {
                 rawIngredients: $scope.rawIngredients,
-                date: $scope.productionDate.toLocaleDateString()
+                date: $scope.productionDate.toLocaleDateString(),
+                preparedBy: currentUser
               };
               console.log(data);
               reports.exportToPDF(shortid, data).then(function (reportFileUrl) {
