@@ -216,11 +216,13 @@
               mealItems: $scope.meal.mealItems
             }).$promise.then(function(data) {
               UIkit.modal('#modal_add').hide();
-              toastr.success(data.name + " has been added to ingredient list.", "Meal Added");
+              toastr.success(data.name + " has been added to meals list.", "Meal Added");
               data.mealItems = $scope.meal.mealItems;
               $scope.meals_data.push(data);
               console.log(data);
               console.log($scope.meal);
+            }).catch(function(err) {
+              toastr.error('Meal already exist', 'Meal Exist');
             });
           }, null, function(event) {
             console.log(event);

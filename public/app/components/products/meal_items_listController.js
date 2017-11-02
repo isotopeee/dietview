@@ -106,6 +106,8 @@
             toastr.success(data.name + ' has been added to ingredients list.', 'Ingredient Added');
             $scope.ingredients_data.push(data);
             clear_form();
+          }).catch(function(err) {
+            toastr.error('Ingredient already exist', 'Ingredient Exist');
           });
         }
 

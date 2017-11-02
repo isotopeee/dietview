@@ -1,3 +1,6 @@
+# October 30, 2017
+    - Implement unique name validaton on meal, mealItem, and mealPlan
+
 # October 20, 2017
     - Disable read-only controls of meal_plans_detailsView
 

@@ -108,6 +108,8 @@
                   UIkit.modal('#modal_add').hide();
                   toastr.success(data.name + " has been added to Meal Plans list.", "Meal Plan Added");
                   clear_form();
+                }).catch(function(err) {
+                  toastr.error('Meal plan already exist', 'Meal plan Exist');
                 });
               }, null, function(event) {
                 console.log(event);
